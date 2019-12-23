@@ -1,3 +1,5 @@
+add_subdirectory(${VALHALLA_SOURCE_DIR}/third_party/googletest ${CMAKE_BINARY_DIR}/googletest)
+
 ## Lists tests
 set(tests aabb2 access_restriction actor admin attributes_controller complexrestriction countryaccess datetime directededge
   distanceapproximator double_bucket_queue edgecollapser edgestatus ellipse encode
@@ -31,7 +33,7 @@ foreach(test ${tests})
   add_executable(${test} EXCLUDE_FROM_ALL ${test}.cc test.cc)
   set_target_properties(${test} PROPERTIES
     COMPILE_DEFINITIONS VALHALLA_SOURCE_DIR="${VALHALLA_SOURCE_DIR}/")
-  target_link_libraries(${test} valhalla)
+  target_link_libraries(${test} valhalla gtest)
 endforeach()
 
 set(cost_tests autocost bicyclecost motorcyclecost motorscootercost pedestriancost transitcost truckcost)
