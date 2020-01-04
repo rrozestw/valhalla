@@ -1,7 +1,6 @@
 #include <vector>
 
 #include "baldr/admin.h"
-#include <memory>
 
 #include <gtest/gtest.h>
 
