@@ -1,11 +1,11 @@
-#include "test.h"
-
 #include <stdexcept>
 
 #include "baldr/rapidjson_utils.h"
 #include <boost/property_tree/ptree.hpp>
 
 #include "tyr/actor.h"
+
+#include <gtest/gtest.h>
 
 #if !defined(VALHALLA_SOURCE_DIR)
 #define VALHALLA_SOURCE_DIR
@@ -61,7 +61,7 @@ boost::property_tree::ptree make_conf() {
   return conf;
 }
 
-void test_actor() {
+TEST(Actor, Basic) {
   auto conf = make_conf();
   tyr::actor_t actor(conf);
 
@@ -96,36 +96,26 @@ void test_actor() {
   // TODO: test the rest of them
 }
 
-void test_interrupt() {
+TEST(Actor, Interrupt) {
   auto conf = make_conf();
   tyr::actor_t actor(conf);
   struct test_exception_t {};
 
-  try {
-    actor.route(R"({"locations":[{"lat":40.546115,"lon":-76.385076,"type":"break"},
+  EXPECT_THROW(actor.route(R"({"locations":[{"lat":40.546115,"lon":-76.385076,"type":"break"},
         {"lat":40.544232,"lon":-76.385752,"type":"break"}],"costing":"auto"})",
-                []() -> void { throw test_exception_t{}; });
-    throw std::logic_error("this should have thrown already");
-  } catch (const test_exception_t& e) {}
+                           []() -> void { throw test_exception_t{}; }), test_exception_t);
 
-  try {
-    actor.trace_attributes(R"({"shape":[{"lat":40.546115,"lon":-76.385076},
+  EXPECT_THROW(actor.trace_attributes(R"({"shape":[{"lat":40.546115,"lon":-76.385076},
         {"lat":40.544232,"lon":-76.385752}],"costing":"auto","shape_match":"map_snap"})",
-                           []() -> void { throw test_exception_t{}; });
-    throw std::logic_error("this should have thrown already");
-  } catch (const test_exception_t& e) {}
+                                     []() -> void { throw test_exception_t{}; }), test_exception_t);
 
   // TODO: test the rest of them
 }
 
 } // namespace
 
-int main() {
-  test::suite suite("actor");
 
-  suite.test(TEST_CASE(test_actor));
-
-  suite.test(TEST_CASE(test_interrupt));
-
-  return suite.tear_down();
+int main(int argc, char* argv[]) {
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
