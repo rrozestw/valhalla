@@ -8,6 +8,8 @@
 #include <stdexcept>
 #include <string>
 
+#include <gtest/gtest.h>
+
 #define TEST_CASE(x) #x, x
 
 namespace test {
