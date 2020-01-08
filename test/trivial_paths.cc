@@ -134,13 +134,10 @@ void try_path(GraphReader& reader,
   valhalla::Location origin = request.options().locations(0);
   valhalla::Location dest = request.options().locations(1);
   auto pathedges = astar.GetBestPath(origin, dest, reader, mode_costing, mode).front();
-  if (pathedges.size() != expected_edgecount) {
-    throw std::runtime_error("Trivial path failed: expected edges: " +
-                             std::to_string(expected_edgecount));
-  }
+  EXPECT_EQ(pathedges.size(), expected_edgecount);
 }
 
-void test_trivial_paths() {
+TEST(TrivialPaths, test_trivial_paths) {
   // Test setup
   loki_worker_t loki_worker(config);
   GraphReader reader(config.get_child("mjolnir"));
@@ -174,11 +171,9 @@ void test_trivial_paths() {
   try_path(reader, loki_worker, test_request5, 5);
 }
 
+
 int main(int argc, char* argv[]) {
-  test::suite suite("trivial_paths");
   // logging::Configure({{"type", ""}}); // silence logs
-
-  suite.test(TEST_CASE(test_trivial_paths));
-
-  return suite.tear_down();
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
