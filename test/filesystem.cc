@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <vector>
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 // TODO: move this out of the test and into the filesystem replacement
 // and then remove filesystem from mjolnir as well

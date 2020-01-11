@@ -2,7 +2,7 @@
 
 #include "midgard/util.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace valhalla;
 

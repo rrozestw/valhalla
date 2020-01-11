@@ -2,7 +2,7 @@
 #include "baldr/complexrestriction.h"
 #include "mjolnir/complexrestrictionbuilder.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace std;
 using namespace valhalla::baldr;

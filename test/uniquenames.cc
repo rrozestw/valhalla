@@ -2,7 +2,7 @@
 
 #include "mjolnir/uniquenames.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace std;
 using namespace valhalla::mjolnir;

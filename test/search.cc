@@ -13,7 +13,7 @@
 #include "midgard/pointll.h"
 #include "midgard/vector2.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace valhalla::midgard;
 using namespace valhalla::baldr;

@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 namespace {
 

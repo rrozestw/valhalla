@@ -4,7 +4,7 @@
 
 #include "test.h" // for random generator
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace valhalla;
 using namespace valhalla::meili;

@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <unordered_set>
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 namespace {
 

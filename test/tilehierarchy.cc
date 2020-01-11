@@ -2,7 +2,7 @@
 #include "baldr/graphid.h"
 #include "midgard/pointll.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 #include <boost/property_tree/ptree.hpp>
 

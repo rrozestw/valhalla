@@ -5,7 +5,7 @@
 
 #include "meili/grid_range_query.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 namespace {
 

@@ -6,7 +6,7 @@
 
 #include "midgard/point2.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace std;
 using namespace valhalla::midgard;

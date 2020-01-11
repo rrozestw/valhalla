@@ -1,7 +1,7 @@
 #include "baldr/nodeinfo.h"
 #include "midgard/util.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace std;
 using namespace valhalla::baldr;

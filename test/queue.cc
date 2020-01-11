@@ -5,7 +5,7 @@
 
 #include "meili/priority_queue.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 namespace {
 

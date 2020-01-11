@@ -17,7 +17,7 @@
 
 #include "test.h" // for load_binary_file
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 #if !defined(VALHALLA_SOURCE_DIR)
 #define VALHALLA_SOURCE_DIR

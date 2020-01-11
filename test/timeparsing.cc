@@ -10,7 +10,7 @@
 #include "baldr/timedomain.h"
 #include "mjolnir/timeparsing.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace std;
 using namespace valhalla::baldr;

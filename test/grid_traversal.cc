@@ -7,7 +7,7 @@
 
 #include "meili/grid_traversal.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 namespace {
 

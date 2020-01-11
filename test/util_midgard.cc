@@ -8,7 +8,7 @@
 
 #include <list>
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace valhalla::midgard;
 

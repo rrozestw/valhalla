@@ -6,7 +6,7 @@
 #include "baldr/rapidjson_utils.h"
 #include <boost/property_tree/ptree.hpp>
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace valhalla::midgard;
 using namespace valhalla::baldr;

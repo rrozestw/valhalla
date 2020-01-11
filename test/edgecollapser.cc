@@ -14,7 +14,7 @@
 #include "baldr/nodeinfo.h"
 #include "baldr/tilehierarchy.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 namespace vb = valhalla::baldr;
 

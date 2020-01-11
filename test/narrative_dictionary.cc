@@ -5,7 +5,7 @@
 #include "odin/narrative_dictionary.h"
 #include "odin/util.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace valhalla::odin;
 

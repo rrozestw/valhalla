@@ -3,7 +3,7 @@
 #include "baldr/graphtile.h"
 #include "config.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace std;
 using namespace valhalla::baldr;

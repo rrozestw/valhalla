@@ -9,7 +9,7 @@
 #include <sstream>
 #include <string>
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 namespace {
 

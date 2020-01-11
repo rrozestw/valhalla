@@ -7,7 +7,7 @@
 #include "meili/topk_search.h"
 #include "meili/viterbi_search.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 // Viterbi and topK search tests
 

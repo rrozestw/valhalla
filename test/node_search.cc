@@ -12,7 +12,7 @@
 #include "midgard/pointll.h"
 #include "midgard/vector2.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 namespace vm = valhalla::midgard;
 namespace vb = valhalla::baldr;

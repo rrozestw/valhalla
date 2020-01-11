@@ -17,7 +17,7 @@
 #include "tyr/actor.h"
 #include "worker.h"
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace valhalla;
 using namespace valhalla::midgard;

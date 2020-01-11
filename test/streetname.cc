@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include <gtest/gtest.h>
+#include "test.h"
 
 using namespace std;
 using namespace valhalla::baldr;
