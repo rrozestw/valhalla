@@ -18,7 +18,6 @@ inline float rand01(std::mt19937& gen) {
   return static_cast<float>(dis(gen));
 }
 
-
 inline std::string load_binary_file(const std::string filename) {
   std::string bytes;
   std::ifstream input_pbf(filename, std::ios::in | std::ios::binary);

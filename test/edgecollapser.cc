@@ -129,12 +129,13 @@ TEST(EdgeCollapser, TestCollapseEdgeSimple) {
                    [&](const vb::merge::path& p) {
                      count += 1;
                      for (auto id : p.m_edges) {
-                       EXPECT_EQ(edges.count(id) , 1) << "Edge not found - either invalid or duplicate!";
+                       EXPECT_EQ(edges.count(id), 1)
+                           << "Edge not found - either invalid or duplicate!";
                        edges.erase(id);
                      }
                    });
 
-  EXPECT_EQ(count , 2) << "Should have collapsed to 2 paths.";
+  EXPECT_EQ(count, 2) << "Should have collapsed to 2 paths.";
   EXPECT_TRUE(edges.empty()) << "Some edges left over!";
 }
 
@@ -184,12 +185,13 @@ TEST(EdgeCollapser, TestCollapseEdgeJunction) {
                    [&](const vb::merge::path& p) {
                      count += 1;
                      for (auto id : p.m_edges) {
-                       EXPECT_EQ(edges.count(id) , 1) << "Edge not found - either invalid or duplicate!";
+                       EXPECT_EQ(edges.count(id), 1)
+                           << "Edge not found - either invalid or duplicate!";
                        edges.erase(id);
                      }
                    });
 
-  EXPECT_EQ(count , 6) << "Should have not collapsed, leaving 6 original paths.";
+  EXPECT_EQ(count, 6) << "Should have not collapsed, leaving 6 original paths.";
   EXPECT_TRUE(edges.empty()) << "Some edges left over!";
 }
 
@@ -219,7 +221,7 @@ TEST(EdgeCollapser, TestCollapseEdgeChain) {
 
   builder.commit_tile(base_id);
   EXPECT_EQ(builder.tiles.size(), 1);
-  
+
   test_graph_reader reader(std::move(builder.tiles));
 
   size_t count = 0;
@@ -236,17 +238,17 @@ TEST(EdgeCollapser, TestCollapseEdgeChain) {
                    [&](const vb::merge::path& p) {
                      count += 1;
                      for (auto id : p.m_edges) {
-                       EXPECT_EQ(edges.count(id) , 1) << "Edge not found - either invalid or duplicate!";
+                       EXPECT_EQ(edges.count(id), 1)
+                           << "Edge not found - either invalid or duplicate!";
                        edges.erase(id);
                      }
                    });
 
-  EXPECT_EQ(count , 2) << "Should have collapsed to 2 paths.";
+  EXPECT_EQ(count, 2) << "Should have collapsed to 2 paths.";
   EXPECT_TRUE(edges.empty()) << "Some edges left over!";
 }
 
 } // anonymous namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

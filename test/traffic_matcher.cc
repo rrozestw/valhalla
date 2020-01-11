@@ -140,12 +140,12 @@ TEST(TrafficMatcher, test_matcher) {
         });
     b_segs.erase(seg_itr, b_segs.end());
 
-    ASSERT_EQ(a_segs.size() , b_segs.size());
+    ASSERT_EQ(a_segs.size(), b_segs.size());
     for (size_t i = 0; i < a_segs.size(); ++i) {
       const auto& a = a_segs[i];
       const auto& b = b_segs[i];
-      EXPECT_EQ(a.begin_shape_index , b.begin_shape_index);
-      EXPECT_EQ(a.end_shape_index , b.end_shape_index);
+      EXPECT_EQ(a.begin_shape_index, b.begin_shape_index);
+      EXPECT_EQ(a.end_shape_index, b.end_shape_index);
       EXPECT_NEAR(a.start_time, b.start_time, 10) << "start time is out of tolerance";
       EXPECT_NEAR(a.end_time, b.end_time, 10) << "end time is out of tolerance";
       EXPECT_NEAR(a.length, b.length, 50) << "length is out of tolerance";
@@ -154,7 +154,6 @@ TEST(TrafficMatcher, test_matcher) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

@@ -339,7 +339,7 @@ TEST(Search, test_single_node) {
 
   auto nodes = valhalla::loki::nodes_in_bbox(box, reader);
 
-  EXPECT_EQ(nodes.size() , 1) << "Expecting to find one node";
+  EXPECT_EQ(nodes.size(), 1) << "Expecting to find one node";
 }
 
 TEST(Search, test_small_node_block) {
@@ -357,7 +357,7 @@ TEST(Search, test_small_node_block) {
 
   auto nodes = valhalla::loki::nodes_in_bbox(box, reader);
 
-  EXPECT_EQ(nodes.size() , 4) << "Expecting to find four nodes";
+  EXPECT_EQ(nodes.size(), 4) << "Expecting to find four nodes";
 }
 
 TEST(Search, test_node_at_tile_boundary) {
@@ -373,7 +373,7 @@ TEST(Search, test_node_at_tile_boundary) {
 
   auto nodes = valhalla::loki::nodes_in_bbox(box, reader);
 
-  EXPECT_EQ(nodes.size() , 1) << "Expecting to find one node";
+  EXPECT_EQ(nodes.size(), 1) << "Expecting to find one node";
 }
 
 TEST(Search, test_opposite_in_another_tile) {
@@ -413,9 +413,8 @@ TEST(Search, test_opposite_in_another_tile) {
 
   auto nodes = valhalla::loki::nodes_in_bbox(box, reader);
 
-  EXPECT_EQ(nodes.size() , 1) << "Expecting to find one node";
+  EXPECT_EQ(nodes.size(), 1) << "Expecting to find one node";
 }
-
 
 // Setup and tearown will be called only once for the entire suite
 class Env : public ::testing::Environment {
@@ -429,7 +428,6 @@ public:
 };
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::AddGlobalTestEnvironment(new Env);

@@ -37,8 +37,7 @@ void TryDistanceSquared(const PointLL& a, const PointLL& b, const float d2) {
   // Test if distance is > 2% the spherical distance
   float d = sqrtf(DistanceApproximator::DistanceSquared(a, b));
   // std::cout << " d = " << d << " ArcDistance = " << d2 << std::endl;
-  EXPECT_NEAR(d / d2, 1, 2.0f)
-    << "DistanceSquared between 2 points test failed";
+  EXPECT_NEAR(d / d2, 1, 2.0f) << "DistanceSquared between 2 points test failed";
 }
 
 TEST(DistanceApproximator, TestDistanceSquared) {
@@ -49,7 +48,6 @@ TEST(DistanceApproximator, TestDistanceSquared) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

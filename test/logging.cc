@@ -12,7 +12,6 @@
 
 #include <gtest/gtest.h>
 
-
 using namespace valhalla::midgard;
 
 namespace {
@@ -44,8 +43,9 @@ TEST(Logging, FileLoggerTest) {
 
   // configure bogusly
   EXPECT_THROW(logging::Configure({{"type", "file"},
-                        {"file_name", "test/thread_file_log_test.log"},
-                                   {"reopen_interval", "opi-903"}}), std::exception);
+                                   {"file_name", "test/thread_file_log_test.log"},
+                                   {"reopen_interval", "opi-903"}}),
+               std::exception);
 
   // configure properly
   logging::Configure(
@@ -95,7 +95,6 @@ TEST(Logging, FileLoggerTest) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

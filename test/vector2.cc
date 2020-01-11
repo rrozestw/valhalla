@@ -3,7 +3,6 @@
 
 #include <gtest/gtest.h>
 
-
 using namespace std;
 using namespace valhalla::midgard;
 
@@ -326,7 +325,6 @@ TEST(Vector2, TestReflect) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

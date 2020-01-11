@@ -17,7 +17,7 @@ void TryLineIntersection(const Ellipse<Point2>& a,
                          const uint32_t expected) {
   Point2 p1, p2;
   EXPECT_EQ(a.Intersect(line, p1, p2), expected)
-    << "Ellipse: LineSegment intersect test failed: expected: " + std::to_string(expected);
+      << "Ellipse: LineSegment intersect test failed: expected: " + std::to_string(expected);
 }
 
 TEST(Ellipse, TestLineIntersection) {
@@ -33,7 +33,7 @@ void TryAABBIntersection(const Ellipse<Point2>& a,
                          const AABB2<Point2>& box,
                          const IntersectCase expected) {
   EXPECT_EQ(a.DoesIntersect(box), expected)
-    << "Ellipse AABB2 does intersect test failed: expected: " + std::to_string(expected);
+      << "Ellipse AABB2 does intersect test failed: expected: " + std::to_string(expected);
 }
 
 TEST(Ellipse, TestAABBIntersection) {
@@ -54,7 +54,7 @@ TEST(Ellipse, TestAABBIntersection) {
 
 void TryContains(const Ellipse<Point2>& a, const Point2& pt, const bool expected) {
   EXPECT_EQ(a.Contains(pt), expected)
-    << "Ellipse Contains test failed: expected: " + std::to_string(expected);
+      << "Ellipse Contains test failed: expected: " + std::to_string(expected);
 }
 
 TEST(Ellipse, TestContains) {

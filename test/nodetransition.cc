@@ -1,5 +1,5 @@
-#include "baldr/graphid.h"
 #include "baldr/nodetransition.h"
+#include "baldr/graphid.h"
 
 #include <gtest/gtest.h>
 
@@ -25,7 +25,6 @@ TEST(NodeTransition, WriteRead) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

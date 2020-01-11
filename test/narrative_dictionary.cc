@@ -5,7 +5,6 @@
 #include "odin/narrative_dictionary.h"
 #include "odin/util.h"
 
-
 #include <gtest/gtest.h>
 
 using namespace valhalla::odin;
@@ -288,22 +287,21 @@ const NarrativeDictionary& GetNarrativeDictionary(const std::string& lang_tag) {
   const auto phrase_dictionary = get_locales().find(lang_tag);
 
   // If language tag is not found then throw error
-  EXPECT_NE(phrase_dictionary, get_locales().end())
-    << "Invalid language tag.";
+  EXPECT_NE(phrase_dictionary, get_locales().end()) << "Invalid language tag.";
 
   return *phrase_dictionary->second;
 }
 
 void validate(const std::string& test_target, const std::string& expected) {
-  EXPECT_EQ(test_target , expected);
+  EXPECT_EQ(test_target, expected);
 }
 
 void validate(const std::vector<std::string>& test_target, const std::vector<std::string>& expected) {
-  EXPECT_EQ(test_target.size() , expected.size());
+  EXPECT_EQ(test_target.size(), expected.size());
 
   for (auto test_target_item = test_target.begin(), expected_item = expected.begin();
        test_target_item != test_target.end(); ++test_target_item, ++expected_item) {
-    EXPECT_EQ((*test_target_item) , (*expected_item));
+    EXPECT_EQ((*test_target_item), (*expected_item));
   }
 }
 
@@ -312,7 +310,7 @@ void validate(const std::unordered_map<std::string, std::string>& test_target,
 
   for (const auto& expected_phrase : expected) {
     const auto& test_target_item = test_target.at(expected_phrase.first);
-    EXPECT_EQ(test_target_item , expected_phrase.second);
+    EXPECT_EQ(test_target_item, expected_phrase.second);
   }
 }
 
@@ -1422,7 +1420,6 @@ TEST(NarrativeDictionary, test_en_US_verbal_multi_cue) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

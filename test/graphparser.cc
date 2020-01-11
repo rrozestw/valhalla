@@ -117,8 +117,9 @@ void BollardsGatesAndAccess(const std::string& config_file) {
   node = GetNode(2949666866, way_nodes);
   EXPECT_TRUE(node.intersection());
   EXPECT_EQ(node.type(), NodeType::kGate);
-  EXPECT_EQ(node.access(), (kAutoAccess | kHOVAccess | kTaxiAccess | kTruckAccess | kBusAccess | kEmergencyAccess |
-      kPedestrianAccess | kWheelchairAccess | kBicycleAccess | kMopedAccess | kMotorcycleAccess));
+  EXPECT_EQ(node.access(), (kAutoAccess | kHOVAccess | kTaxiAccess | kTruckAccess | kBusAccess |
+                            kEmergencyAccess | kPedestrianAccess | kWheelchairAccess |
+                            kBicycleAccess | kMopedAccess | kMotorcycleAccess));
 
   // block
   node = GetNode(1819036441, way_nodes);
@@ -130,15 +131,17 @@ void BollardsGatesAndAccess(const std::string& config_file) {
   node = GetNode(3256854624, way_nodes);
   EXPECT_TRUE(node.intersection());
   EXPECT_EQ(node.type(), NodeType::kBorderControl);
-  EXPECT_EQ(node.access(), kAutoAccess | kHOVAccess | kTaxiAccess | kTruckAccess | kBusAccess | kEmergencyAccess |
-      kPedestrianAccess | kWheelchairAccess | kBicycleAccess | kMopedAccess | kMotorcycleAccess);
+  EXPECT_EQ(node.access(), kAutoAccess | kHOVAccess | kTaxiAccess | kTruckAccess | kBusAccess |
+                               kEmergencyAccess | kPedestrianAccess | kWheelchairAccess |
+                               kBicycleAccess | kMopedAccess | kMotorcycleAccess);
 
   // has bike tag but all should have access
   // Bike access only test
   node = GetNode(696222071, way_nodes);
   EXPECT_TRUE(node.intersection());
-  EXPECT_EQ(node.access(), kAutoAccess | kHOVAccess | kTaxiAccess | kTruckAccess | kBusAccess | kEmergencyAccess |
-      kPedestrianAccess | kWheelchairAccess | kBicycleAccess | kMopedAccess | kMotorcycleAccess);
+  EXPECT_EQ(node.access(), kAutoAccess | kHOVAccess | kTaxiAccess | kTruckAccess | kBusAccess |
+                               kEmergencyAccess | kPedestrianAccess | kWheelchairAccess |
+                               kBicycleAccess | kMopedAccess | kMotorcycleAccess);
 
   // Is a bollard with no flags set.
   node = GetNode(569645326, way_nodes);
@@ -174,7 +177,7 @@ void BollardsGatesAndAccess(const std::string& config_file) {
       bike_network |= b->second.bike_network;
 
   EXPECT_TRUE((bike_network & kMcn) && (bike_network & kLcn) && way_74584853.bike_network() == 0)
-    << "lcn and mtb not marked on way 74584853.";
+      << "lcn and mtb not marked on way 74584853.";
 
   auto way_75786176 = GetWay(75786176, ways);
   bike_network = 0;
@@ -189,7 +192,7 @@ void BollardsGatesAndAccess(const std::string& config_file) {
   }
 
   EXPECT_TRUE((bike_network & kMcn) && (bike_network & kRcn) && way_75786176.bike_network() == 0)
-    << "rcn and mtb not marked on way 75786176.";
+      << "rcn and mtb not marked on way 75786176.";
 
   boost::filesystem::remove(ways_file);
   boost::filesystem::remove(way_nodes_file);
@@ -220,8 +223,9 @@ void RemovableBollards(const std::string& config_file) {
   auto node = GetNode(2425784125, way_nodes);
   EXPECT_TRUE(node.intersection()) << "Rising Bollard not marked as intersection.";
   EXPECT_EQ(node.type(), NodeType::kGate);
-  EXPECT_EQ(node.access(), kAutoAccess | kHOVAccess | kTaxiAccess | kTruckAccess | kBusAccess | kEmergencyAccess |
-      kPedestrianAccess | kWheelchairAccess | kBicycleAccess | kMopedAccess | kMotorcycleAccess);
+  EXPECT_EQ(node.access(), kAutoAccess | kHOVAccess | kTaxiAccess | kTruckAccess | kBusAccess |
+                               kEmergencyAccess | kPedestrianAccess | kWheelchairAccess |
+                               kBicycleAccess | kMopedAccess | kMotorcycleAccess);
 
   boost::filesystem::remove(ways_file);
   boost::filesystem::remove(way_nodes_file);
@@ -256,11 +260,13 @@ void Exits(const std::string& config_file) {
   node = GetNode(1901353894, way_nodes);
   EXPECT_TRUE(node.intersection());
   EXPECT_TRUE(node.has_ref());
-  EXPECT_EQ(osmdata.node_names.name(node.name_index()), "Harrisburg East") << "node name not set correctly .";
+  EXPECT_EQ(osmdata.node_names.name(node.name_index()), "Harrisburg East")
+      << "node name not set correctly .";
 
   node = GetNode(462240654, way_nodes);
   EXPECT_TRUE(node.intersection());
-  EXPECT_EQ(osmdata.node_names.name(node.exit_to_index()), "PA441") << "node exit_to not set correctly .";
+  EXPECT_EQ(osmdata.node_names.name(node.exit_to_index()), "PA441")
+      << "node exit_to not set correctly .";
 
   boost::filesystem::remove(ways_file);
   boost::filesystem::remove(way_nodes_file);
@@ -300,7 +306,7 @@ void Baltimore(const std::string& config_file) {
   EXPECT_FALSE(way_216240466.bus_backward());
   EXPECT_FALSE(way_216240466.moped_backward());
   EXPECT_TRUE(way_216240466.bike_backward());
-  
+
   // access for all
   auto way_138388359 = GetWay(138388359, ways);
   EXPECT_TRUE(way_138388359.auto_forward());
@@ -359,15 +365,17 @@ void Baltimore(const std::string& config_file) {
 
   auto res = osmdata.restrictions.equal_range(98040438);
 
-  ASSERT_NE(res.first,osmdata.restrictions.end()) << "Failed to find 98040438 restriction.";
+  ASSERT_NE(res.first, osmdata.restrictions.end()) << "Failed to find 98040438 restriction.";
 
   for (auto r = res.first; r != res.second; ++r) {
     if (r->second.to() == 6003340) {
       EXPECT_EQ(r->second.via(), 2123388822) << "98040438 restriction test failed for to: 6003340";
-      EXPECT_EQ(r->second.type(), RestrictionType::kNoLeftTurn) << "98040438 restriction test failed for to: 6003340";
+      EXPECT_EQ(r->second.type(), RestrictionType::kNoLeftTurn)
+          << "98040438 restriction test failed for to: 6003340";
     } else if (r->second.to() == 98040438) {
       EXPECT_EQ(r->second.via(), 2123388822) << "98040438 restriction test failed for to: 98040438";
-      EXPECT_EQ(r->second.type(), RestrictionType::kNoUTurn) << "98040438 restriction test failed for to: 98040438";
+      EXPECT_EQ(r->second.type(), RestrictionType::kNoUTurn)
+          << "98040438 restriction test failed for to: 98040438";
     } else
       FAIL() << "98040438 restriction test failed.";
   }
@@ -650,18 +658,20 @@ TEST(GraphParser, TestImportBssNode) {
   const GraphTile* local_tile = reader.GetGraphTile({759649, local_level, 0});
   auto count = local_tile->header()->nodecount();
 
-  EXPECT_EQ(local_tile->node(count - 1)->type() , NodeType::kBikeShare) 
-    << "The added node is not bike share";
+  EXPECT_EQ(local_tile->node(count - 1)->type(), NodeType::kBikeShare)
+      << "The added node is not bike share";
 
-  EXPECT_EQ(local_tile->node(count - 1)->edge_count() , 2) 
-    << "The bike share node must have 2 outbound edges";
+  EXPECT_EQ(local_tile->node(count - 1)->edge_count(), 2)
+      << "The bike share node must have 2 outbound edges";
 
   auto check_edge_attribute = [](const DirectedEdge* directededge) {
-    EXPECT_TRUE(directededge->bss_connection()) << "The bike share node's edges is not a bss connection";
-    EXPECT_EQ(directededge->surface() , Surface::kPavedRough) << "The edges' surface is incorrect";
-    EXPECT_EQ(directededge->cyclelane() , CycleLane::kNone) << "The edges' cyclelane is incorrect";
-    EXPECT_EQ(directededge->classification() , RoadClass::kResidential) << "The edges' road calss is incorrect";
-    EXPECT_EQ(directededge->use() , Use::kRoad) << "The edges' use is incorrect";
+    EXPECT_TRUE(directededge->bss_connection())
+        << "The bike share node's edges is not a bss connection";
+    EXPECT_EQ(directededge->surface(), Surface::kPavedRough) << "The edges' surface is incorrect";
+    EXPECT_EQ(directededge->cyclelane(), CycleLane::kNone) << "The edges' cyclelane is incorrect";
+    EXPECT_EQ(directededge->classification(), RoadClass::kResidential)
+        << "The edges' road calss is incorrect";
+    EXPECT_EQ(directededge->use(), Use::kRoad) << "The edges' use is incorrect";
   };
 
   auto bss_edge_idx = local_tile->node(count - 1)->edge_index();
@@ -700,7 +710,6 @@ public:
   void TearDown() override {
   }
 };
-
 
 int main(int argc, char* argv[]) {
   // Test data BBs are as follows:

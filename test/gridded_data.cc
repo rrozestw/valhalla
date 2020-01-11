@@ -26,8 +26,7 @@ TEST(GriddedData, Basic) {
   auto contours = g.GenerateContours(iso_markers, true);
 
   // need to be the same size and all of them have to have a single ring
-  ASSERT_EQ(contours.size(), iso_markers.size())
-    << "There should be 7 iso lines";
+  ASSERT_EQ(contours.size(), iso_markers.size()) << "There should be 7 iso lines";
 
   // because of the pattern above we should end up with concentric circles
   // every ring should have all smaller rings inside it
@@ -41,8 +40,8 @@ TEST(GriddedData, Basic) {
     // if this is a ring the iso lines with lesser units should be contained within it
     for (const auto& p : std::prev(collection)->second.front().front()) {
       ASSERT_TRUE(p.WithinPolygon(contour.front()))
-        << "Ring " + std::to_string(collection->first) + " should contain ring " +
-            std::to_string(std::prev(collection)->first);
+          << "Ring " + std::to_string(collection->first) + " should contain ring " +
+                 std::to_string(std::prev(collection)->first);
     }
   }
 
@@ -68,7 +67,6 @@ TEST(GriddedData, Basic) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

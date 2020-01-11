@@ -11,17 +11,17 @@ namespace {
 
 TEST(GraphId, TestValues) {
   GraphId target(123, 2, 8);
-  EXPECT_EQ(target.tileid() , 123);
-  EXPECT_EQ(target.level() , 2);
-  EXPECT_EQ(target.id() , 8);
+  EXPECT_EQ(target.tileid(), 123);
+  EXPECT_EQ(target.level(), 2);
+  EXPECT_EQ(target.id(), 8);
 
   GraphId target2(5689, 1, 1234567);
-  EXPECT_EQ(target2.tileid() , 5689);
-  EXPECT_EQ(target2.level() , 1);
-  EXPECT_EQ(target2.id() , 1234567);
+  EXPECT_EQ(target2.tileid(), 5689);
+  EXPECT_EQ(target2.level(), 1);
+  EXPECT_EQ(target2.id(), 1234567);
 
   // Test the tile_value
-  EXPECT_EQ(target2.Tile_Base().value , target2.tile_value());
+  EXPECT_EQ(target2.Tile_Base().value, target2.tile_value());
 
   target.set_id(5678);
   EXPECT_EQ(target.id(), 5678);
@@ -73,7 +73,7 @@ TEST(GraphIdGet, Tileid) {
 }
 
 void TryGet_level(const GraphId& gid, const unsigned int expected) {
-  EXPECT_EQ(expected , gid.level());
+  EXPECT_EQ(expected, gid.level());
 }
 
 TEST(GraphIdGet, Level) {
@@ -82,7 +82,7 @@ TEST(GraphIdGet, Level) {
 }
 
 void TryGet_id(const GraphId& gid, const unsigned int expected) {
-  EXPECT_EQ(expected , gid.id());
+  EXPECT_EQ(expected, gid.id());
 }
 
 TEST(GraphIdGet, Id) {
@@ -100,7 +100,7 @@ TEST(GraphId, TestIsValid) {
 
 void TryOpPostIncrement(GraphId& gid, const unsigned int expected) {
   auto old = gid++;
-  EXPECT_EQ(expected , gid.id());
+  EXPECT_EQ(expected, gid.id());
   EXPECT_EQ(expected - 1, old.id());
 }
 
@@ -113,7 +113,7 @@ TEST(GraphId, TestOpPostIncrement) {
   TryOpPostIncrement(graphid3, 51);
 }
 
-TEST(GraphId, TestOpLessThan) {  
+TEST(GraphId, TestOpLessThan) {
   EXPECT_LT(GraphId(0, 0, 0), GraphId(0, 0, 1));
   EXPECT_LT(GraphId(10, 5, 1), GraphId(10, 6, 1));
   EXPECT_LT(GraphId(5, 1, 50), GraphId(6, 1, 50));
@@ -132,7 +132,6 @@ TEST(GraphId, TestOpEqualTo) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

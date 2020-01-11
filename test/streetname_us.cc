@@ -11,8 +11,8 @@ namespace {
 
 void TryCtor(const std::string& text, const bool is_route_number) {
   StreetNameUs street_name(text, is_route_number);
-  EXPECT_EQ(text , street_name.value());
-  EXPECT_EQ(is_route_number , street_name.is_route_number());
+  EXPECT_EQ(text, street_name.value());
+  EXPECT_EQ(is_route_number, street_name.is_route_number());
 }
 
 TEST(StreetnameUs, TestCtor) {
@@ -43,8 +43,7 @@ TEST(StreetnameUs, TestEquals) {
 }
 
 void TryStartsWith(const StreetNameUs& street_name, const std::string& prefix) {
-  EXPECT_TRUE(street_name.StartsWith(prefix))
-    << street_name.value() + " : " + prefix;
+  EXPECT_TRUE(street_name.StartsWith(prefix)) << street_name.value() + " : " + prefix;
 }
 
 TEST(StreetnameUs, TestStartsWith) {
@@ -53,8 +52,7 @@ TEST(StreetnameUs, TestStartsWith) {
 }
 
 void TryEndsWith(const StreetNameUs& street_name, const std::string& suffix) {
-  EXPECT_TRUE(street_name.EndsWith(suffix))
-    << street_name.value() + " : " << suffix;
+  EXPECT_TRUE(street_name.EndsWith(suffix)) << street_name.value() + " : " << suffix;
 }
 
 TEST(StreetnameUs, TestEndsWith) {
@@ -63,8 +61,7 @@ TEST(StreetnameUs, TestEndsWith) {
 }
 
 void TryGetPreDir(const StreetNameUs& street_name, const std::string& pre_dir) {
-  EXPECT_EQ(pre_dir , street_name.GetPreDir())
-    << street_name.value() + ": Incorrect GetPreDir";
+  EXPECT_EQ(pre_dir, street_name.GetPreDir()) << street_name.value() + ": Incorrect GetPreDir";
 }
 
 TEST(StreetnameUs, TestGetPreDir) {
@@ -76,8 +73,7 @@ TEST(StreetnameUs, TestGetPreDir) {
 }
 
 void TryGetPostDir(const StreetNameUs& street_name, const std::string& post_dir) {
-  EXPECT_EQ(post_dir , street_name.GetPostDir())
-    << street_name.value() + ": Incorrect GetPostDir";
+  EXPECT_EQ(post_dir, street_name.GetPostDir()) << street_name.value() + ": Incorrect GetPostDir";
 }
 
 TEST(StreetnameUs, TestGetPostDir) {
@@ -93,8 +89,8 @@ TEST(StreetnameUs, TestGetPostDir) {
 }
 
 void TryGetPostCardinalDir(const StreetNameUs& street_name, const std::string& post_dir) {
-  EXPECT_EQ(post_dir , street_name.GetPostCardinalDir())
-    << street_name.value() + ": Incorrect GetPostCardinalDir";
+  EXPECT_EQ(post_dir, street_name.GetPostCardinalDir())
+      << street_name.value() + ": Incorrect GetPostCardinalDir";
 }
 
 TEST(StreetnameUs, TestGetPostCardinalDir) {
@@ -106,8 +102,7 @@ TEST(StreetnameUs, TestGetPostCardinalDir) {
 }
 
 void TryGetBaseName(const StreetNameUs& street_name, const std::string& base_name) {
-  EXPECT_EQ(base_name , street_name.GetBaseName())
-    << street_name.value() + ": Incorrect GetBaseName";
+  EXPECT_EQ(base_name, street_name.GetBaseName()) << street_name.value() + ": Incorrect GetBaseName";
 }
 
 TEST(StreetnameUs, TestGetBaseName) {
@@ -132,7 +127,7 @@ TEST(StreetnameUs, TestGetBaseName) {
 
 void TryHasSameBaseName(const StreetNameUs& street_name, const StreetNameUs& rhs) {
   EXPECT_TRUE(street_name.HasSameBaseName(rhs))
-    << street_name.value() + ": Incorrect HasSameBaseName";
+      << street_name.value() + ": Incorrect HasSameBaseName";
 }
 
 TEST(StreetnameUs, TestHasSameBaseName) {
@@ -165,7 +160,6 @@ TEST(StreetnameUs, TestHasSameBaseName) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

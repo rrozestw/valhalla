@@ -1,6 +1,6 @@
 
-#include "config.h"
 #include "thor/attributes_controller.h"
+#include "config.h"
 
 #include <gtest/gtest.h>
 
@@ -8,7 +8,6 @@ using namespace std;
 using namespace valhalla::thor;
 
 namespace {
-
 
 TEST(AttrController, TestCtorDefautAttributes) {
   AttributesController controller;
@@ -91,7 +90,6 @@ TEST(AttrController, TestAdminAttributeEnabled) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

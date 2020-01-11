@@ -39,13 +39,15 @@ void assert_tile_equalish(const GraphTile a,
   ASSERT_EQ(memcmp(reinterpret_cast<const char*>(a.header()) + sizeof(GraphTileHeader),
                    reinterpret_cast<const char*>(b.header()) + sizeof(GraphTileHeader),
                    (reinterpret_cast<const char*>(b.GetBin(0, 0).begin()) -
-                       reinterpret_cast<const char*>(b.header())) -
-                       sizeof(GraphTileHeader)), 0);
+                    reinterpret_cast<const char*>(b.header())) -
+                       sizeof(GraphTileHeader)),
+            0);
 
   // check the stuff after the bins
   ASSERT_EQ(memcmp(reinterpret_cast<const char*>(a.header()) + a.header()->edgeinfo_offset(),
                    reinterpret_cast<const char*>(b.header()) + b.header()->edgeinfo_offset(),
-                   b.header()->end_offset() - b.header()->edgeinfo_offset()), 0);
+                   b.header()->end_offset() - b.header()->edgeinfo_offset()),
+            0);
 
   // if the header is as expected
   const auto *ah = a.header(), *bh = b.header();
@@ -95,9 +97,8 @@ TEST(GraphTileBuilder, TestDuplicateEdgeInfo) {
 
   std::unordered_map<edge_tuple, size_t, test_graph_tile_builder::EdgeTupleHasher> m;
   m.emplace(a, 0);
-  EXPECT_EQ(m.size() , 1) << "Why isnt there an item in this map";
-  ASSERT_NE(m.find(a), m.end())
-    << "We should have been able to find the edge tuple";
+  EXPECT_EQ(m.size(), 1) << "Why isnt there an item in this map";
+  ASSERT_NE(m.find(a), m.end()) << "We should have been able to find the edge tuple";
 
   const auto success = m.emplace(b, 1);
   EXPECT_FALSE(success.second) << "Why on earth would it be found but then insert just fine";
@@ -109,19 +110,18 @@ TEST(GraphTileBuilder, TestDuplicateEdgeInfo) {
   bool added = false;
   test.AddEdgeInfo(0, GraphId(0, 2, 0), GraphId(0, 2, 1), 1234, 555, 0, 120,
                    std::list<PointLL>{{0, 0}, {1, 1}}, {"einzelweg"}, 0, added);
-  EXPECT_EQ(test.edge_offset_map_.size() , 1) << "There should be exactly one of these in here";
+  EXPECT_EQ(test.edge_offset_map_.size(), 1) << "There should be exactly one of these in here";
 
   // add edge info for node 1 to node 0
   test.AddEdgeInfo(0, GraphId(0, 2, 1), GraphId(0, 2, 0), 1234, 555, 0, 120,
                    std::list<PointLL>{{1, 1}, {0, 0}}, {"einzelweg"}, 0, added);
-  EXPECT_EQ(test.edge_offset_map_.size() , 1)
-    << "There should still be exactly one of these in here";
+  EXPECT_EQ(test.edge_offset_map_.size(), 1) << "There should still be exactly one of these in here";
 
   test.StoreTileData();
   test_graph_tile_builder test2(test_dir, GraphId(0, 2, 0), false);
   auto ei = test2.edgeinfo(0);
-  EXPECT_NEAR(ei.mean_elevation(), 555.0f, kElevationBinSize);  
-  EXPECT_EQ(ei.speed_limit() , 120);
+  EXPECT_NEAR(ei.mean_elevation(), 555.0f, kElevationBinSize);
+  EXPECT_EQ(ei.speed_limit(), 120);
 }
 
 TEST(GraphTileBuilder, TestAddBins) {
@@ -166,7 +166,7 @@ TEST(GraphTileBuilder, TestAddBins) {
       n.exceptions(std::ifstream::failbit | std::ifstream::badbit);
       n.open("test/data/bin_tiles/bin/2/000/" + test_tile.first, std::ios::binary);
       std::string nbytes((std::istreambuf_iterator<char>(n)), std::istreambuf_iterator<char>());
-      EXPECT_EQ(obytes , nbytes) << "Old tile and new tile should be the same if not adding any bins";
+      EXPECT_EQ(obytes, nbytes) << "Old tile and new tile should be the same if not adding any bins";
     }
 
     // send fake bins, we'll throw one in each bin
@@ -177,7 +177,7 @@ TEST(GraphTileBuilder, TestAddBins) {
 
     // check the new tile isnt broken and is exactly the right size bigger
     assert_tile_equalish(t, GraphTile(bin_dir, id), increase, bins,
-        "New tiles edgeinfo or names arent matching up: 1");
+                         "New tiles edgeinfo or names arent matching up: 1");
 
     // append some more
     for (auto& bin : bins)
@@ -187,7 +187,7 @@ TEST(GraphTileBuilder, TestAddBins) {
 
     // check the new tile isnt broken and is exactly the right size bigger
     assert_tile_equalish(t, GraphTile(bin_dir, id), increase, bins,
-        "New tiles edgeinfo or names arent matching up: 2");
+                         "New tiles edgeinfo or names arent matching up: 2");
 
     // check that appending works
     t = GraphTile(bin_dir, id);
@@ -197,7 +197,7 @@ TEST(GraphTileBuilder, TestAddBins) {
 
     // check the new tile isnt broken and is exactly the right size bigger
     assert_tile_equalish(t, GraphTile(bin_dir, id), increase, bins,
-        "New tiles edgeinfo or names arent matching up: 3");
+                         "New tiles edgeinfo or names arent matching up: 3");
   }
 }
 
@@ -250,12 +250,10 @@ TEST(GraphTileBuilder, TestBinEdges) {
       "JiGlJqAfDbAtE~A~GgBdFyKlJy[xWqMvMqTlKoPfCeKiBkHeF}E{KoD{JaLsGwSeEg~BqR");
   GraphTileBuilder::tweeners_t tweeners;
   auto bins = GraphTileBuilder::BinEdges(&fake, tweeners);
-  EXPECT_EQ(tweeners.size() , 1)
-    << "This edge leaves a tile for 1 other tile and comes back.";
+  EXPECT_EQ(tweeners.size(), 1) << "This edge leaves a tile for 1 other tile and comes back.";
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

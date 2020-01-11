@@ -32,50 +32,50 @@ TEST(UtilMidgard, TestRangedDefaultT) {
 
     if (testVal < testRange.min || testVal > testRange.max) {
       // Was outside of range so finalVal should now be snapped to default
-      EXPECT_EQ(finalVal , testRange.def) << "Final value did not snap to the range default value";
+      EXPECT_EQ(finalVal, testRange.def) << "Final value did not snap to the range default value";
     } else {
       // Was inside of range so finalVal should still be the same number
-      EXPECT_EQ(finalVal , testVal) << "Final value moved invalidly";
+      EXPECT_EQ(finalVal, testVal) << "Final value moved invalidly";
     }
 
     // Test Edge cases because random distribution is unlikely to land exactly on boundaries
     finalVal = testRange(testRange.min);
-    EXPECT_EQ(finalVal , testRange.min) << "Final value invalidly moves on lower bound";
+    EXPECT_EQ(finalVal, testRange.min) << "Final value invalidly moves on lower bound";
 
     finalVal = testRange(testRange.max);
-    EXPECT_EQ(finalVal , testRange.max) << "Final value invalidly moves on upper bound";
+    EXPECT_EQ(finalVal, testRange.max) << "Final value invalidly moves on upper bound";
   }
 }
 
 TEST(UtilMidgard, TestGetTurnDegree) {
   // Slight Right
-  EXPECT_EQ(GetTurnDegree(315, 335) , 20) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(315, 335), 20) << "Invalid turn degree";
   // Right
-  EXPECT_EQ(GetTurnDegree(0, 90) , 90) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(0, 90), 90) << "Invalid turn degree";
   // Right
-  EXPECT_EQ(GetTurnDegree(90, 180) , 90) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(90, 180), 90) << "Invalid turn degree";
   // Sharp Right
-  EXPECT_EQ(GetTurnDegree(180, 340) , 160) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(180, 340), 160) << "Invalid turn degree";
   // Sharp Right
-  EXPECT_EQ(GetTurnDegree(180, 352) , 172) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(180, 352), 172) << "Invalid turn degree";
   // Sharp Left
-  EXPECT_EQ(GetTurnDegree(180, 40) , 220) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(180, 40), 220) << "Invalid turn degree";
   // Sharp Left
-  EXPECT_EQ(GetTurnDegree(180, 10) , 190) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(180, 10), 190) << "Invalid turn degree";
   // Left
-  EXPECT_EQ(GetTurnDegree(0, 180) , 180) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(0, 180), 180) << "Invalid turn degree";
   // Left
-  EXPECT_EQ(GetTurnDegree(270, 180) , 270) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(270, 180), 270) << "Invalid turn degree";
   // Slight Left
-  EXPECT_EQ(GetTurnDegree(90, 70) , 340) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(90, 70), 340) << "Invalid turn degree";
   // Continue
-  EXPECT_EQ(GetTurnDegree(358, 2) , 4) << "Invalid turn degree";
+  EXPECT_EQ(GetTurnDegree(358, 2), 4) << "Invalid turn degree";
 }
 
 TEST(UtilMidgard, TestGetTime) {
-  EXPECT_EQ(GetTime(100, 100) , 3600) << "Invalid time";
-  EXPECT_EQ(GetTime(5, 20) , 900) << "Invalid time";
-  EXPECT_EQ(GetTime(5, 0) , 0) << "Invalid time";
+  EXPECT_EQ(GetTime(100, 100), 3600) << "Invalid time";
+  EXPECT_EQ(GetTime(5, 20), 900) << "Invalid time";
+  EXPECT_EQ(GetTime(5, 0), 0) << "Invalid time";
 }
 
 TEST(UtilMidgard, AppxEqual) {
@@ -95,12 +95,9 @@ TEST(UtilMidgard, MemoryStatus) {
     // should have each of these
     for (const auto& key : {"VmSize", "VmSwap", "VmPeak"}) {
       auto value = status.metrics.find(key);
-      ASSERT_NE(value, status.metrics.end())
-        << "Missing memory statistic for " + std::string(key);
-      EXPECT_GE(value->second.first, 0.)
-        << "Negative memory usage values are not allowed";
-      EXPECT_EQ(value->second.second.back(), 'B')
-        << "Units should be some magnitude of bytes";
+      ASSERT_NE(value, status.metrics.end()) << "Missing memory statistic for " + std::string(key);
+      EXPECT_GE(value->second.first, 0.) << "Negative memory usage values are not allowed";
+      EXPECT_EQ(value->second.second.back(), 'B') << "Units should be some magnitude of bytes";
     }
   }
 }
@@ -119,15 +116,13 @@ TEST(UtilMidgard, TestClamp) {
   EXPECT_TRUE(equal<float>(circular_range_clamp<float>(739, -45, -8), -38));
 
   // Test invalid range - should throw an exception
-  EXPECT_THROW(circular_range_clamp<float>(739, -8, -45);, 
-               std::runtime_error) 
-    << "should throw exception (lower > upper)";
+  EXPECT_THROW(circular_range_clamp<float>(739, -8, -45);, std::runtime_error)
+      << "should throw exception (lower > upper)";
 
   // Make sure get_turn_degree180 throws an exception if inbound and outbound
   // degrees are not clamped to 0,360
-  EXPECT_THROW(get_turn_degree180(420, 580);,
-               std::invalid_argument)
-    << "get_turn_degree should throw exception (inputs not in 0,360 range)";
+  EXPECT_THROW(get_turn_degree180(420, 580);, std::invalid_argument)
+      << "get_turn_degree should throw exception (inputs not in 0,360 range)";
 }
 
 TEST(UtilMidgard, TestResample) {
@@ -170,8 +165,8 @@ TEST(UtilMidgard, TestResample) {
     for (auto p = std::next(resampled.cbegin()); p != resampled.cend(); ++p) {
       auto dist = p->Distance(*std::prev(p));
       EXPECT_LE(dist, example.first + 1)
-        << "Distance between any two points on the resampled line cannot be "
-        << "further than resample distance";
+          << "Distance between any two points on the resampled line cannot be "
+          << "further than resample distance";
     }
 
     // all the points better be within a meter or so of the original line
@@ -190,9 +185,10 @@ TEST(UtilMidgard, TestResample) {
       while (current != resampled.cend() && *current != p)
         ++current;
       EXPECT_NE(current, resampled.cend())
-        << "All original points should be found in resampled polyline";
+          << "All original points should be found in resampled polyline";
     }
-    EXPECT_EQ(current + 1 , resampled.cend()) << "Last found point should be last point in resampled polyline";
+    EXPECT_EQ(current + 1, resampled.cend())
+        << "Last found point should be last point in resampled polyline";
 
     // Test resample_polyline
     Polyline2<PointLL> pl(input_shape);
@@ -201,7 +197,8 @@ TEST(UtilMidgard, TestResample) {
     resampled = resample_polyline(input_shape, length, resolution);
     size_t n = std::round(length / resolution);
     float sample_distance = length / n;
-    EXPECT_EQ(resampled.size() , n + 1) << "resample_polyline - Sampled polyline is not the expected length";
+    EXPECT_EQ(resampled.size(), n + 1)
+        << "resample_polyline - Sampled polyline is not the expected length";
   }
 }
 
@@ -214,23 +211,23 @@ TEST(UtilMidgard, TestIterable) {
   int sum = 0;
   for (const auto& i : iterable_t<int>(a, 5))
     sum += i;
-  EXPECT_EQ(sum , 15) << "integer array sum failed";
+  EXPECT_EQ(sum, 15) << "integer array sum failed";
 
   std::string concatinated;
   for (const auto& i : iterable_t<char>(b, 5))
     concatinated.push_back(i);
-  EXPECT_EQ(concatinated , "abcde") << "char concatenation failed";
+  EXPECT_EQ(concatinated, "abcde") << "char concatenation failed";
 
   concatinated = "";
   for (const auto& i : iterable_t<std::string>(c, 5))
     concatinated.append(i);
-  EXPECT_EQ(concatinated , "onetwothreefourfive") << "string concatenation failed";
+  EXPECT_EQ(concatinated, "onetwothreefourfive") << "string concatenation failed";
 
   size_t cumulative_product = 1;
   iterable_t<const size_t> iterable(d, 5);
   for (iterable_t<const size_t>::iterator i = iterable.begin(); i != iterable.end(); ++i)
     cumulative_product *= *i;
-  EXPECT_EQ(cumulative_product , 360360) << "cumulative product failed";
+  EXPECT_EQ(cumulative_product, 360360) << "cumulative product failed";
 }
 
 TEST(UtilMidgard, TestTrimPolyline) {
@@ -240,55 +237,54 @@ TEST(UtilMidgard, TestTrimPolyline) {
 
   auto clip = trim_polyline(line.begin(), line.end(), 0.f, 1.f);
   EXPECT_EQ(length(clip.begin(), clip.end()), length(line.begin(), line.end()))
-    << "Should not clip anything if range is [0, 1]";
+      << "Should not clip anything if range is [0, 1]";
 
   clip = trim_polyline(line.begin(), line.end(), 0.f, 0.1f);
   EXPECT_NEAR(length(clip.begin(), clip.end()), length(line.begin(), line.end()) * 0.1f, 1e-5)
-    << "10% portion should be clipped";
+      << "10% portion should be clipped";
 
   clip = trim_polyline(line.begin(), line.end(), 0.5f, 1.f);
   EXPECT_NEAR(length(clip.begin(), clip.end()), length(line.begin(), line.end()) * 0.5f, 1e-5)
-    << "50% portion should be clipped";
+      << "50% portion should be clipped";
 
   clip = trim_polyline(line.begin(), line.end(), 0.5f, 0.7f);
   EXPECT_NEAR(length(clip.begin(), clip.end()), length(line.begin(), line.end()) * 0.2f, 1e-5)
-    << "0.2 portion should be clipped";
+      << "0.2 portion should be clipped";
 
   clip = trim_polyline(line.begin(), line.end(), 0.65f, 0.7f);
   EXPECT_NEAR(length(clip.begin(), clip.end()), length(line.begin(), line.end()) * 0.05f, 1e-5)
-    << "5% portion should be clipped";
+      << "5% portion should be clipped";
 
   clip = trim_polyline(line.begin(), line.end(), 0.4999f, 0.5f);
   EXPECT_NEAR(length(clip.begin(), clip.end()), length(line.begin(), line.end()) * 0.0001f, 1e-5)
-    << "0.1% portion should be clipped";
+      << "0.1% portion should be clipped";
 
   EXPECT_TRUE(trim_polyline(line.begin(), line.end(), 0.65f, 0.5f).empty())
-    << "nothing should be clipped since [0.65, 0.5]";
+      << "nothing should be clipped since [0.65, 0.5]";
 
   EXPECT_TRUE(trim_polyline(line.begin(), line.end(), -2.f, -1.f).empty())
-    << "nothing should be clipped since negative [-2, -1]";
+      << "nothing should be clipped since negative [-2, -1]";
 
   EXPECT_EQ(trim_polyline(line.begin(), line.end(), 0.f, 0.f).back(), Point(0, 0))
-    << "nothing should be clipped since empty set [0, 0]";
+      << "nothing should be clipped since empty set [0, 0]";
 
   EXPECT_EQ(trim_polyline(line.begin(), line.end(), -1.f, 0.f).back(), Point(0, 0))
-    << "nothing should be clipped since out of range [-1, 0]";
+      << "nothing should be clipped since out of range [-1, 0]";
 
   EXPECT_EQ(trim_polyline(line.begin(), line.end(), 1.f, 1.f).front(), Point(7, 2))
-    << "nothing should be clipped since [1, 1]";
+      << "nothing should be clipped since [1, 1]";
 
   EXPECT_EQ(trim_polyline(line.begin(), line.end(), 1.f, 2.f).front(), Point(7, 2))
-    << "nothing should be clipped since out of range [1, 2]";
+      << "nothing should be clipped since out of range [1, 2]";
 
   EXPECT_TRUE(trim_polyline(line.begin(), line.end(), 1.001f, 2.f).empty())
-    << "nothing should be clipped since out of range [1.001, 2]";
+      << "nothing should be clipped since out of range [1.001, 2]";
 
   EXPECT_TRUE(trim_polyline(line.begin(), line.end(), 0.5f, 0.1f).empty())
-    << "nothing should be clipped since empty set [0.5, 0.1]";
+      << "nothing should be clipped since empty set [0.5, 0.1]";
 
   // Make sure length returns 0 when iterator is equal
-  EXPECT_EQ(length(clip.begin(), clip.begin()) , 0.0f)
-    << "incorrect length when iterators are equal";
+  EXPECT_EQ(length(clip.begin(), clip.begin()), 0.0f) << "incorrect length when iterators are equal";
 }
 
 TEST(UtilMidgard, TestTrimFront) {
@@ -300,9 +296,9 @@ TEST(UtilMidgard, TestTrimFront) {
   auto trim = trim_front(pts, 9.0f);
   EXPECT_NEAR(length(trim), 9.0f, tolerance) << "incorrect length of trimmed polyline";
   EXPECT_LE(std::abs(l - length(pts) - 9.0f), tolerance)
-    << "length of remaining polyline not correct - " << l << " - " << length(pts);
+      << "length of remaining polyline not correct - " << l << " - " << length(pts);
 
-  EXPECT_EQ(pts.size() , 2) << "number of remaining points not correct";
+  EXPECT_EQ(pts.size(), 2) << "number of remaining points not correct";
 
   std::list<Point2> pts2 = {{-81.0f, -45.0f}, {-18.0f, 17.0f}, {8.0f, 8.0f},
                             {6.0f, 19.0f},    {49.0f, -5.0f},  {75.0f, 45.0f}};
@@ -323,20 +319,19 @@ TEST(UtilMidgard, TestTrimFront) {
   l = length(pts3);
   auto trim3 = trim_front(pts3, l + 1.0f);
   EXPECT_NEAR(length(trim3), l, tolerance)
-    << "length of trimmed polyline not equal to original length when trim; distance exceeds length";
+      << "length of trimmed polyline not equal to original length when trim; distance exceeds length";
 
-  EXPECT_EQ(trim3.size() , n) 
-    << "trimmed polyline not equal size of original when trim distance exceeds length";
-  EXPECT_LE(pts3.size(), 0)
-    << "some of original polyline remains when trim distance exceeds length";
+  EXPECT_EQ(trim3.size(), n)
+      << "trimmed polyline not equal size of original when trim distance exceeds length";
+  EXPECT_LE(pts3.size(), 0) << "some of original polyline remains when trim distance exceeds length";
 }
 
 TEST(UtilMidgard, TestLengthWithEmptyVector) {
   std::vector<PointLL> empty;
-  EXPECT_EQ(length(empty) , 0.0f) << "empty polyline returns non-zero length";
+  EXPECT_EQ(length(empty), 0.0f) << "empty polyline returns non-zero length";
   // Test with only 1 point, should still return 0
   empty.emplace_back(-70.0f, 30.0f);
-  EXPECT_EQ(length(empty) , 0.0f) << "one point polyline returns non-zero length";
+  EXPECT_EQ(length(empty), 0.0f) << "one point polyline returns non-zero length";
 }
 
 TEST(UtilMidgard, TestTangentAngle) {
@@ -367,7 +362,7 @@ TEST(UtilMidgard, TestExpandLocation) {
 
   // Should throw an exception if negative value is sent
   EXPECT_THROW(AABB2<PointLL> box = ExpandMeters(loc, -10.0f);, std::invalid_argument)
-    << "ExpandLocation: should throw exception with negative meters supplied";
+      << "ExpandLocation: should throw exception with negative meters supplied";
 }
 
 TEST(UtilMidgard, TestSimilarAndEqual) {
@@ -375,17 +370,15 @@ TEST(UtilMidgard, TestSimilarAndEqual) {
   EXPECT_THROW(equal<float>(10.0f, 10.0f, -0.0001f);, std::logic_error);
 
   // Test the equality case
-  EXPECT_TRUE(similar<float>(45.0f, 45.0f, 0.0001f))
-    << "Similar test fails for equal values";
+  EXPECT_TRUE(similar<float>(45.0f, 45.0f, 0.0001f)) << "Similar test fails for equal values";
 
   // Test case where signs are different - if opposing signs the values should not
   // be similar regardless of difference
   EXPECT_FALSE(similar<float>(0.00001f, -0.00001f, 0.0001f))
-    << "Similar test fails for values with opposing signs";
+      << "Similar test fails for values with opposing signs";
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

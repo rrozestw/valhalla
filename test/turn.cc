@@ -6,7 +6,6 @@
 
 #include <gtest/gtest.h>
 
-
 using namespace std;
 using namespace valhalla::baldr;
 
@@ -74,7 +73,6 @@ TEST(Turn, TestGetType) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

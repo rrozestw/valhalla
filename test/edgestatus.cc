@@ -1,7 +1,7 @@
 
+#include "thor/edgestatus.h"
 #include "baldr/graphtile.h"
 #include "config.h"
-#include "thor/edgestatus.h"
 
 #include <gtest/gtest.h>
 
@@ -67,7 +67,6 @@ TEST(EdgeStatus, TestStatus) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

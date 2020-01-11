@@ -108,10 +108,9 @@ TEST(HttpTiles, test_no_cache_gz) {
   test_route("", true);
 }
 
-
 class HttpTilesWithCache : public ::testing::Test {
 protected:
-  void SetUp() override  {
+  void SetUp() override {
     filesystem::remove_all("url_tile_cache");
   }
   void TearDown() override {
@@ -123,13 +122,9 @@ TEST_F(HttpTilesWithCache, test_cache_no_gz) {
   test_route("url_tile_cache", false);
 }
 
-
-
 TEST_F(HttpTilesWithCache, test_cache_gz) {
   test_route("url_tile_cache", true);
 }
-
-
 
 struct TestTileDownloadData {
   TestTileDownloadData() {
@@ -271,7 +266,6 @@ TEST(HttpTiles, test_graphreader_multiple_threads) {
   test_graphreader_tile_download(8, 2, 4);
 }
 
-
 class HttpTilesEnv : public ::testing::Environment {
 public:
   void SetUp() override {
@@ -282,7 +276,6 @@ public:
   void TearDown() override {
   }
 };
-
 
 int main(int argc, char* argv[]) {
   testing::AddGlobalTestEnvironment(new HttpTilesEnv);

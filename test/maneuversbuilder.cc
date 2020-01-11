@@ -92,7 +92,7 @@ void TrySetSimpleDirectionalManeuverType(uint32_t turn_degree, DirectionsLeg_Man
   maneuver.set_turn_degree(turn_degree);
   mbTest.SetSimpleDirectionalManeuverType(maneuver);
   EXPECT_EQ(maneuver.type(), expected)
-    << "Incorrect maneuver type for turn degree=" + std::to_string(turn_degree);
+      << "Incorrect maneuver type for turn degree=" + std::to_string(turn_degree);
 }
 
 TEST(Maneuversbuilder, TestSetSimpleDirectionalManeuverType) {
@@ -251,9 +251,9 @@ void TryDetermineRelativeDirection_Maneuver(uint32_t prev_heading,
   maneuver.set_turn_degree(valhalla::midgard::GetTurnDegree(prev_heading, curr_heading));
   mbTest.DetermineRelativeDirection(maneuver);
   EXPECT_EQ(maneuver.begin_relative_direction(), expected)
-    << std::string("Incorrect relative direction: ") +
-        std::to_string(static_cast<int>(maneuver.begin_relative_direction())) +
-        " | expected: " + std::to_string(static_cast<int>(expected));
+      << std::string("Incorrect relative direction: ") +
+             std::to_string(static_cast<int>(maneuver.begin_relative_direction())) +
+             " | expected: " + std::to_string(static_cast<int>(expected));
 }
 
 TEST(Maneuversbuilder, TestDetermineRelativeDirection_Maneuver) {
@@ -298,7 +298,7 @@ TEST(Maneuversbuilder, TestDetermineRelativeDirection_Maneuver) {
 
 void TryDetermineRelativeDirection(uint32_t turn_degree, Maneuver::RelativeDirection expected) {
   EXPECT_EQ(ManeuversBuilderTest::DetermineRelativeDirection(turn_degree), expected)
-    << "Incorrect relative direction";
+      << "Incorrect relative direction";
 }
 
 TEST(Maneuversbuilder, TestDetermineRelativeDirection) {
@@ -1841,7 +1841,6 @@ TEST(Maneuversbuilder, TestPathSlightRightXSlightLeftIsIntersectingForwardEdge) 
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

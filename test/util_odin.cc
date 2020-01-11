@@ -144,9 +144,7 @@ TEST(UtilOdin, test_supported_locales) {
     std::locale l;
     try {
       l = std::locale(posix_locale.c_str());
-    } catch (std::runtime_error& rte) {
-      FAIL() << "Locale not found for: " + posix_locale;
-    }
+    } catch (std::runtime_error& rte) { FAIL() << "Locale not found for: " + posix_locale; }
 
     // check each instruction
     for (const auto& instruction : en_us.get_child("instructions")) {
@@ -155,26 +153,25 @@ TEST(UtilOdin, test_supported_locales) {
       for (const auto& sub : instruction.second) {
         auto other_sub = other_inst.get_child_optional(sub.first);
         EXPECT_TRUE(other_sub) << "Missing: " + locale.first + "::" + instruction.first + "." +
-                sub.first;
+                                      sub.first;
         // Check for "transit_stop_count_labels.other" - it must be present for all
         if (sub.first == "transit_stop_count_labels") {
           auto transit_stop_count_label_other = other_sub->get_child_optional("other");
           EXPECT_TRUE(transit_stop_count_label_other)
-            << "Missing: " + locale.first + "::" + instruction.first + "." +
-                sub.first + ".other";
+              << "Missing: " + locale.first + "::" + instruction.first + "." + sub.first + ".other";
           continue; // Skip the other checks
         }
         EXPECT_EQ(sub.second.size(), other_sub->size())
-          << "Wrong number of elements in " + locale.first +
-              "::" + instruction.first + "." + sub.first;
+            << "Wrong number of elements in " + locale.first + "::" + instruction.first + "." +
+                   sub.first;
         // check the keys
         std::set<std::string> keys, other_keys;
         for (const auto& kv : sub.second)
           keys.insert(kv.first);
         for (const auto& kv : *other_sub)
           other_keys.insert(kv.first);
-        EXPECT_EQ(keys, other_keys) << "Wrong keys in " + locale.first + "::" + instruction.first + "." +
-                sub.first;
+        EXPECT_EQ(keys, other_keys)
+            << "Wrong keys in " + locale.first + "::" + instruction.first + "." + sub.first;
       }
       // check the phrases
       for (const auto& phrase : instruction.second.get_child("phrases")) {
@@ -186,14 +183,13 @@ TEST(UtilOdin, test_supported_locales) {
         if (std::regex_search(str, m, e))
           for (const auto& tag : m)
             EXPECT_NE(other_phrase.find(tag.str()), std::string::npos)
-              << "Couldn't find " + tag.str() + " in " + locale.first +
-                  "::" + instruction.first + ".phrases." + phrase.first;
+                << "Couldn't find " + tag.str() + " in " + locale.first + "::" + instruction.first +
+                       ".phrases." + phrase.first;
       }
     }
   }
 }
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

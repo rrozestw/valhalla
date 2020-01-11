@@ -11,7 +11,6 @@
 
 #include <gtest/gtest.h>
 
-
 using namespace std;
 using namespace valhalla::baldr;
 using namespace valhalla::midgard;
@@ -75,7 +74,6 @@ TEST(PathlocationSerialization, TestRadius) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

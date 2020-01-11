@@ -18,11 +18,13 @@ namespace {
 TEST(Sample, no_data) {
   // check the no data value
   skadi::sample s("test/data/this_is_not_a_directory");
-  EXPECT_EQ(skadi::sample::get_no_data_value() , -32768) << "No data value should be -32768";
+  EXPECT_EQ(skadi::sample::get_no_data_value(), -32768) << "No data value should be -32768";
 
-  EXPECT_EQ(s.get(std::make_pair(0.0, 0.0)) , skadi::sample::get_no_data_value()) << "Asked for point with no data should be no data value";
+  EXPECT_EQ(s.get(std::make_pair(0.0, 0.0)), skadi::sample::get_no_data_value())
+      << "Asked for point with no data should be no data value";
 
-  EXPECT_EQ(s.get(std::make_pair(200.0, 200.0)) , skadi::sample::get_no_data_value()) << "Asked for point outside of valid range";
+  EXPECT_EQ(s.get(std::make_pair(200.0, 200.0)), skadi::sample::get_no_data_value())
+      << "Asked for point outside of valid range";
 }
 
 TEST(Sample, create_tile) {
@@ -87,11 +89,10 @@ void _get(const std::string& location) {
   auto heights = s.get_all(postings);
   for (const auto height : heights) {
     EXPECT_NE(height, skadi::sample::get_no_data_value())
-      << "Should have heights for all of these points";
+        << "Should have heights for all of these points";
     riemann_sum += height;
   }
-  EXPECT_NEAR(riemann_sum, 1675, 100)
-    << "Area under discretized curve isn't right";
+  EXPECT_NEAR(riemann_sum, 1675, 100) << "Area under discretized curve isn't right";
 }
 
 TEST(Sample, get) {
@@ -123,7 +124,7 @@ TEST(Sample, edges) {
   // check 4 pixels
   auto n = .5f / 3600;
   float v = s.get(std::make_pair(-180.f + n, -89.f - n));
-  
+
   EXPECT_NEAR(v, 1.5f, 0.1f);
 
   // check 2 pixels
@@ -132,15 +133,15 @@ TEST(Sample, edges) {
 
   // check 0 pixels
   v = s.get(std::make_pair(-180.f + n, -89.f - n * 5));
-  EXPECT_EQ(v , skadi::sample::get_no_data_value()) << "Wrong value at location";
+  EXPECT_EQ(v, skadi::sample::get_no_data_value()) << "Wrong value at location";
 }
 
 TEST(Sample, lazy_load) {
   // make sure there is no data there
   { std::ofstream file("test/data/sample/N00/N00E000.hgt", std::ios::binary | std::ios::trunc); }
   skadi::sample s("test/data/sample");
-  EXPECT_EQ(s.get(std::make_pair(0.503915, 0.678783)) , skadi::sample::get_no_data_value()) 
-    << "Asked for point with no data should be no data value";
+  EXPECT_EQ(s.get(std::make_pair(0.503915, 0.678783)), skadi::sample::get_no_data_value())
+      << "Asked for point with no data should be no data value";
 
   // put data there
   {
@@ -157,7 +158,6 @@ TEST(Sample, lazy_load) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

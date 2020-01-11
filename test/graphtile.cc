@@ -19,24 +19,30 @@ struct testable_graphtile : public valhalla::baldr::GraphTile {
 };
 
 TEST(Graphtile, FileSuffix) {
-  EXPECT_EQ(GraphTile::FileSuffix(GraphId(2, 2, 0)) , "2/000/000/002.gph");
-  EXPECT_EQ(GraphTile::FileSuffix(GraphId(4, 2, 0)) , "2/000/000/004.gph");
-  EXPECT_EQ(GraphTile::FileSuffix(GraphId(1197468, 2, 0)) , "2/001/197/468.gph");
-  EXPECT_EQ(GraphTile::FileSuffix(GraphId(64799, 1, 0)) , "1/064/799.gph");
-  EXPECT_EQ(GraphTile::FileSuffix(GraphId(49, 0, 0)) , "0/000/049.gph");
-  EXPECT_EQ(GraphTile::FileSuffix(GraphId(1000000, 3, 1)) , "3/001/000/000.gph");
+  EXPECT_EQ(GraphTile::FileSuffix(GraphId(2, 2, 0)), "2/000/000/002.gph");
+  EXPECT_EQ(GraphTile::FileSuffix(GraphId(4, 2, 0)), "2/000/000/004.gph");
+  EXPECT_EQ(GraphTile::FileSuffix(GraphId(1197468, 2, 0)), "2/001/197/468.gph");
+  EXPECT_EQ(GraphTile::FileSuffix(GraphId(64799, 1, 0)), "1/064/799.gph");
+  EXPECT_EQ(GraphTile::FileSuffix(GraphId(49, 0, 0)), "0/000/049.gph");
+  EXPECT_EQ(GraphTile::FileSuffix(GraphId(1000000, 3, 1)), "3/001/000/000.gph");
 }
 
 TEST(Graphtile, IdFromString) {
-  EXPECT_EQ(GraphTile::GetTileId("foo/bar/baz/qux/corge/1/000/002.gph") , GraphId(2, 1, 0));
-  EXPECT_EQ(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/1/000/002.gph") , GraphId(2, 1, 0));
-  EXPECT_EQ(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/2/001/000/002.gph") , GraphId(1000002, 2, 0));
-  EXPECT_EQ(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/3/001/000/002.gph") , GraphId(1000002, 3, 0));
-  EXPECT_EQ(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/3/001/000/002") , GraphId(1000002, 3, 0));
-  EXPECT_EQ(GraphTile::GetTileId("2/000/791/317.gph.gz") , GraphId(791317, 2, 0));
+  EXPECT_EQ(GraphTile::GetTileId("foo/bar/baz/qux/corge/1/000/002.gph"), GraphId(2, 1, 0));
+  EXPECT_EQ(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/1/000/002.gph"),
+            GraphId(2, 1, 0));
+  EXPECT_EQ(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/2/001/000/002.gph"),
+            GraphId(1000002, 2, 0));
+  EXPECT_EQ(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/3/001/000/002.gph"),
+            GraphId(1000002, 3, 0));
+  EXPECT_EQ(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/3/001/000/002"),
+            GraphId(1000002, 3, 0));
+  EXPECT_EQ(GraphTile::GetTileId("2/000/791/317.gph.gz"), GraphId(791317, 2, 0));
 
-  EXPECT_THROW(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/1/000/002/.gph"), std::runtime_error);
-  EXPECT_THROW(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/0/004/050.gph"), std::runtime_error);
+  EXPECT_THROW(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/1/000/002/.gph"),
+               std::runtime_error);
+  EXPECT_THROW(GraphTile::GetTileId("foo2/8675309/bar/1baz2/qux42corge/0/004/050.gph"),
+               std::runtime_error);
   EXPECT_THROW(GraphTile::GetTileId("foo/bar/0/004/0-1.gph"), std::runtime_error);
   EXPECT_THROW(GraphTile::GetTileId("foo/bar/0/004//001.gph"), std::runtime_error);
   EXPECT_THROW(GraphTile::GetTileId("foo/bar/1/000/004/001.gph"), std::runtime_error);
@@ -65,7 +71,8 @@ TEST(Graphtile, Bin) {
     EXPECT_EQ(itr.size(), idx_itr.size()) << "Wrong bin!";
     EXPECT_EQ(itr.size(), rc_itr.size()) << "Wrong bin!";
 
-    for (auto j = itr.begin(), k = idx_itr.begin(), l = rc_itr.begin(); j != itr.end(); ++j, ++k, ++l) {
+    for (auto j = itr.begin(), k = idx_itr.begin(), l = rc_itr.begin(); j != itr.end();
+         ++j, ++k, ++l) {
       EXPECT_EQ(*j, *k) << "Wrong edge found in bin";
       EXPECT_EQ(*j, *l) << "Wrong edge found in bin";
     }
@@ -81,7 +88,6 @@ TEST(GraphTileIntegrity, SizeLessThanHeader) {
   size_t tileSize = sizeof(GraphTileHeader) - 1;
   std::vector<char> tile_data(tileSize);
   EXPECT_THROW(GraphTile tile(GraphId(), tile_data.data(), tileSize), std::runtime_error);
-
 }
 
 TEST(GraphTileIntegrity, SizeLessThanPayload) {
@@ -98,7 +104,6 @@ TEST(GraphTileIntegrity, SizeLessThanPayload) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

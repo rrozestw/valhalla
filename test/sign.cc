@@ -9,7 +9,6 @@
 
 #include <gtest/gtest.h>
 
-
 using namespace std;
 using namespace valhalla::odin;
 using namespace valhalla::baldr;
@@ -21,16 +20,16 @@ constexpr size_t kSignExpectedSize = 8;
 namespace {
 
 TEST(Sign, test_sizeof) {
-  EXPECT_EQ(sizeof(valhalla::baldr::Sign) , kSignExpectedSize);
+  EXPECT_EQ(sizeof(valhalla::baldr::Sign), kSignExpectedSize);
 }
 
 void TryCtor(const std::string& text, const bool is_route_number) {
   valhalla::odin::Sign sign(text, is_route_number);
   uint32_t consecutive_count = 0;
 
-  EXPECT_EQ(text , sign.text());
-  EXPECT_EQ(is_route_number , sign.is_route_number());
-  EXPECT_EQ(consecutive_count , sign.consecutive_count());
+  EXPECT_EQ(text, sign.text());
+  EXPECT_EQ(is_route_number, sign.is_route_number());
+  EXPECT_EQ(consecutive_count, sign.consecutive_count());
 }
 
 TEST(Sign, TestCtor) {
@@ -50,8 +49,7 @@ TEST(Sign, TestCtor) {
 void TryDescendingSortByConsecutiveCount(std::vector<valhalla::odin::Sign>& signs,
                                          const std::vector<valhalla::odin::Sign>& expectedSigns) {
 
-  EXPECT_EQ(signs.size() , expectedSigns.size()) 
-    << "DescendingSortByConsecutiveCount size mismatch";
+  EXPECT_EQ(signs.size(), expectedSigns.size()) << "DescendingSortByConsecutiveCount size mismatch";
 
   std::sort(signs.begin(), signs.end(),
             [](const valhalla::odin::Sign& lhs, const valhalla::odin::Sign& rhs) {
@@ -59,8 +57,8 @@ void TryDescendingSortByConsecutiveCount(std::vector<valhalla::odin::Sign>& sign
             });
 
   for (size_t x = 0, n = signs.size(); x < n; ++x) {
-    EXPECT_EQ(signs.at(x).consecutive_count() , expectedSigns.at(x).consecutive_count()) 
-      << "Incorrect DescendingSortByConsecutiveCount";
+    EXPECT_EQ(signs.at(x).consecutive_count(), expectedSigns.at(x).consecutive_count())
+        << "Incorrect DescendingSortByConsecutiveCount";
   }
 }
 
@@ -129,7 +127,6 @@ TEST(Sign, TestDescendingSortByConsecutiveCount_0_1_2) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

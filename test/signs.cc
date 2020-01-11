@@ -78,7 +78,7 @@ void TryGetExitNumberString(const Signs& signs,
                             bool limit_by_consecutive_count,
                             const std::string& expectedString) {
 
-  EXPECT_EQ(signs.GetExitNumberString(max_count, limit_by_consecutive_count) , expectedString);
+  EXPECT_EQ(signs.GetExitNumberString(max_count, limit_by_consecutive_count), expectedString);
 }
 
 void TryGetExitBranchString(const Signs& signs,
@@ -86,7 +86,7 @@ void TryGetExitBranchString(const Signs& signs,
                             bool limit_by_consecutive_count,
                             const std::string& expectedString) {
 
-  EXPECT_EQ(signs.GetExitBranchString(max_count, limit_by_consecutive_count) , expectedString);
+  EXPECT_EQ(signs.GetExitBranchString(max_count, limit_by_consecutive_count), expectedString);
 }
 
 void TryGetExitTowardString(const Signs& signs,
@@ -94,7 +94,7 @@ void TryGetExitTowardString(const Signs& signs,
                             bool limit_by_consecutive_count,
                             const std::string& expectedString) {
 
-  EXPECT_EQ(signs.GetExitTowardString(max_count, limit_by_consecutive_count) , expectedString);
+  EXPECT_EQ(signs.GetExitTowardString(max_count, limit_by_consecutive_count), expectedString);
 }
 
 void TryGetExitNameString(const Signs& signs,
@@ -102,7 +102,7 @@ void TryGetExitNameString(const Signs& signs,
                           bool limit_by_consecutive_count,
                           const std::string& expectedString) {
 
-  EXPECT_EQ(signs.GetExitNameString(max_count, limit_by_consecutive_count) , expectedString);
+  EXPECT_EQ(signs.GetExitNameString(max_count, limit_by_consecutive_count), expectedString);
 }
 
 void TryGetGuideBranchString(const Signs& signs,
@@ -110,7 +110,7 @@ void TryGetGuideBranchString(const Signs& signs,
                              bool limit_by_consecutive_count,
                              const std::string& expectedString) {
 
-  EXPECT_EQ(signs.GetGuideBranchString(max_count, limit_by_consecutive_count) , expectedString);
+  EXPECT_EQ(signs.GetGuideBranchString(max_count, limit_by_consecutive_count), expectedString);
 }
 
 void TryGetGuideTowardString(const Signs& signs,
@@ -118,7 +118,7 @@ void TryGetGuideTowardString(const Signs& signs,
                              bool limit_by_consecutive_count,
                              const std::string& expectedString) {
 
-  EXPECT_EQ(signs.GetGuideTowardString(max_count, limit_by_consecutive_count) , expectedString);
+  EXPECT_EQ(signs.GetGuideTowardString(max_count, limit_by_consecutive_count), expectedString);
 }
 
 void TryGetJunctionNameString(const Signs& signs,
@@ -126,7 +126,7 @@ void TryGetJunctionNameString(const Signs& signs,
                               bool limit_by_consecutive_count,
                               const std::string& expectedString) {
 
-  EXPECT_EQ(signs.GetJunctionNameString(max_count, limit_by_consecutive_count) , expectedString);
+  EXPECT_EQ(signs.GetJunctionNameString(max_count, limit_by_consecutive_count), expectedString);
 }
 
 TEST(Signs, TestGetExitTowardString_PA283_onto_PA743) {
@@ -259,7 +259,6 @@ TEST(Signs, TestGetJunctionNameString) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

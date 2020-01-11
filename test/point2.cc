@@ -14,7 +14,7 @@ using namespace valhalla::midgard;
 namespace {
 
 void TryPointSubtraction(const Point2& a, const Point2& b, const Vector2& res) {
-  Vector2 v = b - a;  
+  Vector2 v = b - a;
   EXPECT_EQ(v.x(), res.x());
   EXPECT_EQ(v.y(), res.y());
 }
@@ -85,11 +85,10 @@ void TryClosestPoint(const std::vector<Point2>& pts,
                      const float res) {
   auto result = p.ClosestPoint(pts);
 
-  EXPECT_NEAR(std::get<1>(result), res, kEpsilon)
-    << "ClosestPoint test failed - distance is wrong";
+  EXPECT_NEAR(std::get<1>(result), res, kEpsilon) << "ClosestPoint test failed - distance is wrong";
 
   EXPECT_EQ(idx, std::get<2>(result))
-    << "ClosestPoint test failed -index of closest segment is wrong";
+      << "ClosestPoint test failed -index of closest segment is wrong";
 
   EXPECT_NEAR(c.x(), std::get<0>(result).x(), kEpsilon);
   EXPECT_NEAR(c.y(), std::get<0>(result).y(), kEpsilon);
@@ -119,11 +118,11 @@ TEST(Point2, TestClosestPoint) {
 }
 
 void TryWithinConvexPolygon(const std::vector<Point2>& pts, const Point2& p, const bool res) {
-  EXPECT_EQ(p.WithinPolygon(pts) , res);
+  EXPECT_EQ(p.WithinPolygon(pts), res);
 }
 
 void TryWithinConvexPolygonList(const std::list<Point2>& pts, const Point2& p, const bool res) {
-  EXPECT_EQ(p.WithinPolygon(pts) , res);
+  EXPECT_EQ(p.WithinPolygon(pts), res);
 }
 
 TEST(Point2, TestWithinConvexPolygon) {
@@ -166,7 +165,6 @@ TEST(Point2, TestHash) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

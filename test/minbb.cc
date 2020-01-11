@@ -48,7 +48,6 @@ bool ApproxEqual(const AABB2<PointLL>& a, const AABB2<PointLL>& b) {
          a.maxpt().ApproximatelyEqual(b.maxpt(), 0.000001f);
 }
 
-
 TEST(MinBB, utrecht_bb) {
   bb_tester t("test/data/utrecht_tiles");
 
@@ -56,19 +55,19 @@ TEST(MinBB, utrecht_bb) {
   EXPECT_TRUE(t.bb.maxpt().IsValid());
 
   EXPECT_PRED2(ApproxEqual, t(t.bb), t.bb)
-    << "Expanding the bbox from the largest bbox shouldn't change the bbox";
+      << "Expanding the bbox from the largest bbox shouldn't change the bbox";
 
   AABB2<PointLL> sbb(t.bb.minpt() + Vector2(0.0001f, 0.0001f),
                      t.bb.maxpt() - Vector2(0.0001f, 0.0001f));
 
   EXPECT_PRED2(ApproxEqual, t(sbb), t.bb)
-    << "Expanding a slightly smaller bbox shouldn't change the bbox";
+      << "Expanding a slightly smaller bbox shouldn't change the bbox";
 
   AABB2<PointLL> lbb(t.bb.minpt() - Vector2(0.0001f, 0.0001f),
                      t.bb.maxpt() + Vector2(0.0001f, 0.0001f));
 
   EXPECT_PRED2(ApproxEqual, t(lbb), t.bb)
-    << "Expanding a slightly larger bbox shouldn't change the bbox";
+      << "Expanding a slightly larger bbox shouldn't change the bbox";
 }
 
 TEST(MinBB, null_bb) {
@@ -79,14 +78,13 @@ TEST(MinBB, null_bb) {
   EXPECT_FALSE(t.bb.maxpt().IsValid());
 
   auto bb = t(t.bb);
-  EXPECT_EQ(bb , t.bb) << "reader should also give back invalid bounding box";
+  EXPECT_EQ(bb, t.bb) << "reader should also give back invalid bounding box";
 
   bb = t(AABB2<PointLL>{});
-  EXPECT_EQ(bb , t.bb) << "reader should still give back invalid bounding box";
+  EXPECT_EQ(bb, t.bb) << "reader should still give back invalid bounding box";
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   valhalla::midgard::logging::Configure({{"type", ""}});

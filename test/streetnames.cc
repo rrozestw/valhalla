@@ -15,8 +15,8 @@ void TryListCtor(const std::vector<std::pair<std::string, bool>>& names) {
 
   int x = 0;
   for (const auto& street_name : street_names) {
-    EXPECT_EQ(names.at(x).first , street_name->value());
-    EXPECT_EQ(names.at(x).second , street_name->is_route_number());
+    EXPECT_EQ(names.at(x).first, street_name->value());
+    EXPECT_EQ(names.at(x).second, street_name->is_route_number());
     ++x;
   }
 }
@@ -31,8 +31,8 @@ void TryFindCommonStreetNames(const StreetNames& lhs,
                               const StreetNames& rhs,
                               const StreetNames& expected) {
   std::unique_ptr<StreetNames> computed = lhs.FindCommonStreetNames(rhs);
-  EXPECT_EQ(computed->ToString() , expected.ToString())
-    << "Incorrect street names returned from FindCommonStreetNames";
+  EXPECT_EQ(computed->ToString(), expected.ToString())
+      << "Incorrect street names returned from FindCommonStreetNames";
 }
 
 TEST(Streetnames, TestFindCommonStreetNames) {
@@ -57,8 +57,8 @@ void TryFindCommonBaseNames(const StreetNames& lhs,
                             const StreetNames& rhs,
                             const StreetNames& expected) {
   std::unique_ptr<StreetNames> computed = lhs.FindCommonBaseNames(rhs);
-  EXPECT_EQ(computed->ToString() , expected.ToString())
-    << "Incorrect street names returned from FindCommonBaseNames";
+  EXPECT_EQ(computed->ToString(), expected.ToString())
+      << "Incorrect street names returned from FindCommonBaseNames";
 }
 
 TEST(Streetnames, TestFindCommonBaseNames) {
@@ -73,8 +73,8 @@ TEST(Streetnames, TestFindCommonBaseNames) {
 
 void TryGetRouteNumbers(const StreetNames& street_names, const StreetNames& expected) {
   std::unique_ptr<StreetNames> computed = street_names.GetRouteNumbers();
-  EXPECT_EQ(computed->ToString() , expected.ToString())
-    << "Incorrect values returned from GetRouteNumbers";
+  EXPECT_EQ(computed->ToString(), expected.ToString())
+      << "Incorrect values returned from GetRouteNumbers";
 }
 
 TEST(Streetnames, TestGetRouteNumbers) {
@@ -91,8 +91,8 @@ TEST(Streetnames, TestGetRouteNumbers) {
 
 void TryGetNonRouteNumbers(const StreetNames& street_names, const StreetNames& expected) {
   std::unique_ptr<StreetNames> computed = street_names.GetNonRouteNumbers();
-  EXPECT_EQ(computed->ToString() , expected.ToString())
-    << "Incorrect values returned from GetNonRouteNumbers";
+  EXPECT_EQ(computed->ToString(), expected.ToString())
+      << "Incorrect values returned from GetNonRouteNumbers";
 }
 
 TEST(Streetnames, TestGetNonRouteNumbers) {
@@ -109,7 +109,6 @@ TEST(Streetnames, TestGetNonRouteNumbers) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

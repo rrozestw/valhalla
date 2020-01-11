@@ -85,9 +85,9 @@ TEST(ShapeAttributes, test_shape_attributes_included) {
   auto shape_attributes_speed = rapidjson::Pointer("/shape_attributes/speed").Get(doc)->GetArray();
   auto edges = rapidjson::Pointer("/edges").Get(doc)->GetArray();
 
-  EXPECT_EQ(shape_attributes_time.Size() , shape.size() - 1);
-  EXPECT_EQ(shape_attributes_length.Size() , shape.size() - 1);
-  EXPECT_EQ(shape_attributes_speed.Size() , shape.size() - 1);
+  EXPECT_EQ(shape_attributes_time.Size(), shape.size() - 1);
+  EXPECT_EQ(shape_attributes_length.Size(), shape.size() - 1);
+  EXPECT_EQ(shape_attributes_speed.Size(), shape.size() - 1);
 
   // Measures the length between point
   for (int i = 1; i < shape.size(); i++) {
@@ -143,9 +143,9 @@ TEST(ShapeAttributes, test_shape_attributes_no_turncosts) {
   auto shape_attributes_speed = rapidjson::Pointer("/shape_attributes/speed").Get(doc)->GetArray();
   auto edges = rapidjson::Pointer("/edges").Get(doc)->GetArray();
 
-  EXPECT_EQ(shape_attributes_time.Size() , shape.size() - 1);
-  EXPECT_EQ(shape_attributes_length.Size() , shape.size() - 1);
-  EXPECT_EQ(shape_attributes_speed.Size() , shape.size() - 1);
+  EXPECT_EQ(shape_attributes_time.Size(), shape.size() - 1);
+  EXPECT_EQ(shape_attributes_length.Size(), shape.size() - 1);
+  EXPECT_EQ(shape_attributes_speed.Size(), shape.size() - 1);
 
   // Measures the length between point
   for (int i = 1; i < shape.size(); i++) {
@@ -176,7 +176,6 @@ TEST(ShapeAttributes, test_shape_attributes_no_turncosts) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

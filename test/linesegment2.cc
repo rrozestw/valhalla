@@ -45,7 +45,7 @@ void TryIntersect(const LineSegment2<Point2>& s1,
                   const Point2& exp) {
   Point2 intersect;
   bool doesintersect = s1.Intersect(s2, intersect);
-  EXPECT_EQ(doesintersect , res);
+  EXPECT_EQ(doesintersect, res);
   if (doesintersect) {
     EXPECT_NEAR(intersect.x(), exp.x(), kEpsilon);
     EXPECT_NEAR(intersect.y(), exp.y(), kEpsilon);
@@ -58,7 +58,7 @@ void TryIntersectLL(const LineSegment2<PointLL>& s1,
                     const PointLL& exp) {
   PointLL intersect;
   bool doesintersect = s1.Intersect(s2, intersect);
-  EXPECT_EQ(doesintersect , res);
+  EXPECT_EQ(doesintersect, res);
   if (doesintersect) {
     EXPECT_NEAR(intersect.x(), exp.x(), kEpsilon);
     EXPECT_NEAR(intersect.y(), exp.y(), kEpsilon);
@@ -131,12 +131,13 @@ void TryPolyClip(const LineSegment2<Point2>& s1,
                  LineSegment2<Point2>& clip_res) {
   LineSegment2<Point2> clip_segment;
   bool intersects = s1.ClipToPolygon(poly, clip_segment);
-  EXPECT_EQ(intersects , res) << "LineSegment ClipToPolygon intersection test failed";
+  EXPECT_EQ(intersects, res) << "LineSegment ClipToPolygon intersection test failed";
 
   EXPECT_TRUE(clip_res.ApproximatelyEqual(clip_segment))
-    << "LineSegment ClipToPolygon clipped segment mismatch: should be " +
-        std::to_string(clip_segment.a().x()) + "," + std::to_string(clip_segment.a().y()) +
-    " to: " + std::to_string(clip_segment.b().x()) + "," + std::to_string(clip_segment.b().y());
+      << "LineSegment ClipToPolygon clipped segment mismatch: should be " +
+             std::to_string(clip_segment.a().x()) + "," + std::to_string(clip_segment.a().y()) +
+             " to: " + std::to_string(clip_segment.b().x()) + "," +
+             std::to_string(clip_segment.b().y());
 }
 
 TEST(Linesegment, TestPolyIntersect) {
@@ -209,7 +210,6 @@ TEST(Linesegment, TestIsLeft) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

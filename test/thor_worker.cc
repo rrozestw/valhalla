@@ -64,14 +64,11 @@ TEST(ThorWorker, test_parse_filter_attributes_defaults) {
           {"lat":52.09110,"lon":5.09806},
           {"lat":52.09098,"lon":5.09679}]})"));
 
-  EXPECT_FALSE(result.get_child_optional("shape_attributes"))
-    << "Expected excluded shape_attributes";
+  EXPECT_FALSE(result.get_child_optional("shape_attributes")) << "Expected excluded shape_attributes";
 
-  EXPECT_TRUE(result.get_child_optional("edges"))
-    << "Expected included edges";
+  EXPECT_TRUE(result.get_child_optional("edges")) << "Expected included edges";
 
-  EXPECT_TRUE(result.get_child_optional("shape"))
-    << "Expected included shape";
+  EXPECT_TRUE(result.get_child_optional("shape")) << "Expected included shape";
 }
 
 TEST(ThorWorker, test_parse_filter_attributes_excludes) {
@@ -102,8 +99,8 @@ TEST(ThorWorker, test_parse_filter_attributes_excludes) {
   for (size_t i = 0; i < test_cases.size(); ++i) {
     auto result = json_to_pt(test_cases[i]);
     EXPECT_FALSE(result.get_child_optional(excluded_keys[i]))
-    << "Expected excluded shape | found " + excluded_keys[i] + "=" +
-        result.get<std::string>(excluded_keys[i]);
+        << "Expected excluded shape | found " + excluded_keys[i] + "=" +
+               result.get<std::string>(excluded_keys[i]);
   }
 }
 
@@ -131,11 +128,10 @@ TEST(ThorWorker, test_parse_filter_attributes_includes) {
   for (size_t i = 0; i < test_cases.size(); ++i) {
     auto result = json_to_pt(test_cases[i]);
     EXPECT_TRUE(result.get_child_optional(included_keys[i]))
-      << "Expected " + included_keys[i] + " to be present";
+        << "Expected " + included_keys[i] + " to be present";
   }
 }
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

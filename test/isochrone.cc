@@ -78,8 +78,7 @@ void try_isochrone(GraphReader& reader,
   auto result = thor_worker.isochrones(request);
 
   // Check if the result contains the expected string
-  EXPECT_NE(result.find(expected), std::string::npos)
-    << "isochrones failed: expected " + expected;
+  EXPECT_NE(result.find(expected), std::string::npos) << "isochrones failed: expected " + expected;
 }
 
 TEST(Isochronies, Basic) {
@@ -105,7 +104,6 @@ TEST(Isochronies, Basic) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   // Silence logs (especially long request logging)

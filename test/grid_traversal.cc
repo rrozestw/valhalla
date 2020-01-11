@@ -13,11 +13,10 @@ namespace {
 
 using namespace valhalla;
 
-
-std::string result_to_str(const std::vector<std::pair<int, int>> &result) {
+std::string result_to_str(const std::vector<std::pair<int, int>>& result) {
   std::string result_str;
   result_str = "(";
-  for (const auto &p : result) {
+  for (const auto& p : result) {
     result_str += std::to_string(p.first);
     result_str += " ";
     result_str += std::to_string(p.second);
@@ -30,12 +29,12 @@ std::string result_to_str(const std::vector<std::pair<int, int>> &result) {
   return result_str;
 }
 
-void assert_equal_squares(const std::vector<std::pair<int, int>> &got,
-                          const std::vector<std::pair<int, int>> &expected,
-                          const std::string &msg) {
+void assert_equal_squares(const std::vector<std::pair<int, int>>& got,
+                          const std::vector<std::pair<int, int>>& expected,
+                          const std::string& msg) {
 
-  ASSERT_EQ(got, expected)
-    << "got: " << result_to_str(got) << " expected: " <<  result_to_str(expected);
+  ASSERT_EQ(got, expected) << "got: " << result_to_str(got)
+                           << " expected: " << result_to_str(expected);
 
   ASSERT_EQ(got.size(), expected.size());
   for (decltype(got.size()) i = 0; i < got.size(); i++) {
@@ -146,7 +145,6 @@ TEST(GridTraversal, TestGridTraversal) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

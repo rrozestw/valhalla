@@ -294,7 +294,7 @@ TEST(Mapmatch, test_distance_only) {
     for (const auto& name : edge.second.get_child("names"))
       names.insert(name.second.get_value<std::string>());
   EXPECT_NE(names.find("Jan Pieterszoon Coenstraat"), names.end())
-    << "Using distance only it should have taken a small detour";
+      << "Using distance only it should have taken a small detour";
 }
 
 TEST(Mapmatch, test_trace_route_breaks) {
@@ -323,7 +323,7 @@ TEST(Mapmatch, test_trace_route_breaks) {
   for (size_t i = 0; i < test_cases.size(); ++i) {
     auto matched = json_to_pt(actor.trace_route(test_cases[i]));
     const auto& legs = matched.get_child("trip.legs");
-    EXPECT_EQ(legs.size() , test_answers[i]);
+    EXPECT_EQ(legs.size(), test_answers[i]);
 
     for (const auto& leg : legs) {
       auto decoded_match =
@@ -425,7 +425,7 @@ TEST(Mapmatch, test_edges_discontinuity_with_multi_routes) {
   for (size_t i = 0; i < test_cases.size(); ++i) {
     api_tester tester;
     auto response = tester.match(test_cases[i]);
-    EXPECT_EQ(response.trip().routes_size() , std::get<0>(test_answers[i]));
+    EXPECT_EQ(response.trip().routes_size(), std::get<0>(test_answers[i]));
 
     size_t leg_count = 0;
     for (const auto& route : response.trip().routes()) {
@@ -433,14 +433,14 @@ TEST(Mapmatch, test_edges_discontinuity_with_multi_routes) {
       for (const auto& leg : route.legs()) {
         if (leg.location(0).has_date_time()) {
           EXPECT_TRUE(std::get<2>(test_answers[i]))
-            << "Found a leg with a start time when it shouldnt have had one";
+              << "Found a leg with a start time when it shouldnt have had one";
         } else {
           EXPECT_FALSE(std::get<2>(test_answers[i]))
-            << "Found a leg without a start time when it should have had one";
+              << "Found a leg without a start time when it should have had one";
         }
       }
     }
-    EXPECT_EQ(leg_count , std::get<1>(test_answers[i]));
+    EXPECT_EQ(leg_count, std::get<1>(test_answers[i]));
   }
 }
 
@@ -456,9 +456,7 @@ TEST(Mapmatch, test_disconnected_edges_expect_no_route) {
   for (size_t i = 0; i < test_cases.size(); ++i) {
     try {
       auto matched = json_to_pt(actor.trace_route(test_cases[i]));
-    } catch (...) {
-      EXPECT_EQ(illegal_path++ , i) << "Expected no route but got one";
-    }
+    } catch (...) { EXPECT_EQ(illegal_path++, i) << "Expected no route but got one"; }
   }
 }
 
@@ -516,10 +514,10 @@ TEST(Mapmatch, test_matching_indices_and_waypoint_indices) {
         // handle the tracepoint null case
         continue;
       }
-      EXPECT_EQ(result , answers[i][j])
-        << "expect matching_index and waypoint_index: (" + answers[i][j].first +
-           "," + answers[i][j].second + "), " + "but got: (" + result.first +
-           "," + result.second + ")";
+      EXPECT_EQ(result, answers[i][j]) << "expect matching_index and waypoint_index: (" +
+                                              answers[i][j].first + "," + answers[i][j].second +
+                                              "), " + "but got: (" + result.first + "," +
+                                              result.second + ")";
       ++j;
     }
   }
@@ -537,8 +535,8 @@ TEST(Mapmatch, test_time_rejection) {
   for (const auto& edge : matched.get_child("edges"))
     for (const auto& name : edge.second.get_child("names"))
       names.insert(name.second.get_value<std::string>());
-  EXPECT_EQ(names.find("Jan Pieterszoon Coenstraat") , names.end()) 
-    << "Using time it should not take a small detour";
+  EXPECT_EQ(names.find("Jan Pieterszoon Coenstraat"), names.end())
+      << "Using time it should not take a small detour";
 }
 
 TEST(Mapmatch, test32bit) {
@@ -568,7 +566,7 @@ TEST(Mapmatch, test_trace_route_edge_walk_expected_error_code) {
          {"lat":52.08863,"lon":5.15253,"accuracy":30,"time":10},
          {"lat":52.08851,"lon":5.15249,"accuracy":30,"time":12}]})"));
   } catch (const valhalla_exception_t& e) {
-    EXPECT_EQ(e.code , expected_error_code);
+    EXPECT_EQ(e.code, expected_error_code);
     // If we get here then all good - return
     return;
   }
@@ -592,7 +590,7 @@ TEST(Mapmatch, test_trace_route_map_snap_expected_error_code) {
          {"lat":52.08863,"lon":5.15253,"radius":5,"time":10},
          {"lat":52.08851,"lon":5.15249,"radius":5,"time":12}]})"));
   } catch (const valhalla_exception_t& e) {
-    EXPECT_EQ(e.code , expected_error_code);
+    EXPECT_EQ(e.code, expected_error_code);
     // If we get here then all good - return
     return;
   }
@@ -616,7 +614,7 @@ TEST(Mapmatch, test_trace_attributes_edge_walk_expected_error_code) {
          {"lat":52.08863,"lon":5.15253,"accuracy":30,"time":10},
          {"lat":52.08851,"lon":5.15249,"accuracy":30,"time":12}]})"));
   } catch (const valhalla_exception_t& e) {
-    EXPECT_EQ(e.code , expected_error_code);
+    EXPECT_EQ(e.code, expected_error_code);
     // If we get here then all good - return
     return;
   }
@@ -640,7 +638,7 @@ TEST(Mapmatch, test_trace_attributes_map_snap_expected_error_code) {
          {"lat":52.08863,"lon":5.15253,"radius":5,"time":10},
          {"lat":52.08851,"lon":5.15249,"radius":5,"time":12}]})"));
   } catch (const valhalla_exception_t& e) {
-    EXPECT_EQ(e.code , expected_error_code);
+    EXPECT_EQ(e.code, expected_error_code);
     // If we get here then all good - return
     return;
   }
@@ -669,8 +667,7 @@ TEST(Mapmatch, test_topk_validate) {
          {"lat":52.09579,"lon":5.13137,"accuracy":5,"time":2},
          {"lat":52.09652,"lon":5.13184,"accuracy":5,"time":4}]})"));
 
-  EXPECT_EQ(matched.get_child("alternate_paths").size(), 0) 
-    << "There should be only one result";
+  EXPECT_EQ(matched.get_child("alternate_paths").size(), 0) << "There should be only one result";
 }
 
 TEST(Mapmatch, test_topk_fork_alternate) {
@@ -702,8 +699,8 @@ TEST(Mapmatch, test_topk_fork_alternate) {
       streets += n + ", ";
     FAIL() << "The most obvious result is stay left but got: " + streets;
   }
-  EXPECT_EQ(matched.get<float>("confidence_score") , 1.0f)
-    << "Confidence of the first result is always 1";
+  EXPECT_EQ(matched.get<float>("confidence_score"), 1.0f)
+      << "Confidence of the first result is always 1";
 
   /*** Alternate path - right at the fork
     {"type":"FeatureCollection","features":[
@@ -727,9 +724,9 @@ TEST(Mapmatch, test_topk_fork_alternate) {
     FAIL() << "The second most obvious result is stay right but got: " + streets;
   }
   EXPECT_LT(alternate.get<float>("confidence_score"), 1.0f)
-    << "Confidence of the second result is always less than 1";
+      << "Confidence of the second result is always less than 1";
   EXPECT_LT(matched.get<float>("raw_score"), alternate.get<float>("raw_score"))
-    << "The raw score of the first result is always less than that of the second";
+      << "The raw score of the first result is always less than that of the second";
 }
 
 TEST(Mapmatch, test_topk_loop_alternate) {
@@ -770,8 +767,8 @@ TEST(Mapmatch, test_topk_loop_alternate) {
     FAIL() << "The most obvious result is stay left on the same road - but got: " + streets;
   }
 
-  EXPECT_EQ(matched.get<float>("confidence_score") , 1.0f)
-    << "Confidence of the first result is always 1";
+  EXPECT_EQ(matched.get<float>("confidence_score"), 1.0f)
+      << "Confidence of the first result is always 1";
 
   /*** Alternate path - loop around to the right
     {"type":"FeatureCollection","features":[
@@ -802,9 +799,9 @@ TEST(Mapmatch, test_topk_loop_alternate) {
     FAIL() << "The second most obvious result is loop around to the right - but got: " + streets;
   }
   EXPECT_LT(alternate.get<float>("confidence_score"), 1.0f)
-    << "Confidence of the second result is always less than 1";
+      << "Confidence of the second result is always less than 1";
   EXPECT_LT(matched.get<float>("raw_score"), alternate.get<float>("raw_score"))
-    << "The raw score of the first result is always less than that of the second";
+      << "The raw score of the first result is always less than that of the second";
 }
 
 TEST(Mapmatch, test_topk_frontage_alternate) {
@@ -846,11 +843,10 @@ TEST(Mapmatch, test_topk_frontage_alternate) {
     std::string streets;
     for (const auto& n : names)
       streets += n + ", ";
-    FAIL() << "The most obvious result is stay straight on the same road - but got: " +
-      streets;
+    FAIL() << "The most obvious result is stay straight on the same road - but got: " + streets;
   }
-  EXPECT_EQ(matched.get<float>("confidence_score") , 1.0f)
-    << "Confidence of the first result is always 1";
+  EXPECT_EQ(matched.get<float>("confidence_score"), 1.0f)
+      << "Confidence of the first result is always 1";
 
   /*** Alternate path - use one way frontage road
     {"type":"FeatureCollection","features":[
@@ -889,9 +885,9 @@ TEST(Mapmatch, test_topk_frontage_alternate) {
   }
 
   EXPECT_LT(alternate.get<float>("confidence_score"), 1.0f)
-    << "Confidence of the second result is always less than 1";
+      << "Confidence of the second result is always less than 1";
   EXPECT_LT(matched.get<float>("raw_score"), alternate.get<float>("raw_score"))
-    << "The raw score of the first result is always less than that of the second";
+      << "The raw score of the first result is always less than that of the second";
 }
 
 TEST(Mapmatch, test_now_matches) {
@@ -989,13 +985,13 @@ TEST(Mapmatch, test_leg_duration_trimming) {
     printf("\n%s\n", match_test_case.c_str());
 
     // they should not disagree (unless the map match is very vague)
-    EXPECT_EQ(route_api.trip().routes_size() , match_api.trip().routes_size())
-      << "Number of routes differs";
+    EXPECT_EQ(route_api.trip().routes_size(), match_api.trip().routes_size())
+        << "Number of routes differs";
 
     for (size_t i = 0; i < route_api.trip().routes_size(); ++i) {
       const auto& rlegs = route_api.trip().routes(i).legs();
       const auto& mlegs = match_api.trip().routes(i).legs();
-      EXPECT_EQ(rlegs.size() , mlegs.size()) << "Number of legs differs";
+      EXPECT_EQ(rlegs.size(), mlegs.size()) << "Number of legs differs";
       printf("Route %zu\n", i);
       for (size_t j = 0; j < rlegs.size(); ++j) {
         auto rtime = rlegs.Get(j).node().rbegin()->elapsed_time();
@@ -1051,7 +1047,6 @@ TEST(Mapmatch, test_intersection_matching) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   midgard::logging::Configure({{"type", ""}}); // silence logs

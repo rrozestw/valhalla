@@ -104,13 +104,12 @@ TEST(ThorService, test_failure_requests) {
     auto response_str = response.to_string();
 
     EXPECT_FALSE(result.intermediate)
-      << "This cant be intermediate right now we are only testing error scenarios";
+        << "This cant be intermediate right now we are only testing error scenarios";
     EXPECT_EQ(result.messages.front(), response_str);
   }
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   // make this whole thing bail if it doesnt finish fast

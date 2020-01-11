@@ -279,12 +279,12 @@ TEST(Matrix, test_matrix) {
                                        reader, &costing, TravelMode::kDrive, 400000.0);
   for (uint32_t i = 0; i < results.size(); ++i) {
     EXPECT_NEAR(results[i].dist, matrix_answers[i].dist, kThreshold)
-      << "result " + std::to_string(i) + "'s distance is not close enough"
-                             +  " to expected value for CostMatrix";
+        << "result " + std::to_string(i) + "'s distance is not close enough" +
+               " to expected value for CostMatrix";
 
     EXPECT_NEAR(results[i].time, matrix_answers[i].time, kThreshold)
-      << "result " + std::to_string(i) + "'s time is not close enough"
-      + " to expected value for CostMatrix";
+        << "result " + std::to_string(i) + "'s time is not close enough" +
+               " to expected value for CostMatrix";
   }
 
   TimeDistanceMatrix timedist_matrix;
@@ -292,13 +292,12 @@ TEST(Matrix, test_matrix) {
                                            reader, &costing, TravelMode::kDrive, 400000.0);
   for (uint32_t i = 0; i < results.size(); ++i) {
     EXPECT_NEAR(results[i].dist, matrix_answers[i].dist, kThreshold)
-      << "result " + std::to_string(i) +
-      "'s distance is not equal to" +
-      " the expected value for TimeDistMatrix";
+        << "result " + std::to_string(i) + "'s distance is not equal to" +
+               " the expected value for TimeDistMatrix";
 
     EXPECT_NEAR(results[i].time, matrix_answers[i].time, kThreshold)
-      << "result " + std::to_string(i) +
-      "'s time is not equal to the expected value for TimeDistMatrix";
+        << "result " + std::to_string(i) +
+               "'s time is not equal to the expected value for TimeDistMatrix";
   }
 }
 
@@ -321,29 +320,28 @@ TEST(Matrix, DISABLED_test_matrix_osrm) {
   results = cost_matrix.SourceToTarget(request.options().sources(), request.options().targets(),
                                        reader, &costing, TravelMode::kDrive, 400000.0);
   for (uint32_t i = 0; i < results.size(); ++i) {
-    EXPECT_EQ(results[i].dist , matrix_answers[i].dist)
-      << "result " + std::to_string(i) +
-      "'s distance is not close enough to expected value for CostMatrix.";
+    EXPECT_EQ(results[i].dist, matrix_answers[i].dist)
+        << "result " + std::to_string(i) +
+               "'s distance is not close enough to expected value for CostMatrix.";
 
-    EXPECT_EQ(results[i].time , matrix_answers[i].time)
-      << "result " + std::to_string(i) +
-      "'s time is not close enough to expected value for CostMatrix.";
+    EXPECT_EQ(results[i].time, matrix_answers[i].time)
+        << "result " + std::to_string(i) +
+               "'s time is not close enough to expected value for CostMatrix.";
   }
 
   TimeDistanceMatrix timedist_matrix;
   results = timedist_matrix.SourceToTarget(request.options().sources(), request.options().targets(),
                                            reader, &costing, TravelMode::kDrive, 400000.0);
   for (uint32_t i = 0; i < results.size(); ++i) {
-    EXPECT_EQ(results[i].dist , matrix_answers[i].dist)
-      << "result " + std::to_string(i) +
-      "'s distance is not equal to the expected value for TimeDistMatrix.";
+    EXPECT_EQ(results[i].dist, matrix_answers[i].dist)
+        << "result " + std::to_string(i) +
+               "'s distance is not equal to the expected value for TimeDistMatrix.";
 
-    EXPECT_EQ(results[i].time , matrix_answers[i].time)
-      << "result " + std::to_string(i) +
-      "'s time is not equal to the expected value for TimeDistMatrix";
+    EXPECT_EQ(results[i].time, matrix_answers[i].time)
+        << "result " + std::to_string(i) +
+               "'s time is not equal to the expected value for TimeDistMatrix";
   }
 }
-
 
 int main(int argc, char* argv[]) {
   logging::Configure({{"type", ""}}); // silence logs

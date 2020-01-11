@@ -11,8 +11,8 @@ namespace {
 
 void TryCtor(const std::string& text, const bool is_route_number) {
   StreetName street_name(text, is_route_number);
-  EXPECT_EQ(text , street_name.value());
-  EXPECT_EQ(is_route_number , street_name.is_route_number());
+  EXPECT_EQ(text, street_name.value());
+  EXPECT_EQ(is_route_number, street_name.is_route_number());
 }
 
 TEST(Streetname, TestCtor) {
@@ -71,7 +71,7 @@ TEST(Streetname, TestGetPreDir) {
 }
 
 void TryGetPostDir(const StreetName& street_name, const std::string& post_dir) {
-  EXPECT_EQ(post_dir , street_name.GetPostDir()) << street_name.value() + ": Incorrect GetPostDir";
+  EXPECT_EQ(post_dir, street_name.GetPostDir()) << street_name.value() + ": Incorrect GetPostDir";
 }
 
 TEST(Streetname, TestGetPostDir) {
@@ -80,8 +80,8 @@ TEST(Streetname, TestGetPostDir) {
 }
 
 void TryGetPostCardinalDir(const StreetName& street_name, const std::string& post_dir) {
-  EXPECT_EQ(post_dir , street_name.GetPostCardinalDir()) 
-    << street_name.value() + ": Incorrect GetPostCardinalDir";
+  EXPECT_EQ(post_dir, street_name.GetPostCardinalDir())
+      << street_name.value() + ": Incorrect GetPostCardinalDir";
 }
 
 TEST(Streetname, TestGetPostCardinalDir) {
@@ -90,8 +90,7 @@ TEST(Streetname, TestGetPostCardinalDir) {
 }
 
 void TryGetBaseName(const StreetName& street_name, const std::string& base_name) {
-  EXPECT_EQ(base_name , street_name.GetBaseName()) 
-    << street_name.value() + ": Incorrect GetBaseName";
+  EXPECT_EQ(base_name, street_name.GetBaseName()) << street_name.value() + ": Incorrect GetBaseName";
 }
 
 TEST(Streetname, TestGetBaseName) {
@@ -103,7 +102,7 @@ TEST(Streetname, TestGetBaseName) {
 
 void TryHasSameBaseName(const StreetName& street_name, const StreetName& rhs) {
   EXPECT_TRUE(street_name.HasSameBaseName(rhs))
-    << street_name.value() + ": Incorrect HasSameBaseName";
+      << street_name.value() + ": Incorrect HasSameBaseName";
 }
 
 TEST(Streetname, TestHasSameBaseName) {
@@ -119,7 +118,6 @@ TEST(Streetname, TestHasSameBaseName) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

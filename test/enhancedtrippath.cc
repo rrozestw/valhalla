@@ -11,7 +11,6 @@ using namespace valhalla;
 using namespace valhalla::odin;
 using namespace valhalla::baldr;
 
-
 namespace {
 
 void TryCalculateRightLeftIntersectingEdgeCounts(
@@ -24,14 +23,17 @@ void TryCalculateRightLeftIntersectingEdgeCounts(
   xedge_counts.clear();
 
   node->CalculateRightLeftIntersectingEdgeCounts(from_heading, travel_mode, xedge_counts);
-  EXPECT_EQ(xedge_counts.right , expected_xedge_counts.right);
-  EXPECT_EQ(xedge_counts.right_similar , expected_xedge_counts.right_similar);
-  EXPECT_EQ(xedge_counts.right_traversable_outbound , expected_xedge_counts.right_traversable_outbound);
-  EXPECT_EQ(xedge_counts.right_similar_traversable_outbound , expected_xedge_counts.right_similar_traversable_outbound);
-  EXPECT_EQ(xedge_counts.left , expected_xedge_counts.left);
-  EXPECT_EQ(xedge_counts.left_similar , expected_xedge_counts.left_similar);
-  EXPECT_EQ(xedge_counts.left_traversable_outbound , expected_xedge_counts.left_traversable_outbound);
-  EXPECT_EQ(xedge_counts.left_similar_traversable_outbound , expected_xedge_counts.left_similar_traversable_outbound);
+  EXPECT_EQ(xedge_counts.right, expected_xedge_counts.right);
+  EXPECT_EQ(xedge_counts.right_similar, expected_xedge_counts.right_similar);
+  EXPECT_EQ(xedge_counts.right_traversable_outbound,
+            expected_xedge_counts.right_traversable_outbound);
+  EXPECT_EQ(xedge_counts.right_similar_traversable_outbound,
+            expected_xedge_counts.right_similar_traversable_outbound);
+  EXPECT_EQ(xedge_counts.left, expected_xedge_counts.left);
+  EXPECT_EQ(xedge_counts.left_similar, expected_xedge_counts.left_similar);
+  EXPECT_EQ(xedge_counts.left_traversable_outbound, expected_xedge_counts.left_traversable_outbound);
+  EXPECT_EQ(xedge_counts.left_similar_traversable_outbound,
+            expected_xedge_counts.left_similar_traversable_outbound);
 }
 
 TEST(EnhancedTripPathCalculateRightLeftIntersectingEdgeCounts, StraightStraight) {
@@ -177,7 +179,7 @@ TEST(EnhancedTripPathHasActiveTurnLane, True) {
 }
 
 void TryHasNonDirectionalTurnLane(std::unique_ptr<EnhancedTripLeg_Edge> edge, bool expected) {
-  EXPECT_EQ(edge->HasNonDirectionalTurnLane() , expected);
+  EXPECT_EQ(edge->HasNonDirectionalTurnLane(), expected);
 }
 
 TEST(EnhancedTripPathHasNonDirectionalTurnLane, False) {
@@ -215,11 +217,11 @@ void TryActivateTurnLanes(std::unique_ptr<EnhancedTripLeg_Edge> edge,
   uint16_t activated_count = edge->ActivateTurnLanes(turn_lane_direction, remaining_step_distance,
                                                      curr_maneuver_type, next_maneuver_type);
   EXPECT_EQ(activated_count, expected_activated_count)
-    << "Incorrect activated count returned from ActivateTurnLanes(" +
-    std::to_string(turn_lane_direction) + ", " + std::to_string(remaining_step_distance) + ", " +
-    std::to_string(curr_maneuver_type) + ", " + std::to_string(next_maneuver_type) +
-    ") - found: " + std::to_string(activated_count) +
-    " | expected: " + std::to_string(expected_activated_count);
+      << "Incorrect activated count returned from ActivateTurnLanes(" +
+             std::to_string(turn_lane_direction) + ", " + std::to_string(remaining_step_distance) +
+             ", " + std::to_string(curr_maneuver_type) + ", " + std::to_string(next_maneuver_type) +
+             ") - found: " + std::to_string(activated_count) +
+             " | expected: " + std::to_string(expected_activated_count);
 }
 
 TEST(EnhancedTripPath, TestActivateTurnLanes) {
@@ -640,7 +642,6 @@ TEST(EnhancedTripPath, TestActivateTurnLanesShortNextLeft) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

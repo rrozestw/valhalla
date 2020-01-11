@@ -173,10 +173,8 @@ TEST(TimeDepPaths, test_arrive_by_paths) {
   try_path(reader, loki_worker, false, test_request1, 1);
 }
 
-
 int main(int argc, char* argv[]) {
   // logging::Configure({{"type", ""}}); // silence logs
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
-

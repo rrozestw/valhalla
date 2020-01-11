@@ -405,8 +405,8 @@ void run_requests(const std::vector<http_request_t>& requests,
                response_json.Parse(response.body);
                expected_json.Parse(responses[request - requests.cbegin() - 1].second);
                EXPECT_EQ(response_json, expected_json)
-                 <<  "\nExpected Response: " + responses[request - requests.cbegin() - 1].second +
-                     "\n, Actual Response: " + response.body;
+                   << "\nExpected Response: " + responses[request - requests.cbegin() - 1].second +
+                          "\n, Actual Response: " + response.body;
 
                ++success_count;
                return request != requests.cend();
@@ -416,7 +416,7 @@ void run_requests(const std::vector<http_request_t>& requests,
   client.batch();
 
   // Make sure that all requests are tested
-  EXPECT_EQ(success_count,requests.size());
+  EXPECT_EQ(success_count, requests.size());
 }
 
 TEST(LokiService, test_failure_requests) {
@@ -431,14 +431,12 @@ TEST(LokiService, test_osrm_failure_requests) {
 
 } // namespace
 
-
 class LokiServiceEnv : public ::testing::Environment {
 public:
   void SetUp() override {
     start_service();
   }
 };
-
 
 // Elevation service
 int main(int argc, char* argv[]) {
@@ -449,4 +447,3 @@ int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
-

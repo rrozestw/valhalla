@@ -103,17 +103,18 @@ TEST(Actor, Interrupt) {
 
   EXPECT_THROW(actor.route(R"({"locations":[{"lat":40.546115,"lon":-76.385076,"type":"break"},
         {"lat":40.544232,"lon":-76.385752,"type":"break"}],"costing":"auto"})",
-                           []() -> void { throw test_exception_t{}; }), test_exception_t);
+                           []() -> void { throw test_exception_t{}; }),
+               test_exception_t);
 
   EXPECT_THROW(actor.trace_attributes(R"({"shape":[{"lat":40.546115,"lon":-76.385076},
         {"lat":40.544232,"lon":-76.385752}],"costing":"auto","shape_match":"map_snap"})",
-                                     []() -> void { throw test_exception_t{}; }), test_exception_t);
+                                      []() -> void { throw test_exception_t{}; }),
+               test_exception_t);
 
   // TODO: test the rest of them
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

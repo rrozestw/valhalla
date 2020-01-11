@@ -47,20 +47,20 @@ void test_instructions(const std::string filename,
 
   // Validate routes size
   int found_routes_size = request.directions().routes_size();
-  EXPECT_EQ(found_routes_size , expected_routes_size);
+  EXPECT_EQ(found_routes_size, expected_routes_size);
 
   // Validate legs size
   int found_legs_size = request.directions().routes(0).legs_size();
-  EXPECT_EQ(found_legs_size , expected_legs_size);
+  EXPECT_EQ(found_legs_size, expected_legs_size);
 
   // Validate maneuvers size
   int found_maneuvers_size = request.directions().routes(0).legs(0).maneuver_size();
-  EXPECT_EQ(found_maneuvers_size , expected_maneuvers_size);
+  EXPECT_EQ(found_maneuvers_size, expected_maneuvers_size);
 
   // Validate the text instruction for the specified maneuver index
   std::string found_text_instruction =
       request.directions().routes(0).legs(0).maneuver(maneuver_index).text_instruction();
-  EXPECT_EQ(found_text_instruction , expected_text_instruction);
+  EXPECT_EQ(found_text_instruction, expected_text_instruction);
 
   // Validate the verbal_transition_alert_instruction for the specified maneuver index, if requested
   if (!expected_verbal_transition_alert_instruction.empty()) {
@@ -70,7 +70,8 @@ void test_instructions(const std::string filename,
             .legs(0)
             .maneuver(maneuver_index)
             .verbal_transition_alert_instruction();
-    EXPECT_EQ(found_verbal_transition_alert_instruction , expected_verbal_transition_alert_instruction);
+    EXPECT_EQ(found_verbal_transition_alert_instruction,
+              expected_verbal_transition_alert_instruction);
   }
 
   // Validate the verbal_pre_transition_instruction for the specified maneuver index, if requested
@@ -80,7 +81,7 @@ void test_instructions(const std::string filename,
                                                               .legs(0)
                                                               .maneuver(maneuver_index)
                                                               .verbal_pre_transition_instruction();
-    EXPECT_EQ(found_verbal_pre_transition_instruction , expected_verbal_pre_transition_instruction);
+    EXPECT_EQ(found_verbal_pre_transition_instruction, expected_verbal_pre_transition_instruction);
   }
 
   // Validate the verbal_post_transition_instruction for the specified maneuver index, if requested
@@ -90,7 +91,7 @@ void test_instructions(const std::string filename,
                                                                .legs(0)
                                                                .maneuver(maneuver_index)
                                                                .verbal_post_transition_instruction();
-    EXPECT_EQ(found_verbal_post_transition_instruction , expected_verbal_post_transition_instruction);
+    EXPECT_EQ(found_verbal_post_transition_instruction, expected_verbal_post_transition_instruction);
   }
 }
 
@@ -119,7 +120,7 @@ void test_osrm_maneuver(const std::string filename,
 
   rapidjson::Document doc;
   doc.Parse(json_str.c_str());
-  
+
   ASSERT_FALSE(doc.HasParseError()) << "Parse JSON error";
 
   // Set the maneuver path
@@ -130,13 +131,13 @@ void test_osrm_maneuver(const std::string filename,
   // Validate maneuver type
   std::string maneuver_type_path = maneuver_path + "/type";
   std::string found_maneuver_type = rapidjson::get<std::string>(doc, maneuver_type_path.c_str());
-  EXPECT_EQ(found_maneuver_type , expected_maneuver_type);
+  EXPECT_EQ(found_maneuver_type, expected_maneuver_type);
 
   // Validate maneuver modifier
   std::string maneuver_midifier_path = maneuver_path + "/modifier";
   std::string found_maneuver_modifier =
       rapidjson::get<std::string>(doc, maneuver_midifier_path.c_str());
-  EXPECT_EQ(found_maneuver_modifier , expected_maneuver_modifier);
+  EXPECT_EQ(found_maneuver_modifier, expected_maneuver_modifier);
 }
 
 void test_osrm_destinations(const std::string filename,
@@ -146,7 +147,7 @@ void test_osrm_destinations(const std::string filename,
                             const std::string expected_destinations) {
   // Load pinpoint test
   std::string path_bytes = test::load_binary_file(filename);
-  
+
   EXPECT_NE(path_bytes.size(), 0);
 
   // Create the request from the path bytes
@@ -173,7 +174,7 @@ void test_osrm_destinations(const std::string filename,
 
   // Validate destinations
   std::string found_destinations = rapidjson::get<std::string>(doc, destinations_path.c_str());
-  EXPECT_EQ(found_destinations , expected_destinations);
+  EXPECT_EQ(found_destinations, expected_destinations);
 }
 
 void test_osrm_junction_name(const std::string filename,
@@ -209,7 +210,7 @@ void test_osrm_junction_name(const std::string filename,
 
   // Validate junction_name
   std::string found_junction_name = rapidjson::get<std::string>(doc, junction_name_path.c_str(), "");
-  EXPECT_EQ(found_junction_name , expected_junction_name);
+  EXPECT_EQ(found_junction_name, expected_junction_name);
 }
 
 TEST(Instructions, validate_merge_instructions) {
@@ -415,7 +416,6 @@ TEST(Instructions, validate_exit_instructions) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

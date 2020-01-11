@@ -29,19 +29,19 @@ private:
   double cost_;
 };
 
-bool operator>(const Label &lhs, const Label &rhs) {
+bool operator>(const Label& lhs, const Label& rhs) {
   return lhs.sortcost() > rhs.sortcost();
 }
 
-bool operator<(const Label &lhs, const Label &rhs) {
+bool operator<(const Label& lhs, const Label& rhs) {
   return lhs.sortcost() < rhs.sortcost();
 }
 
-bool operator==(const Label &lhs, const Label &rhs) {
+bool operator==(const Label& lhs, const Label& rhs) {
   return lhs.sortcost() == rhs.sortcost();
 }
 
-bool operator!=(const Label &lhs, const Label &rhs) {
+bool operator!=(const Label& lhs, const Label& rhs) {
   return !(lhs == rhs);
 }
 
@@ -122,13 +122,13 @@ TEST(Queue, TestQueue) {
   EXPECT_TRUE(queue.empty()) << "now queue should be empty";
 
   uint32_t i = 0;
-  for (const auto &label : labels) {
+  for (const auto& label : labels) {
     EXPECT_EQ(label.id(), i) << "id should be matched";
     EXPECT_EQ(label.sortcost(), i + 1) << "sortcost should be matched";
     i++;
   }
 
-  for (const auto &label : labels) {
+  for (const auto& label : labels) {
     queue.push(label);
   }
   queue.clear();
@@ -159,7 +159,6 @@ TEST(Queue, TestSorting) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

@@ -6,23 +6,21 @@
 
 #include <gtest/gtest.h>
 
-
 using namespace std;
 using namespace valhalla::midgard;
 
 namespace {
 
-#define ASSERT_POINTLL_EQUAL(a, b) do {                 \
-  constexpr float kPrecision = .00001;          \
-  EXPECT_NEAR(a.first, b.first, kPrecision);    \
-  EXPECT_NEAR(a.second, b.second, kPrecision);  \
-} while (0)
-
+#define ASSERT_POINTLL_EQUAL(a, b)                                                                   \
+  do {                                                                                               \
+    constexpr float kPrecision = .00001;                                                             \
+    EXPECT_NEAR(a.first, b.first, kPrecision);                                                       \
+    EXPECT_NEAR(a.second, b.second, kPrecision);                                                     \
+  } while (0)
 
 TEST(PointLL, test_invalid) {
   PointLL ll;
-  EXPECT_FALSE(ll.IsValid())
-    << "PointLL default initialization should not be valid";
+  EXPECT_FALSE(ll.IsValid()) << "PointLL default initialization should not be valid";
 
   ll.Set(0, 0);
   EXPECT_TRUE(ll.IsValid()) << "0,0 is a valid coordinate";
@@ -39,16 +37,14 @@ TEST(PointLL, test_constructor) {
 
 void test_along(const std::vector<PointLL> l, float d, float a) {
   auto r = PointLL::HeadingAlongPolyline(l, d);
-  EXPECT_NEAR(r, a, 1.f) 
-    << "Invalid polyline begin heading was " + std::to_string(r) +
-    " but should be " + std::to_string(a);
+  EXPECT_NEAR(r, a, 1.f) << "Invalid polyline begin heading was " + std::to_string(r) +
+                                " but should be " + std::to_string(a);
 }
 
 void test_end(const std::vector<PointLL> l, float d, float a) {
   auto r = PointLL::HeadingAtEndOfPolyline(l, d);
-  EXPECT_NEAR(r, a, 1.f) 
-    << "Invalid polyline end heading was " + std::to_string(r) +
-    " but should be " + std::to_string(a);
+  EXPECT_NEAR(r, a, 1.f) << "Invalid polyline end heading was " + std::to_string(r) +
+                                " but should be " + std::to_string(a);
 }
 
 TEST(PointLL, TestHeadingAlongPolyline) {
@@ -192,15 +188,15 @@ void TryClosestPoint(std::vector<PointLL> pts,
 
     // Test expected closest point
     EXPECT_TRUE(result_pt.ApproximatelyEqual(expected_pt))
-      << "TryClosestPoint point test failed - found: " + std::to_string(result_pt.lat()) + "," +
-      std::to_string(result_pt.lng()) + " | expected: " + std::to_string(expected_pt.lat()) +
-      "," + std::to_string(expected_pt.lng());
+        << "TryClosestPoint point test failed - found: " + std::to_string(result_pt.lat()) + "," +
+               std::to_string(result_pt.lng()) + " | expected: " + std::to_string(expected_pt.lat()) +
+               "," + std::to_string(expected_pt.lng());
 
     // Test expected distance
     EXPECT_NEAR(std::get<1>(result), expected_dist, 0.5f);
 
     // Test expected index
-    EXPECT_EQ(std::get<2>(result) , expected_idx);
+    EXPECT_EQ(std::get<2>(result), expected_idx);
   }
 }
 
@@ -213,15 +209,15 @@ void TryClosestPointNoDistance(const std::vector<PointLL>& pts,
 
   // Test expected closest point
   EXPECT_TRUE(result_pt.ApproximatelyEqual(expected_pt))
-    << "TryClosestPointNoDistance point test failed - found: " + std::to_string(result_pt.lat()) +
-    "," + std::to_string(result_pt.lng()) + " | expected: " + std::to_string(expected_pt.lat()) +
-    "," + std::to_string(expected_pt.lng());
+      << "TryClosestPointNoDistance point test failed - found: " + std::to_string(result_pt.lat()) +
+             "," + std::to_string(result_pt.lng()) +
+             " | expected: " + std::to_string(expected_pt.lat()) + "," +
+             std::to_string(expected_pt.lng());
 
   // Test expected index
-  EXPECT_EQ(std::get<2>(result) , expected_idx)
-    << "TryClosestPointNoDistance index test failed - found: " +
-    std::to_string(std::get<2>(result)) +
-    " | expected: " + std::to_string(expected_idx);
+  EXPECT_EQ(std::get<2>(result), expected_idx)
+      << "TryClosestPointNoDistance index test failed - found: " +
+             std::to_string(std::get<2>(result)) + " | expected: " + std::to_string(expected_idx);
 }
 
 TEST(PointLL, TestClosestPoint) {
@@ -283,7 +279,7 @@ TEST(PointLL, TestClosestPoint) {
 }
 
 void TryWithinConvexPolygon(const std::vector<PointLL>& pts, const PointLL& p, const bool res) {
-  EXPECT_EQ(p.WithinPolygon(pts) , res);
+  EXPECT_EQ(p.WithinPolygon(pts), res);
 }
 
 TEST(PointLL, TestWithinConvexPolygon) {
@@ -320,7 +316,7 @@ TEST(PointLL, TestMidPoint) {
   // the shortest path between them is actually the geodesic that intersects
   // the pole. longitude is meaningless then
   mid = PointLL(-23, 45).MidPoint({157, 45});
-  EXPECT_EQ(mid.second , 90);
+  EXPECT_EQ(mid.second, 90);
 
   // in the northern hemisphere we should expect midpoints on
   // geodesics between point of the same latitude to have higher latitude
@@ -344,20 +340,17 @@ TEST(PointLL, TestMidPoint) {
 
 TEST(PointLL, TestDistance) {
   float d = PointLL(-90.0f, 0.0f).Distance({90.0f, 0.0f});
-  EXPECT_EQ(d , kPi * kRadEarthMeters)
-    << "Distance 180 from each other should be PI * earth radius";
+  EXPECT_EQ(d, kPi * kRadEarthMeters) << "Distance 180 from each other should be PI * earth radius";
 
   d = PointLL(-90.0f, 0.0f).Distance({-90.0f, 0.0f});
-  EXPECT_EQ(d , 0.0f) << "Distance between same points should be 0";
+  EXPECT_EQ(d, 0.0f) << "Distance between same points should be 0";
 
   d = PointLL(45.0f, 45.0f).Distance({45.0f, 40.0f});
-  EXPECT_NEAR(d, 556599.5f, 1.0f)
-    << "Distance d = " + std::to_string(d) +
-       " between points should be approx 556599.5 meters";
+  EXPECT_NEAR(d, 556599.5f, 1.0f) << "Distance d = " + std::to_string(d) +
+                                         " between points should be approx 556599.5 meters";
 }
 
 } // namespace
-
 
 // todo: add many more tests!
 

@@ -11,15 +11,15 @@ constexpr size_t kTransitScheduleExpectedSize = 16;
 namespace {
 
 TEST(TransitSchedule, Sizeof) {
-  EXPECT_EQ(sizeof(TransitSchedule) , kTransitScheduleExpectedSize);
+  EXPECT_EQ(sizeof(TransitSchedule), kTransitScheduleExpectedSize);
 }
 
 TEST(TransitSchedule, TestWriteRead) {
   // Test building a transit stop and reading back values
   TransitSchedule sched(15, 0x15, 30);
-  EXPECT_EQ(sched.days() , 15);
-  EXPECT_EQ(sched.days_of_week() , 0x15);
-  EXPECT_EQ(sched.end_day() , 30);
+  EXPECT_EQ(sched.days(), 15);
+  EXPECT_EQ(sched.days_of_week(), 0x15);
+  EXPECT_EQ(sched.end_day(), 30);
 
   // Test a valid day within the schedule
   EXPECT_FALSE(sched.IsValid(5, 4, false));
@@ -32,8 +32,7 @@ TEST(TransitSchedule, TestWriteRead) {
 
   // Check for exceeding max end day
   TransitSchedule sched1(11111001, 0x15, kMaxEndDay + 1);
-  EXPECT_EQ(sched1.end_day() , kMaxEndDay) 
-    << "TransitSchedule end_day not clamped - test failed";
+  EXPECT_EQ(sched1.end_day(), kMaxEndDay) << "TransitSchedule end_day not clamped - test failed";
 
   // Test bounds for day of the week
   EXPECT_THROW(TransitSchedule sched2(11111001, kAllDaysOfWeek + 1, 31);, std::runtime_error);
@@ -57,7 +56,6 @@ TEST(TransitSchedule, TestSort) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

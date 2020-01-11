@@ -166,12 +166,11 @@ void search(valhalla::baldr::Location location,
   const auto p = results.at(location);
 
   EXPECT_EQ((p.edges.front().begin_node() || p.edges.front().end_node()), expected_node)
-    << p.edges.front().begin_node() << ":" << p.edges.front().end_node()
-    << (expected_node ? " Should've snapped to node": " Shouldn't've snapped to node");
+      << p.edges.front().begin_node() << ":" << p.edges.front().end_node()
+      << (expected_node ? " Should've snapped to node" : " Shouldn't've snapped to node");
 
   EXPECT_TRUE(p.edges.size()) << "Didn't find any node/edges";
-  EXPECT_TRUE(p.edges.front().projected.ApproximatelyEqual(expected_point))
-    << "Found wrong point";
+  EXPECT_TRUE(p.edges.front().projected.ApproximatelyEqual(expected_point)) << "Found wrong point";
 
   valhalla::baldr::PathLocation answer(location);
   for (const auto& expected_edge : expected_edges) {
@@ -184,8 +183,7 @@ void search(valhalla::baldr::Location location,
   EXPECT_TRUE(answer.shares_edges(p)) << "Did not find expected edges";
   // if you want to enforce that the result didnt have more then expected
   if (exact) {
-    EXPECT_EQ(answer.edges.size() , p.edges.size()) 
-      << "Got more edges than expected";
+    EXPECT_EQ(answer.edges.size(), p.edges.size()) << "Got more edges than expected";
   }
 }
 
@@ -206,7 +204,7 @@ void search(valhalla::baldr::Location location, size_t result_count, int reachab
     return;
   const auto& p = results.at(location);
 
-  EXPECT_EQ(p.edges.size() , result_count) << "Wrong number of edges";
+  EXPECT_EQ(p.edges.size(), result_count) << "Wrong number of edges";
   for (const auto& e : p.edges) {
     EXPECT_EQ(e.outbound_reach, reachability);
     EXPECT_EQ(e.inbound_reach, reachability);
@@ -389,8 +387,7 @@ TEST(Search, test_search_cutoff) {
 
 } // namespace
 
-
-// Setup and tearown will be called only once for the entire suite
+// Setup and tearown will be called only once for the entire suite121
 class SearchTestSuiteEnv : public ::testing::Environment {
 public:
   void SetUp() override {
@@ -400,7 +397,6 @@ public:
     // todo: think whether we want to clean tile dir after the test
   }
 };
-
 
 int main(int argc, char* argv[]) {
   testing::AddGlobalTestEnvironment(new SearchTestSuiteEnv);

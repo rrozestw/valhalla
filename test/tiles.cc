@@ -12,10 +12,13 @@ using namespace valhalla::midgard;
 namespace {
 
 TEST(Tiles, TestMaxId) {
-  EXPECT_EQ(Tiles<PointLL>::MaxTileId(AABB2<PointLL>(PointLL(-180, -90), PointLL(180, 90)), .25) , 1036799);
-  EXPECT_EQ(Tiles<PointLL>::MaxTileId(AABB2<PointLL>(PointLL(-180, -90), PointLL(180, 90)), 1) , 64799);
-  EXPECT_EQ(Tiles<PointLL>::MaxTileId(AABB2<PointLL>(PointLL(-180, -90), PointLL(180, 90)), 4) , 4049);
-  EXPECT_EQ(Tiles<PointLL>::MaxTileId(AABB2<PointLL>(PointLL(-180, -90), PointLL(180, 90)), .33) , 595685);
+  EXPECT_EQ(Tiles<PointLL>::MaxTileId(AABB2<PointLL>(PointLL(-180, -90), PointLL(180, 90)), .25),
+            1036799);
+  EXPECT_EQ(Tiles<PointLL>::MaxTileId(AABB2<PointLL>(PointLL(-180, -90), PointLL(180, 90)), 1),
+            64799);
+  EXPECT_EQ(Tiles<PointLL>::MaxTileId(AABB2<PointLL>(PointLL(-180, -90), PointLL(180, 90)), 4), 4049);
+  EXPECT_EQ(Tiles<PointLL>::MaxTileId(AABB2<PointLL>(PointLL(-180, -90), PointLL(180, 90)), .33),
+            595685);
 }
 
 TEST(Tiles, TestBase) {
@@ -51,7 +54,7 @@ TEST(Tiles, TestRowCol) {
   int32_t tileid1 = tiles.TileId(-76.5f, 40.5f);
   auto rc = tiles.GetRowColumn(tileid1);
   int32_t tileid2 = tiles.TileId(rc.second, rc.first);
-  EXPECT_EQ(tileid1 , tileid2) << "TileId does not match using row,col";
+  EXPECT_EQ(tileid1, tileid2) << "TileId does not match using row,col";
 }
 
 TEST(Tiles, TestNeighbors) {
@@ -66,8 +69,7 @@ TEST(Tiles, TestNeighbors) {
   auto rc2 = tiles.GetRowColumn(tileid2);
 
   EXPECT_TRUE(tiles.AreNeighbors(tileid1, tileid2))
-    << "Left neighbor not identified as a neighbor "
-    << tileid1 << " - " << tileid2;
+      << "Left neighbor not identified as a neighbor " << tileid1 << " - " << tileid2;
 
   EXPECT_EQ(rc1.first, rc2.first) << "Left neighbor row,col not correct";
   EXPECT_EQ((rc1.second - 1), rc2.second) << "Left neighbor row,col not correct";
@@ -75,9 +77,8 @@ TEST(Tiles, TestNeighbors) {
   // Test right neighbor
   tileid2 = tiles.RightNeighbor(tileid1);
   rc2 = tiles.GetRowColumn(tileid2);
-  EXPECT_TRUE(tiles.AreNeighbors(tileid1, tileid2)) 
-    << "Right neighbor not identified as a neighbor "
-    << tileid1 << " - " << tileid2;
+  EXPECT_TRUE(tiles.AreNeighbors(tileid1, tileid2))
+      << "Right neighbor not identified as a neighbor " << tileid1 << " - " << tileid2;
 
   EXPECT_EQ(rc1.first, rc2.first) << "Right neighbor row,col not correct";
   EXPECT_EQ((rc1.second + 1), rc2.second) << "Right neighbor row,col not correct";
@@ -86,8 +87,7 @@ TEST(Tiles, TestNeighbors) {
   tileid2 = tiles.TopNeighbor(tileid1);
   rc2 = tiles.GetRowColumn(tileid2);
   EXPECT_TRUE(tiles.AreNeighbors(tileid1, tileid2))
-    << "Top neighbor not identified as a neighbor "
-    << tileid1 << " - " << tileid2;
+      << "Top neighbor not identified as a neighbor " << tileid1 << " - " << tileid2;
 
   EXPECT_EQ((rc1.first + 1), rc2.first) << "Top neighbor row,col not correct";
   EXPECT_EQ(rc1.second, rc2.second) << "Top neighbor row,col not correct";
@@ -96,8 +96,7 @@ TEST(Tiles, TestNeighbors) {
   tileid2 = tiles.BottomNeighbor(tileid1);
   rc2 = tiles.GetRowColumn(tileid2);
   EXPECT_TRUE(tiles.AreNeighbors(tileid1, tileid2))
-    << "Bottom neighbor not identified as a neighbor "
-    << tileid1 << " - " << tileid2;
+      << "Bottom neighbor not identified as a neighbor " << tileid1 << " - " << tileid2;
 
   EXPECT_EQ((rc1.first - 1), rc2.first) << "Bottom neighbor row,col not correct";
   EXPECT_EQ(rc1.second, rc2.second) << "Bottom neighbor row,col not correct";
@@ -108,22 +107,22 @@ TEST(Tiles, TileList) {
 
   AABB2<PointLL> bbox(PointLL(-99.5f, 30.5f), PointLL(-90.5f, 39.5f));
   std::vector<int32_t> tilelist = tiles.TileList(bbox);
-  EXPECT_EQ(tilelist.size() , 100) << "Wrong number of tiles in TileList";
+  EXPECT_EQ(tilelist.size(), 100) << "Wrong number of tiles in TileList";
 
   // Test crossing -180
   AABB2<PointLL> bbox2(PointLL(-183.5f, 30.5f), PointLL(-176.5f, 34.5f));
   tilelist = tiles.TileList(bbox2);
-  EXPECT_EQ(tilelist.size() , 40) << "Wrong number of tiles in TileList crossing -180";
+  EXPECT_EQ(tilelist.size(), 40) << "Wrong number of tiles in TileList crossing -180";
 
   // Test crossing 180
   AABB2<PointLL> bbox3(PointLL(176.5f, 30.5f), PointLL(183.5f, 34.5f));
   tilelist = tiles.TileList(bbox3);
-  EXPECT_EQ(tilelist.size() , 40) << "Wrong number of tiles in TileList crossing 180";
+  EXPECT_EQ(tilelist.size(), 40) << "Wrong number of tiles in TileList crossing 180";
 
   Tiles<PointLL> tiles2(AABB2<PointLL>(PointLL(-180, -90), PointLL(180, 90)), 0.25f);
   AABB2<PointLL> bbox4(PointLL(-76.489998f, 40.509998f), PointLL(-76.480003f, 40.520000f));
   tilelist = tiles.TileList(bbox4);
-  EXPECT_EQ(tilelist.size() , 1) << "Wrong number of tiles found in TileList";
+  EXPECT_EQ(tilelist.size(), 1) << "Wrong number of tiles found in TileList";
 }
 
 using intersect_t = std::unordered_map<int32_t, std::unordered_set<unsigned short>>;
@@ -137,16 +136,16 @@ void assert_answer(const Tiles<Point2>& g, const std::list<Point2>& l, const int
     auto i = expected.find(t.first);
     ASSERT_NE(i, expected.cend()) << "Unexpected intersected tile " + std::to_string(t.first);
     // wrong number of subdivisions
-    ASSERT_LE(t.second.size(), i->second.size()) 
-      << "in tile " + std::to_string(t.first) + " expected no more than " +
-         std::to_string(i->second.size()) + " intersected subdivisions but got " +
-         std::to_string(t.second.size());
+    ASSERT_LE(t.second.size(), i->second.size())
+        << "in tile " + std::to_string(t.first) + " expected no more than " +
+               std::to_string(i->second.size()) + " intersected subdivisions but got " +
+               std::to_string(t.second.size());
 
     // missing subdivision
     for (const auto& s : t.second)
-      ASSERT_NE(i->second.find(s), i->second.cend())
-        << "In tile " + std::to_string(t.first) +
-        " unexpected intersected subdivision " + std::to_string(s);
+      ASSERT_NE(i->second.find(s), i->second.cend()) << "In tile " + std::to_string(t.first) +
+                                                            " unexpected intersected subdivision " +
+                                                            std::to_string(s);
   }
 }
 
@@ -360,18 +359,18 @@ template <class coord_t> void test_point(const Tiles<coord_t>& t, const coord_t&
       last = r;
       ++size;
     } catch (const std::runtime_error& e) {
-      EXPECT_EQ(std::string(e.what()) , "Subdivisions were exhausted") 
-        << "Should have thrown only for running out of subdivisions";
+      EXPECT_EQ(std::string(e.what()), "Subdivisions were exhausted")
+          << "Should have thrown only for running out of subdivisions";
       break;
     }
   }
 
-  EXPECT_EQ(size , t.ncolumns() * t.nsubdivisions() * t.nrows() * t.nsubdivisions()) 
-    << "Number of subdivisions didnt match";
+  EXPECT_EQ(size, t.ncolumns() * t.nsubdivisions() * t.nrows() * t.nsubdivisions())
+      << "Number of subdivisions didnt match";
 
-  EXPECT_TRUE(zeros == 1 || zeros == 2 || zeros == 4) 
-    << "Got: " << zeros 
-    << " but only 1, 2 and 4 subdivisions can be 0 distance from the input point";
+  EXPECT_TRUE(zeros == 1 || zeros == 2 || zeros == 4)
+      << "Got: " << zeros
+      << " but only 1, 2 and 4 subdivisions can be 0 distance from the input point";
 }
 
 TEST(Tiles, test_closest_first) {
@@ -382,13 +381,13 @@ TEST(Tiles, test_closest_first) {
   // test a simple 8x4 grid for polar and meridian wrapping
   Tiles<PointLL> t(AABB2<PointLL>{-180, -90, 180, 90}, 90, 2);
   auto y = t.ClosestFirst({179.99, -16.825});
-  EXPECT_EQ(to_global_sub(y(), t) , 15) << "Should have been 15";
-  EXPECT_EQ(to_global_sub(y(), t) , 8) << "Should have been wrapped to 8";
-  EXPECT_EQ(to_global_sub(y(), t) , 23) << "Should have been above to 23";
+  EXPECT_EQ(to_global_sub(y(), t), 15) << "Should have been 15";
+  EXPECT_EQ(to_global_sub(y(), t), 8) << "Should have been wrapped to 8";
+  EXPECT_EQ(to_global_sub(y(), t), 23) << "Should have been above to 23";
   y = t.ClosestFirst({-179.99, -16.825});
-  EXPECT_EQ(to_global_sub(y(), t) , 8) << "Should have been 8";
-  EXPECT_EQ(to_global_sub(y(), t) , 15) << "Should have been wrapped to 15";
-  EXPECT_EQ(to_global_sub(y(), t) , 16) << "Should have been above to 16";
+  EXPECT_EQ(to_global_sub(y(), t), 8) << "Should have been 8";
+  EXPECT_EQ(to_global_sub(y(), t), 15) << "Should have been wrapped to 15";
+  EXPECT_EQ(to_global_sub(y(), t), 16) << "Should have been above to 16";
 
   // check realistic antimeridian wrapping
   t = Tiles<PointLL>(AABB2<PointLL>{-180, -90, 180, 90}, .25, 5);
@@ -399,14 +398,15 @@ TEST(Tiles, test_closest_first) {
       (p.second - t.TileBounds().miny()) / t.TileBounds().Height() * t.nrows() * t.nsubdivisions();
   auto c = t.ClosestFirst(p);
   auto first = c();
-  EXPECT_EQ(to_global_sub(first, t) , py * t.ncolumns() * t.nsubdivisions() + px) 
-    << "Unexpected global subdivision";
+  EXPECT_EQ(to_global_sub(first, t), py * t.ncolumns() * t.nsubdivisions() + px)
+      << "Unexpected global subdivision";
 
-  EXPECT_EQ(std::get<2>(first) , 0) << "Unexpected distance";
+  EXPECT_EQ(std::get<2>(first), 0) << "Unexpected distance";
 
   auto second = c();
-  EXPECT_EQ(to_global_sub(second, t) , py * t.ncolumns() * t.nsubdivisions()) << "Unexpected global subdivision";
-  EXPECT_EQ(std::get<2>(second) , p.Distance({-180, -16.825})) << "Unexpected distance";
+  EXPECT_EQ(to_global_sub(second, t), py * t.ncolumns() * t.nsubdivisions())
+      << "Unexpected global subdivision";
+  EXPECT_EQ(std::get<2>(second), p.Distance({-180, -16.825})) << "Unexpected distance";
 
   // try planar coordinate system
   Tiles<Point2> tp(AABB2<Point2>{-10, -10, 10, 10}, 1, 5);
@@ -442,14 +442,14 @@ TEST(Tiles, test_intersect_bbox_world) {
   AABB2<PointLL> world_box{-180, -90, 180, 90};
   Tiles<PointLL> t(world_box, 90, 2);
   auto intersection = t.Intersect(world_box);
-  EXPECT_EQ(intersection.size() , t.TileCount()) 
-    << "Expected " + std::to_string(t.TileCount()) +
-       " tiles returned from world-spanning intersection";
-    
+  EXPECT_EQ(intersection.size(), t.TileCount())
+      << "Expected " + std::to_string(t.TileCount()) +
+             " tiles returned from world-spanning intersection";
+
   auto nbins = t.nsubdivisions() * t.nsubdivisions();
   for (const auto& i : intersection) {
     const auto& bins = i.second;
-    EXPECT_EQ(bins.size() , nbins) << "For tile " << i.first;
+    EXPECT_EQ(bins.size(), nbins) << "For tile " << i.first;
   }
 }
 
@@ -459,22 +459,21 @@ TEST(Tiles, test_intersect_bbox_single) {
 
   AABB2<PointLL> single_box{1, 1, 2, 2};
   auto intersection = t.Intersect(single_box);
-  EXPECT_EQ(intersection.size() , 1) 
-    << "Expected one tile returned from world-spanning intersection";
+  EXPECT_EQ(intersection.size(), 1) << "Expected one tile returned from world-spanning intersection";
 
   auto tile_id = intersection.begin()->first;
   auto bins = intersection.begin()->second;
   // expect tile id to be 6 because the point just up and right from the origin
   // should be in the 3rd column, 2nd row, so thats (ncols(=4) * row(=1)) +
   // col(=2).
-  EXPECT_EQ(tile_id , 6);
+  EXPECT_EQ(tile_id, 6);
 
   // there should be a single result bin, which should be in the lower left
   // and therefore be bin 0.
-  EXPECT_EQ(bins.size() , 1);
+  EXPECT_EQ(bins.size(), 1);
 
   auto bin_id = *bins.begin();
-  EXPECT_EQ(bin_id , 0);
+  EXPECT_EQ(bin_id, 0);
 }
 
 TEST(Tiles, test_intersect_bbox_rounding) {
@@ -483,18 +482,17 @@ TEST(Tiles, test_intersect_bbox_rounding) {
 
   AABB2<PointLL> single_box{0.5, 0.5, 0.501, 0.501};
   auto intersection = t.Intersect(single_box);
-  EXPECT_EQ(intersection.size() , 1) << "Expected one tile returned from intersection";
+  EXPECT_EQ(intersection.size(), 1) << "Expected one tile returned from intersection";
 
   auto bins = intersection.begin()->second;
   // expect only the lower left bin, 0
-  EXPECT_EQ(bins.size() , 1);
+  EXPECT_EQ(bins.size(), 1);
 
   auto bin_id = *bins.begin();
-  EXPECT_EQ(bin_id , 0);
+  EXPECT_EQ(bin_id, 0);
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

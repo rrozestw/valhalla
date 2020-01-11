@@ -50,19 +50,21 @@ TEST(Compression, roundtrip) {
   // deflate
   std::string message = "message in a gzipped bottle";
   std::string deflated;
-  EXPECT_TRUE(valhalla::baldr::deflate(std::bind(deflate_src, std::placeholders::_1, std::ref(message)),
-                                std::bind(deflate_dst, std::placeholders::_1, std::ref(deflated))))
-    << "Can't write gzipped string";
+  EXPECT_TRUE(
+      valhalla::baldr::deflate(std::bind(deflate_src, std::placeholders::_1, std::ref(message)),
+                               std::bind(deflate_dst, std::placeholders::_1, std::ref(deflated))))
+      << "Can't write gzipped string";
 
   // inflate
   std::string inflated;
-  EXPECT_TRUE(valhalla::baldr::inflate(std::bind(inflate_src, std::placeholders::_1, std::ref(deflated)),
-                                std::bind(inflate_dst, std::placeholders::_1, std::ref(inflated))))
-    << "failed to inflate string";
+  EXPECT_TRUE(
+      valhalla::baldr::inflate(std::bind(inflate_src, std::placeholders::_1, std::ref(deflated)),
+                               std::bind(inflate_dst, std::placeholders::_1, std::ref(inflated))))
+      << "failed to inflate string";
 
   // check the data
-  EXPECT_EQ(inflated , "message in a gzipped bottle") 
-    << "decompressed doesn't match string before compression";
+  EXPECT_EQ(inflated, "message in a gzipped bottle")
+      << "decompressed doesn't match string before compression";
 }
 
 TEST(Compression, fail_deflate) {
@@ -78,12 +80,12 @@ TEST(Compression, fail_deflate) {
   std::string src = "who cares", dst;
 
   EXPECT_FALSE(valhalla::baldr::deflate(deflate_src_fail,
-                               std::bind(deflate_dst, std::placeholders::_1, std::ref(dst))))
-    << "src should fail";
+                                        std::bind(deflate_dst, std::placeholders::_1, std::ref(dst))))
+      << "src should fail";
 
   EXPECT_FALSE(valhalla::baldr::deflate(std::bind(deflate_src, std::placeholders::_1, std::ref(src)),
-                               deflate_dst_fail))
-    << "dst should fail";
+                                        deflate_dst_fail))
+      << "dst should fail";
 }
 
 TEST(Compression, fail_inflate) {
@@ -102,26 +104,29 @@ TEST(Compression, fail_inflate) {
   std::string message = "message in a gzipped bottle";
   std::string deflated;
 
-  EXPECT_TRUE(valhalla::baldr::deflate(std::bind(deflate_src, std::placeholders::_1, std::ref(message)),
-                                std::bind(deflate_dst, std::placeholders::_1, std::ref(deflated))))
-    << "Can't write gzipped string";
+  EXPECT_TRUE(
+      valhalla::baldr::deflate(std::bind(deflate_src, std::placeholders::_1, std::ref(message)),
+                               std::bind(deflate_dst, std::placeholders::_1, std::ref(deflated))))
+      << "Can't write gzipped string";
 
   std::string inflated;
-  EXPECT_FALSE(valhalla::baldr::inflate(inflate_src_fail,
+  EXPECT_FALSE(
+      valhalla::baldr::inflate(inflate_src_fail,
                                std::bind(inflate_dst, std::placeholders::_1, std::ref(inflated))))
-    << "src should fail";
+      << "src should fail";
 
-  EXPECT_FALSE(valhalla::baldr::inflate(inflate_src_fail2,
+  EXPECT_FALSE(
+      valhalla::baldr::inflate(inflate_src_fail2,
                                std::bind(inflate_dst, std::placeholders::_1, std::ref(inflated))))
-    << "src should fail";
+      << "src should fail";
 
-  EXPECT_FALSE(valhalla::baldr::inflate(std::bind(inflate_src, std::placeholders::_1, std::ref(deflated)),
+  EXPECT_FALSE(
+      valhalla::baldr::inflate(std::bind(inflate_src, std::placeholders::_1, std::ref(deflated)),
                                inflate_dst_fail))
-    << "dst should fail";
+      << "dst should fail";
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

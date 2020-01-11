@@ -15,7 +15,6 @@ namespace {
 
 using namespace valhalla::midgard::OpenLR;
 
-
 std::string decode64(const std::string& val) {
   using namespace boost::archive::iterators;
   using It = transform_width<binary_from_base64<std::string::const_iterator>, 8, 6>;
@@ -136,7 +135,7 @@ TEST(OpenLR, InternalReferencePoints) {
       LineLocation tryRef(locRef.toBinary());
 
       EXPECT_NEAR(tryRef.getLength(), 2 * 12774.8, 1e-3) << "Distance incorrect.";
-      EXPECT_NEAR(tryRef.poff, locRef.poff, 58.6) <<  "Positive offset incorrect.";
+      EXPECT_NEAR(tryRef.poff, locRef.poff, 58.6) << "Positive offset incorrect.";
       EXPECT_NEAR(tryRef.noff, locRef.noff, 58.6) << "Negative offset incorrect.";
     }
   }
@@ -164,7 +163,6 @@ TEST(OpenLR, TooSmallReference) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

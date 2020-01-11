@@ -534,9 +534,9 @@ void trivial_path_no_uturns(const std::string& config_file) {
 
   for (const auto& loc : locations) {
     ASSERT_NO_THROW(
-            path_location.push_back(projections.at(loc));
-            PathLocation::toPBF(path_location.back(), options.mutable_locations()->Add(), graph_reader);
-      ) << "fail_invalid_origin";
+        path_location.push_back(projections.at(loc));
+        PathLocation::toPBF(path_location.back(), options.mutable_locations()->Add(), graph_reader);)
+        << "fail_invalid_origin";
   }
 
   vt::AStarPathAlgorithm astar;
@@ -554,7 +554,7 @@ void trivial_path_no_uturns(const std::string& config_file) {
   odin::DirectionsBuilder::Build(api);
   const auto& trip_directions = api.directions().routes(0).legs(0);
 
-  EXPECT_EQ(trip_directions.summary().time() , 0);
+  EXPECT_EQ(trip_directions.summary().time(), 0);
 
   boost::filesystem::remove(ways_file);
   boost::filesystem::remove(way_nodes_file);
@@ -648,7 +648,7 @@ TEST(Astar, test_oneway) {
   const auto& legs = response.trip().routes(0).legs();
   const auto& directions = response.directions().routes(0).legs();
 
-  EXPECT_EQ(legs.size() , 1);
+  EXPECT_EQ(legs.size(), 1);
 
   std::vector<std::string> names;
 
@@ -666,9 +666,9 @@ TEST(Astar, test_oneway) {
   }
 
   auto correct_route = std::vector<std::string>{"Quay Street", "Nelson Street", ""};
-  EXPECT_EQ(names , correct_route)
-    << "Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
-       ", expected: \n" + boost::algorithm::join(correct_route, ", ");
+  EXPECT_EQ(names, correct_route) << "Incorrect route, got: \n" +
+                                         boost::algorithm::join(names, ", ") + ", expected: \n" +
+                                         boost::algorithm::join(correct_route, ", ");
 }
 
 TEST(Astar, test_oneway_wrong_way) {
@@ -683,10 +683,8 @@ TEST(Astar, test_oneway_wrong_way) {
     auto response = tester.test(request);
     FAIL() << "Expectd exception!";
   } catch (const std::exception& e) {
-    EXPECT_EQ(std::string(e.what()) , "No path could be found for input");
-  } catch (...) {
-    FAIL() << "Wrong exception type";
-  }
+    EXPECT_EQ(std::string(e.what()), "No path could be found for input");
+  } catch (...) { FAIL() << "Wrong exception type"; }
 }
 
 TEST(Astar, test_deadend) {
@@ -706,7 +704,7 @@ TEST(Astar, test_deadend) {
   const auto& legs = response.trip().routes(0).legs();
   const auto& directions = response.directions().routes(0).legs();
 
-  EXPECT_EQ(legs.size() , 1);
+  EXPECT_EQ(legs.size(), 1);
 
   std::vector<std::string> names;
   std::string uturn_street;
@@ -734,11 +732,11 @@ TEST(Astar, test_deadend) {
       std::vector<std::string>{"Bell Lane",   "Small Street",
                                "Quay Street", // The u-turn on Quay Street is optimized away
                                "Quay Street", "Small Street", "", ""};
-  EXPECT_EQ(names , correct_route)
-    << "Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
-       ", expected: \n" + boost::algorithm::join(correct_route, ", ");
+  EXPECT_EQ(names, correct_route) << "Incorrect route, got: \n" +
+                                         boost::algorithm::join(names, ", ") + ", expected: \n" +
+                                         boost::algorithm::join(correct_route, ", ");
 
-  EXPECT_EQ(uturn_street , "Quay Street") << "We did not find the expected u-turn";
+  EXPECT_EQ(uturn_street, "Quay Street") << "We did not find the expected u-turn";
 }
 
 TEST(Astar, test_deadend_timedep_forward) {
@@ -762,7 +760,7 @@ TEST(Astar, test_deadend_timedep_forward) {
   const auto& legs = response.trip().routes(0).legs();
   const auto& directions = response.directions().routes(0).legs();
 
-  EXPECT_EQ(legs.size() , 1);
+  EXPECT_EQ(legs.size(), 1);
 
   std::vector<std::string> names;
   std::string uturn_street;
@@ -790,13 +788,13 @@ TEST(Astar, test_deadend_timedep_forward) {
       std::vector<std::string>{"Bell Lane",   "Small Street",
                                "Quay Street", // The u-turn on Quay Street is optimized away
                                "Quay Street", "Small Street", "", ""};
-  EXPECT_EQ(names , correct_route)
-    << "Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
-       ", expected: \n" + boost::algorithm::join(correct_route, ", ");
+  EXPECT_EQ(names, correct_route) << "Incorrect route, got: \n" +
+                                         boost::algorithm::join(names, ", ") + ", expected: \n" +
+                                         boost::algorithm::join(correct_route, ", ");
 
   // TODO Why did it not happen on Quay Street?
   // if (uturn_street != "Small Street") {
-  EXPECT_EQ(uturn_street , "Quay Street") << "We did not find the expected u-turn";
+  EXPECT_EQ(uturn_street, "Quay Street") << "We did not find the expected u-turn";
 }
 TEST(Astar, test_deadend_timedep_reverse) {
   auto conf = get_conf("whitelion_tiles");
@@ -819,7 +817,7 @@ TEST(Astar, test_deadend_timedep_reverse) {
   const auto& legs = response.trip().routes(0).legs();
   const auto& directions = response.directions().routes(0).legs();
 
-  EXPECT_EQ(legs.size() , 1);
+  EXPECT_EQ(legs.size(), 1);
 
   std::vector<std::string> names;
   std::string uturn_street;
@@ -847,11 +845,11 @@ TEST(Astar, test_deadend_timedep_reverse) {
       std::vector<std::string>{"Bell Lane",   "Small Street",
                                "Quay Street", // The u-turn on Quay Street is optimized away
                                "Quay Street", "Small Street", "", ""};
-  EXPECT_EQ(names , correct_route)
-    << "Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
-       ", expected: \n" + boost::algorithm::join(correct_route, ", ");
+  EXPECT_EQ(names, correct_route) << "Incorrect route, got: \n" +
+                                         boost::algorithm::join(names, ", ") + ", expected: \n" +
+                                         boost::algorithm::join(correct_route, ", ");
 
-  EXPECT_EQ(uturn_street , "Quay Street") << "We did not find the expected u-turn";
+  EXPECT_EQ(uturn_street, "Quay Street") << "We did not find the expected u-turn";
 }
 TEST(Astar, test_time_restricted_road) {
   // Try routing over "Via Montebello" in Rome which is a time restricted road
@@ -867,7 +865,7 @@ TEST(Astar, test_time_restricted_road) {
   const auto& legs = response.trip().routes(0).legs();
   const auto& directions = response.directions().routes(0).legs();
 
-  EXPECT_EQ(legs.size() , 1);
+  EXPECT_EQ(legs.size(), 1);
 
   std::vector<std::string> names;
   std::vector<std::string> restricted_streets;
@@ -889,12 +887,12 @@ TEST(Astar, test_time_restricted_road) {
   }
 
   auto correct_route = std::vector<std::string>{"Via Goito", "Via Montebello", ""};
-  EXPECT_EQ(names , correct_route)
-    << "Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
-       ", expected: \n" + boost::algorithm::join(correct_route, ", ");
+  EXPECT_EQ(names, correct_route) << "Incorrect route, got: \n" +
+                                         boost::algorithm::join(names, ", ") + ", expected: \n" +
+                                         boost::algorithm::join(correct_route, ", ");
 
   EXPECT_TRUE(response.trip().routes(0).legs(0).node(1).edge().has_time_restrictions())
-    << "Expected leg to have time_restriction";
+      << "Expected leg to have time_restriction";
 
   // Verify JSON payload
   const std::string payload = tyr::serializeDirections(response);
@@ -904,23 +902,23 @@ TEST(Astar, test_time_restricted_road) {
   {
     const char key[] = "/trip/legs/0/maneuvers/0/has_time_restrictions";
     EXPECT_TRUE(GetValueByPointerWithDefault(response_json, key, false) != true)
-      << "Via Goito is marked as time-restricted which is incorrect! JSON does have "
-      <<  key << " set to true";
+        << "Via Goito is marked as time-restricted which is incorrect! JSON does have " << key
+        << " set to true";
   }
   {
     const char key[] = "/trip/legs/0/maneuvers/1/has_time_restrictions";
     EXPECT_TRUE(GetValueByPointerWithDefault(response_json, key, false) == true)
-      << std::string("JSON does not have ") + key + " set to true";
+        << std::string("JSON does not have ") + key + " set to true";
   }
   {
     const char key[] = "/trip/legs/0/summary/has_time_restrictions";
     EXPECT_TRUE(GetValueByPointerWithDefault(response_json, key, false) == true)
-      << std::string("JSON does not have ") + key + " set to true";
+        << std::string("JSON does not have ") + key + " set to true";
   }
   {
     const char key[] = "/trip/summary/has_time_restrictions";
     EXPECT_TRUE(GetValueByPointerWithDefault(response_json, key, false) == true)
-      << std::string("JSON does not have ") + key + " set to true";
+        << std::string("JSON does not have ") + key + " set to true";
   }
 }
 
@@ -933,10 +931,8 @@ public:
 
 } // anonymous namespace
 
-
 int main(int argc, char* argv[]) {
   testing::AddGlobalTestEnvironment(new AstarTestEnv);
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
-

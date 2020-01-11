@@ -8,7 +8,6 @@
 
 #include <gtest/gtest.h>
 
-
 // TODO: move this out of the test and into the filesystem replacement
 // and then remove filesystem from mjolnir as well
 #ifdef _WIN32
@@ -91,18 +90,15 @@ TEST(Filesystem, remove_any) {
   // make and delete a file
   { std::fstream fs(".foobar", std::ios::out); }
   EXPECT_TRUE(filesystem::remove(".foobar"));
-  EXPECT_FALSE(filesystem::exists(".foobar"))
-    << ".foobar file should have been deleted";
+  EXPECT_FALSE(filesystem::exists(".foobar")) << ".foobar file should have been deleted";
 
   // make and delete a file
   try_mkdir(".foobar");
   EXPECT_TRUE(filesystem::remove(".foobar"));
-  EXPECT_FALSE(filesystem::exists(".foobar"))
-    << ".foobar dir should have been deleted";
+  EXPECT_FALSE(filesystem::exists(".foobar")) << ".foobar dir should have been deleted";
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

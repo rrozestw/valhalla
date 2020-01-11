@@ -40,13 +40,13 @@ void try_free_flow_speed(const std::string encoded_str,
   const auto raw = reinterpret_cast<const unsigned char*>(decoded_data.data());
   std::size_t index = 0;
   uint32_t t = static_cast<std::uint32_t>(raw[index++] & 0x1f);
-  EXPECT_EQ(t , 0);
+  EXPECT_EQ(t, 0);
 
   uint32_t free_flow_speed = static_cast<std::uint32_t>(raw[index++] & 0xff);
-  EXPECT_EQ(free_flow_speed , exp_free_flow);
+  EXPECT_EQ(free_flow_speed, exp_free_flow);
 
   uint32_t constrained_flow_speed = static_cast<std::uint32_t>(raw[index++] & 0xff);
-  EXPECT_EQ(constrained_flow_speed , exp_constrained_flow);
+  EXPECT_EQ(constrained_flow_speed, exp_constrained_flow);
 }
 
 TEST(PredicteSpeeds, test_free_flow_speed) {
@@ -63,12 +63,12 @@ TEST(PredicteSpeeds, test_decoding) {
 
   // Decode the base64 string and cast the data to a raw string of signed bytes
   auto decoded_str = decode64(encoded_speed_string);
-  EXPECT_EQ(decoded_str.size() , 402);
+  EXPECT_EQ(decoded_str.size(), 402);
 
   auto raw = reinterpret_cast<const int8_t*>(decoded_str.data());
 
   // Check that the first value pair == 1
-  EXPECT_EQ(static_cast<std::int8_t>(raw[0]) , 1) << "First value should be 1";
+  EXPECT_EQ(static_cast<std::int8_t>(raw[0]), 1) << "First value should be 1";
 
   // Create the coefficients. Each group of 2 bytes represents a signed, int16 number (big endian).
   // Convert to little endian.
@@ -197,12 +197,12 @@ TEST(PredicteSpeeds, test_negative_speeds) {
 
   // Decode the base64 string and cast the data to a raw string of signed bytes
   auto decoded_str = decode64(encoded_speed_string);
-  EXPECT_EQ(decoded_str.size() , 402);
+  EXPECT_EQ(decoded_str.size(), 402);
 
   auto raw = reinterpret_cast<const int8_t*>(decoded_str.data());
 
   // Check that the first value pair == 1
-  EXPECT_EQ(static_cast<std::int8_t>(raw[0]) , 1) << "First value should be 1";
+  EXPECT_EQ(static_cast<std::int8_t>(raw[0]), 1) << "First value should be 1";
 
   // Create the coefficients. Each group of 2 bytes represents a signed, int16 number (big endian).
   // Convert to little endian.
@@ -229,7 +229,6 @@ TEST(PredicteSpeeds, test_negative_speeds) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

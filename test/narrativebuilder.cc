@@ -269,43 +269,46 @@ void TryBuild(const Options& options,
   narrative_builder->Build(options, etp, maneuvers);
 
   // Check maneuver list sizes
-  ASSERT_EQ(maneuvers.size() , expected_maneuvers.size());
+  ASSERT_EQ(maneuvers.size(), expected_maneuvers.size());
 
   for (auto man = maneuvers.begin(), expected_man = expected_maneuvers.begin();
        man != maneuvers.end(); ++man, ++expected_man) {
 
     // Check maneuver type
-    EXPECT_EQ(man->type() , expected_man->type());
+    EXPECT_EQ(man->type(), expected_man->type());
 
     // Check maneuver instruction
-    EXPECT_EQ(man->instruction() , expected_man->instruction());
+    EXPECT_EQ(man->instruction(), expected_man->instruction());
 
     // Check maneuver verbal_transition_alert_instruction
-    EXPECT_EQ(man->verbal_transition_alert_instruction() , expected_man->verbal_transition_alert_instruction());
+    EXPECT_EQ(man->verbal_transition_alert_instruction(),
+              expected_man->verbal_transition_alert_instruction());
 
     // Check maneuver verbal_pre_transition_instruction
-    EXPECT_EQ(man->verbal_pre_transition_instruction() , expected_man->verbal_pre_transition_instruction());
+    EXPECT_EQ(man->verbal_pre_transition_instruction(),
+              expected_man->verbal_pre_transition_instruction());
 
     // Check maneuver verbal_post_transition_instruction
-    EXPECT_EQ(man->verbal_post_transition_instruction() , expected_man->verbal_post_transition_instruction());
+    EXPECT_EQ(man->verbal_post_transition_instruction(),
+              expected_man->verbal_post_transition_instruction());
 
     // Check maneuver depart_instruction
-    EXPECT_EQ(man->depart_instruction() , expected_man->depart_instruction());
+    EXPECT_EQ(man->depart_instruction(), expected_man->depart_instruction());
 
     // Check maneuver verbal_depart_instruction
-    EXPECT_EQ(man->verbal_depart_instruction() , expected_man->verbal_depart_instruction());
+    EXPECT_EQ(man->verbal_depart_instruction(), expected_man->verbal_depart_instruction());
 
     // Check maneuver arrive_instruction
-    EXPECT_EQ(man->arrive_instruction() , expected_man->arrive_instruction());
+    EXPECT_EQ(man->arrive_instruction(), expected_man->arrive_instruction());
 
     // Check maneuver verbal_arrive_instruction
-    EXPECT_EQ(man->verbal_arrive_instruction() , expected_man->verbal_arrive_instruction());
+    EXPECT_EQ(man->verbal_arrive_instruction(), expected_man->verbal_arrive_instruction());
   }
 }
 
 void VerifyToStayOn(const Maneuver& maneuver, bool expected_to_stay_on) {
   // Check to stay on attribute
-  EXPECT_EQ(maneuver.to_stay_on() , expected_to_stay_on);
+  EXPECT_EQ(maneuver.to_stay_on(), expected_to_stay_on);
 }
 
 void PopulateStartManeuverList_0(std::list<Maneuver>& maneuvers,
@@ -8034,7 +8037,7 @@ TEST(NarrativeBuilder, TestFormRampStraightInstruction) {
 }
 
 void TryFormRampRightInstruction(NarrativeBuilderTest& nbt, Maneuver maneuver, std::string expected) {
-  EXPECT_EQ(nbt.FormRampInstruction(maneuver) , expected);
+  EXPECT_EQ(nbt.FormRampInstruction(maneuver), expected);
 }
 
 TEST(NarrativeBuilder, TestFormRampRightInstruction) {
@@ -8208,7 +8211,7 @@ TEST(NarrativeBuilder, TestFormRampRightInstruction) {
 }
 
 void TryFormRampLeftInstruction(NarrativeBuilderTest& nbt, Maneuver maneuver, std::string expected) {
-  EXPECT_EQ(nbt.FormRampInstruction(maneuver) , expected);
+  EXPECT_EQ(nbt.FormRampInstruction(maneuver), expected);
 }
 
 TEST(NarrativeBuilder, TestFormRampLeftInstruction) {
@@ -8382,7 +8385,7 @@ TEST(NarrativeBuilder, TestFormRampLeftInstruction) {
 }
 
 void TryFormExitRightInstruction(NarrativeBuilderTest& nbt, Maneuver maneuver, std::string expected) {
-  EXPECT_EQ(nbt.FormExitInstruction(maneuver) , expected);
+  EXPECT_EQ(nbt.FormExitInstruction(maneuver), expected);
 }
 
 TEST(NarrativeBuilder, TestFormExitRightInstruction) {
@@ -8823,7 +8826,6 @@ TEST(NarrativeBuilder, TestFormExitLeftInstruction) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

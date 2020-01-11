@@ -9,9 +9,7 @@
 using namespace valhalla;
 using namespace valhalla::meili;
 
-
 namespace {
-
 
 void Add(baldr::DoubleBucketQueue& adjlist, const std::vector<float>& costs) {
   uint32_t idx = 0;
@@ -77,7 +75,8 @@ TEST(Routing, TestAddRemove) {
   adjlist3.decrease(3, 3);
   costs[3] = 3;
   uint32_t lab = adjlist3.pop();
-  EXPECT_EQ(lab, 3) << "TestAddRemove: After decrease the lowest cost label must be label 3, top = " + std::to_string(lab);
+  EXPECT_EQ(lab, 3) << "TestAddRemove: After decrease the lowest cost label must be label 3, top = " +
+                           std::to_string(lab);
 }
 
 void TrySimulation(size_t loop_count, size_t expansion_size, size_t max_increment_cost) {
@@ -188,7 +187,8 @@ TEST(Routing, TestRoutePathIterator) {
 
   EXPECT_EQ(&(*it0), &labelset.label(0)) << "TestRoutePathIterator: wrong dereferencing";
 
-  EXPECT_EQ(it0->predecessor(), baldr::kInvalidLabel) << "TestRoutePathIterator: wrong dereferencing pointer";
+  EXPECT_EQ(it0->predecessor(), baldr::kInvalidLabel)
+      << "TestRoutePathIterator: wrong dereferencing pointer";
 
   EXPECT_EQ(++it0, the_end) << "TestRoutePathIterator: wrong prefix increment";
 
@@ -215,7 +215,6 @@ TEST(Routing, TestRoutePathIterator) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

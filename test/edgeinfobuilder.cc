@@ -51,10 +51,10 @@ TEST(EdgeInfoBuilder, TestWriteRead) {
   EdgeInfoBuilder eibuilder;
 
   eibuilder.set_mean_elevation(kMinElevation - 100.0f);
-  EXPECT_EQ(eibuilder.mean_elevation() , kMinElevation);
+  EXPECT_EQ(eibuilder.mean_elevation(), kMinElevation);
 
   eibuilder.set_mean_elevation(kMaxElevation + 100.0f);
-  EXPECT_EQ(eibuilder.mean_elevation() , kMaxElevation);
+  EXPECT_EQ(eibuilder.mean_elevation(), kMaxElevation);
 
   eibuilder.set_mean_elevation(0.0f);
   EXPECT_NEAR(eibuilder.mean_elevation(), 0, kElevationBinSize);
@@ -87,7 +87,7 @@ TEST(EdgeInfoBuilder, TestWriteRead) {
 
   // Check the name indices
   for (uint8_t i = 0; i < ei->name_count(); ++i) {
-    EXPECT_EQ(name_info_list[i].name_offset_ , ei->GetNameInfo(i).name_offset_);
+    EXPECT_EQ(name_info_list[i].name_offset_, ei->GetNameInfo(i).name_offset_);
   }
 
   // Check the shape points
@@ -97,7 +97,6 @@ TEST(EdgeInfoBuilder, TestWriteRead) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

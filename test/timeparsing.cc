@@ -41,10 +41,10 @@ void TryConditionalRestrictions(const std::string& condition,
     res.end_day() << " end week " << res.end_week() << " end hrs " <<
     res.end_hrs() << " end mins " << res.end_mins() << std::endl;*/
 
-    EXPECT_EQ(res.td_value() , expected_values.at(x))
-      << "Time domain " + condition +
-         " test failed.  Expected: " + std::to_string(expected_values.at(x)) +
-         " but received " + std::to_string(res.td_value());
+    EXPECT_EQ(res.td_value(), expected_values.at(x))
+        << "Time domain " + condition +
+               " test failed.  Expected: " + std::to_string(expected_values.at(x)) +
+               " but received " + std::to_string(res.td_value());
   }
 }
 
@@ -391,7 +391,6 @@ TEST(TimeParsing, TestConditionalRestrictions) {
     }
   }
 }
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

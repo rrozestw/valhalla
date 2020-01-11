@@ -33,13 +33,13 @@ constexpr size_t kTurnLanesExpectedSize = 8;
 namespace {
 
 TEST(Turnlanes, test_sizeof) {
-  EXPECT_EQ(sizeof(valhalla::baldr::TurnLanes) , kTurnLanesExpectedSize);
+  EXPECT_EQ(sizeof(valhalla::baldr::TurnLanes), kTurnLanesExpectedSize);
 }
 
 TEST(Turnlanes, test_access) {
   TurnLanes tl(32, 1234);
-  EXPECT_EQ(tl.edgeindex() , 32);
-  EXPECT_EQ(tl.text_offset() , 1234);
+  EXPECT_EQ(tl.edgeindex(), 32);
+  EXPECT_EQ(tl.text_offset(), 1234);
 }
 
 TEST(Turnlanes, test_static_methods) {
@@ -101,22 +101,22 @@ void test_turn_lanes(const std::string filename,
 
   // Validate routes size
   int found_routes_size = request.directions().routes_size();
-  EXPECT_EQ(found_routes_size , expected_routes_size);
+  EXPECT_EQ(found_routes_size, expected_routes_size);
 
   // Validate legs size
   int found_legs_size = request.directions().routes(0).legs_size();
-  EXPECT_EQ(found_legs_size , expected_legs_size);
+  EXPECT_EQ(found_legs_size, expected_legs_size);
 
   // Validate maneuvers size
   int found_maneuvers_size = request.directions().routes(0).legs(0).maneuver_size();
-  EXPECT_EQ(found_maneuvers_size , expected_maneuvers_size);
+  EXPECT_EQ(found_maneuvers_size, expected_maneuvers_size);
 
   // Validate turn lanes - get turn lanes from the prev edge of the specified maneuver index
   valhalla::odin::EnhancedTripLeg etl(*request.mutable_trip()->mutable_routes(0)->mutable_legs(0));
   auto prev_edge = etl.GetPrevEdge(
       request.directions().routes(0).legs(0).maneuver(maneuver_index).begin_path_index());
   std::string found_turn_lanes = prev_edge->TurnLanesToString();
-  EXPECT_EQ(found_turn_lanes , expected_turn_lanes);
+  EXPECT_EQ(found_turn_lanes, expected_turn_lanes);
 }
 
 TEST(Turnlanes, validate_turn_lanes) {
@@ -178,7 +178,6 @@ TEST(Turnlanes, validate_turn_lanes) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

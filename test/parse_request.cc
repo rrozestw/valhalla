@@ -131,19 +131,19 @@ constexpr float kDefaultTransit_UseTransfers = 0.3f;
 ///////////////////////////////////////////////////////////////////////////////
 // validate by type methods
 void validate(const std::string& key, const bool expected_value, const bool pbf_value) {
-  EXPECT_EQ(pbf_value , expected_value) << "incorrect " << key;
+  EXPECT_EQ(pbf_value, expected_value) << "incorrect " << key;
 }
 
 void validate(const std::string& key,
               const bool expected_value,
               const bool has_pbf_value,
               const bool pbf_value) {
-  ASSERT_TRUE(has_pbf_value) << "bool value not found in pbf for key=" + key;  
-  EXPECT_EQ(pbf_value , expected_value) << "incorrect " << key;
+  ASSERT_TRUE(has_pbf_value) << "bool value not found in pbf for key=" + key;
+  EXPECT_EQ(pbf_value, expected_value) << "incorrect " << key;
 }
 
 void validate(const std::string& key, const float expected_value, const float pbf_value) {
-  EXPECT_EQ(pbf_value , expected_value) << "incorrect " << key;
+  EXPECT_EQ(pbf_value, expected_value) << "incorrect " << key;
 }
 
 void validate(const std::string& key,
@@ -151,11 +151,11 @@ void validate(const std::string& key,
               const bool has_pbf_value,
               const float pbf_value) {
   ASSERT_TRUE(has_pbf_value) << "float value not found in pbf for key=" + key;
-  EXPECT_EQ(pbf_value , expected_value) << "incorrect " << key;
+  EXPECT_EQ(pbf_value, expected_value) << "incorrect " << key;
 }
 
 void validate(const std::string& key, const uint32_t expected_value, const uint32_t pbf_value) {
-  EXPECT_EQ(pbf_value , expected_value) << "incorrect " << key;
+  EXPECT_EQ(pbf_value, expected_value) << "incorrect " << key;
 }
 
 void validate(const std::string& key,
@@ -163,13 +163,13 @@ void validate(const std::string& key,
               const bool has_pbf_value,
               const uint32_t pbf_value) {
   ASSERT_TRUE(has_pbf_value) << "uint32_t value not found in pbf for key=" + key;
-  EXPECT_EQ(pbf_value , expected_value) << "incorrect " << key;
+  EXPECT_EQ(pbf_value, expected_value) << "incorrect " << key;
 }
 
 void validate(const std::string& key,
               const std::string& expected_value,
               const std::string& pbf_value) {
-  EXPECT_EQ(pbf_value , expected_value) << "incorrect " << key;
+  EXPECT_EQ(pbf_value, expected_value) << "incorrect " << key;
 }
 
 void validate(const std::string& key,
@@ -178,7 +178,7 @@ void validate(const std::string& key,
               const std::string& pbf_value) {
 
   ASSERT_TRUE(has_pbf_value) << "string value not found in pbf for key=" + key;
-  EXPECT_EQ(pbf_value , expected_value) << "incorrect " << key;
+  EXPECT_EQ(pbf_value, expected_value) << "incorrect " << key;
 }
 
 void validate(const std::string& key,
@@ -186,10 +186,9 @@ void validate(const std::string& key,
               const bool has_pbf_value,
               const ShapeMatch pbf_value) {
   ASSERT_TRUE(has_pbf_value) << "ShapeMatch value not found in pbf for key=" + key;
-  EXPECT_EQ(pbf_value , expected_value)
-    << "Incorrect " + key +
-       " ShapeMatch | expected_value=" + ShapeMatch_Enum_Name(expected_value) +
-       " | found=" + ShapeMatch_Enum_Name(pbf_value);
+  EXPECT_EQ(pbf_value, expected_value)
+      << "Incorrect " + key + " ShapeMatch | expected_value=" + ShapeMatch_Enum_Name(expected_value) +
+             " | found=" + ShapeMatch_Enum_Name(pbf_value);
 }
 
 void validate(const std::string& key,
@@ -198,10 +197,10 @@ void validate(const std::string& key,
               const valhalla::FilterAction pbf_value) {
   ASSERT_TRUE(has_pbf_value) << "FilterAction value not found in pbf for key=" + key;
 
-  EXPECT_EQ(pbf_value , expected_value)
-    << "Incorrect " + key + " FilterAction | expected_value=" +
-       FilterAction_Enum_Name(expected_value) +
-       " | found=" + FilterAction_Enum_Name(pbf_value);
+  EXPECT_EQ(pbf_value, expected_value)
+      << "Incorrect " + key +
+             " FilterAction | expected_value=" + FilterAction_Enum_Name(expected_value) +
+             " | found=" + FilterAction_Enum_Name(pbf_value);
 }
 
 void validate(const std::string& key,
@@ -210,11 +209,10 @@ void validate(const std::string& key,
               const google::protobuf::RepeatedPtrField<std::string>& pbf_values) {
   ASSERT_TRUE(has_pbf_values) << "string values not found in pbf for key=" + key;
 
-  ASSERT_EQ(expected_values.size() , pbf_values.size())
-    << "invalid count in pbf for key=" + key;
+  ASSERT_EQ(expected_values.size(), pbf_values.size()) << "invalid count in pbf for key=" + key;
 
   for (size_t i = 0; i < expected_values.size(); ++i) {
-    ASSERT_EQ(pbf_values.Get(i) , expected_values.at(i)) << "incorrect " << key;
+    ASSERT_EQ(pbf_values.Get(i), expected_values.at(i)) << "incorrect " << key;
   }
 }
 
@@ -2580,7 +2578,6 @@ TEST(ParseRequest, test_operators_transit_filter) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

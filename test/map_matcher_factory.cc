@@ -15,7 +15,6 @@
 #define VALHALLA_SOURCE_DIR
 #endif
 
-
 namespace {
 
 using namespace valhalla;
@@ -106,7 +105,7 @@ TEST(MapMatcherFactory, TestMapMatcherFactory) {
       auto matcher = factory.Create(Costing::pedestrian, options);
       EXPECT_EQ(matcher->travelmode(), sif::TravelMode::kPedestrian);
       EXPECT_EQ(matcher->config().get<float>("search_radius"), preferred_search_radius)
-        << "preference for pedestrian should override pedestrian config";
+          << "preference for pedestrian should override pedestrian config";
 
       delete matcher;
     }
@@ -121,7 +120,7 @@ TEST(MapMatcherFactory, TestMapMatcherFactory) {
       auto matcher = factory.Create(Costing::pedestrian, options);
       EXPECT_EQ(matcher->travelmode(), sif::TravelMode::kPedestrian);
       EXPECT_EQ(matcher->config().get<float>("search_radius"), preferred_search_radius)
-        << "preference for universal should override config";
+          << "preference for universal should override config";
       delete matcher;
     }
 
@@ -132,7 +131,7 @@ TEST(MapMatcherFactory, TestMapMatcherFactory) {
       meili::MapMatcherFactory factory(root);
       auto matcher = factory.Create(options);
       EXPECT_EQ(matcher->travelmode(), sif::TravelMode::kDrive)
-        << "should read default mode in the meili.mode correctly";
+          << "should read default mode in the meili.mode correctly";
 
       delete matcher;
     }
@@ -145,14 +144,14 @@ TEST(MapMatcherFactory, TestMapMatcherFactory) {
       options.set_costing(Costing::pedestrian);
       auto matcher = factory.Create(options);
       EXPECT_EQ(matcher->travelmode(), sif::TravelMode::kPedestrian)
-        << "should read costing in options correctly";
+          << "should read costing in options correctly";
 
       delete matcher;
 
       options.set_costing(Costing::bicycle);
       matcher = factory.Create(options);
       EXPECT_EQ(matcher->travelmode(), sif::TravelMode::kBicycle)
-        << "should read costing in options correctly again";
+          << "should read costing in options correctly again";
 
       delete matcher;
     }
@@ -165,7 +164,7 @@ TEST(MapMatcherFactory, TestMapMatcherFactory) {
       options.set_costing(Costing::pedestrian);
       auto matcher = factory.Create(options);
       EXPECT_NE(matcher->costing()->travel_type(), (int)sif::PedestrianType::kSegway)
-        << "should not have custom costing options when not set in preferences";
+          << "should not have custom costing options when not set in preferences";
 
       delete matcher;
 
@@ -174,7 +173,7 @@ TEST(MapMatcherFactory, TestMapMatcherFactory) {
       matcher = factory.Create(options);
 
       EXPECT_EQ(matcher->costing()->travel_type(), (int)sif::PedestrianType::kSegway)
-        << "should read custom costing options in preferences correctly";
+          << "should read custom costing options in preferences correctly";
 
       delete matcher;
     }
@@ -196,16 +195,15 @@ TEST(MapMatcherFactory, TestMapMatcher) {
   // Share the same pool
 
   EXPECT_EQ(&auto_matcher->graphreader(), &pedestrian_matcher->graphreader())
-    << "graph reader should be shared among matchers";
+      << "graph reader should be shared among matchers";
   EXPECT_EQ(&auto_matcher->candidatequery(), &pedestrian_matcher->candidatequery())
-    << "range query should be shared among matchers";
+      << "range query should be shared among matchers";
 
   delete auto_matcher;
   delete pedestrian_matcher;
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

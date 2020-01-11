@@ -38,9 +38,9 @@ TEST(DoubleBucketQueue, TestInvalidConstruction) {
   std::vector<float> edgelabels;
   const auto edgecost = [&edgelabels](const uint32_t label) { return edgelabels[label]; };
   EXPECT_THROW(DoubleBucketQueue adjlist(0, 10000, 0, edgecost), runtime_error)
-    << "Invalid bucket size not caught";
+      << "Invalid bucket size not caught";
   EXPECT_THROW(DoubleBucketQueue adjlist(0, 0.0f, 1, edgecost), runtime_error)
-    << "Invalid cost range not caught";
+      << "Invalid cost range not caught";
 }
 
 TEST(DoubleBucketQueue, TestAddRemove) {
@@ -88,8 +88,8 @@ void TryRemove(DoubleBucketQueue& dbqueue, size_t num_to_remove, const std::vect
   auto previous_cost = -std::numeric_limits<float>::infinity();
   for (size_t i = 0; i < num_to_remove; ++i) {
     const auto top = dbqueue.pop();
-    EXPECT_NE(top, kInvalidLabel)
-      << "TryAddRemove: expected " + std::to_string(num_to_remove) + " labels to remove";
+    EXPECT_NE(top, kInvalidLabel) << "TryAddRemove: expected " + std::to_string(num_to_remove) +
+                                         " labels to remove";
     const auto cost = costs[top];
     EXPECT_LE(previous_cost, cost) << "TryAddRemove: expected order test failed";
     previous_cost = cost;
@@ -136,11 +136,11 @@ void TrySimulation(DoubleBucketQueue& dbqueue,
           dbqueue.decrease(idx, newcost);
           costs[idx] = newcost;
           // todo: why commented??
-          //EXPECT_EQ(dbqueue.cost(idx), newcost) << "failed to decrease cost";
+          // EXPECT_EQ(dbqueue.cost(idx), newcost) << "failed to decrease cost";
         } else {
           // Assert that it must fail to decrease since costs[idx] <= newcost
           // todo: why commented??
-          //EXPECT_THROW(dbqueue.decrease(idx, newcost), std::runtime_error);
+          // EXPECT_THROW(dbqueue.decrease(idx, newcost), std::runtime_error);
           // test::assert_throw<std::runtime_error>([&dbqueue, idx, newcost](){
           //     dbqueue.decrease(idx, newcost);
           //   }, "decreasing a non-less cost must fail");
@@ -185,7 +185,6 @@ TEST(DoubleBucketQueue, TestSimulation) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

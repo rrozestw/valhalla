@@ -13,7 +13,7 @@ constexpr size_t kNodeInfoExpectedSize = 32;
 namespace {
 
 TEST(NodeInfo, Sizeof) {
-  EXPECT_EQ(sizeof(NodeInfo) , kNodeInfoExpectedSize);
+  EXPECT_EQ(sizeof(NodeInfo), kNodeInfoExpectedSize);
 }
 
 TEST(NodeInfo, LL) {
@@ -64,28 +64,27 @@ TEST(NodeInfo, WriteRead) {
   nodeinfo.set_heading(6, 145);
   nodeinfo.set_heading(7, 0);
 
-  EXPECT_EQ(nodeinfo.heading(0) , 266);
-  EXPECT_EQ(nodeinfo.heading(1) , 90);
-  EXPECT_EQ(nodeinfo.heading(2) , 32);
-  EXPECT_EQ(nodeinfo.heading(3) , 180);
-  EXPECT_EQ(nodeinfo.heading(4) , 184);
-  EXPECT_EQ(nodeinfo.heading(5) , 270);
-  EXPECT_EQ(nodeinfo.heading(6) , 145);
-  EXPECT_EQ(nodeinfo.heading(7) , 0);
+  EXPECT_EQ(nodeinfo.heading(0), 266);
+  EXPECT_EQ(nodeinfo.heading(1), 90);
+  EXPECT_EQ(nodeinfo.heading(2), 32);
+  EXPECT_EQ(nodeinfo.heading(3), 180);
+  EXPECT_EQ(nodeinfo.heading(4), 184);
+  EXPECT_EQ(nodeinfo.heading(5), 270);
+  EXPECT_EQ(nodeinfo.heading(6), 145);
+  EXPECT_EQ(nodeinfo.heading(7), 0);
 
   nodeinfo.set_local_driveability(3, Traversability::kBoth);
   nodeinfo.set_local_driveability(5, Traversability::kNone);
   nodeinfo.set_local_driveability(7, Traversability::kForward);
   nodeinfo.set_local_driveability(1, Traversability::kBackward);
 
-  EXPECT_EQ(nodeinfo.local_driveability(3) , Traversability::kBoth);
-  EXPECT_EQ(nodeinfo.local_driveability(5) , Traversability::kNone);
-  EXPECT_EQ(nodeinfo.local_driveability(7) , Traversability::kForward);
-  EXPECT_EQ(nodeinfo.local_driveability(1) , Traversability::kBackward);
+  EXPECT_EQ(nodeinfo.local_driveability(3), Traversability::kBoth);
+  EXPECT_EQ(nodeinfo.local_driveability(5), Traversability::kNone);
+  EXPECT_EQ(nodeinfo.local_driveability(7), Traversability::kForward);
+  EXPECT_EQ(nodeinfo.local_driveability(1), Traversability::kBackward);
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

@@ -2,7 +2,6 @@
 #include <cstdint>
 #include <string>
 
-
 #include "baldr/datetime.h"
 #include "baldr/graphconstants.h"
 #include "baldr/timedomain.h"
@@ -110,16 +109,14 @@ void TryGetDuration(const std::string& date_time,
   auto tz = DateTime::get_tz_db().from_index(DateTime::get_tz_db().to_index("America/New_York"));
 
   EXPECT_EQ(DateTime::get_duration(date_time, seconds, tz), expected_date_time)
-    << std::string("Incorrect duration ") +
-    DateTime::get_duration(date_time, seconds, tz) + std::string(" ") +
-    expected_date_time;
+      << std::string("Incorrect duration ") + DateTime::get_duration(date_time, seconds, tz) +
+             std::string(" ") + expected_date_time;
 }
 
 void TryGetSecondsFromMidnight(const std::string& date_time, uint32_t expected_seconds) {
   auto secs = DateTime::seconds_from_midnight(date_time);
-  EXPECT_EQ(secs, expected_seconds)
-    << std::string("Incorrect number of seconds from ") + date_time +
-    " got: " + std::to_string(secs);
+  EXPECT_EQ(secs, expected_seconds) << std::string("Incorrect number of seconds from ") + date_time +
+                                           " got: " + std::to_string(secs);
 }
 
 void TryIsoDateTime() {
@@ -132,8 +129,9 @@ void TryIsoDateTime() {
   if (found != std::string::npos)
     time = current_date_time.substr(found + 1);
 
-  EXPECT_EQ(test_iso_date_time(DateTime::day_of_week_mask(current_date_time), time, tz), current_date_time)
-    << std::string("Iso date time failed ") + current_date_time;
+  EXPECT_EQ(test_iso_date_time(DateTime::day_of_week_mask(current_date_time), time, tz),
+            current_date_time)
+      << std::string("Iso date time failed ") + current_date_time;
 
   tz = DateTime::get_tz_db().from_index(DateTime::get_tz_db().to_index("America/Chicago"));
   current_date_time = DateTime::iso_date_time(tz);
@@ -141,8 +139,9 @@ void TryIsoDateTime() {
   if (found != std::string::npos)
     time = current_date_time.substr(found + 1);
 
-  EXPECT_EQ(test_iso_date_time(DateTime::day_of_week_mask(current_date_time), time, tz), current_date_time)
-    << std::string("Iso date time failed ") + current_date_time;
+  EXPECT_EQ(test_iso_date_time(DateTime::day_of_week_mask(current_date_time), time, tz),
+            current_date_time)
+      << std::string("Iso date time failed ") + current_date_time;
 
   tz = DateTime::get_tz_db().from_index(DateTime::get_tz_db().to_index("Africa/Porto-Novo"));
   current_date_time = DateTime::iso_date_time(tz);
@@ -150,15 +149,16 @@ void TryIsoDateTime() {
   if (found != std::string::npos)
     time = current_date_time.substr(found + 1);
 
-  EXPECT_EQ(test_iso_date_time(DateTime::day_of_week_mask(current_date_time), time, tz), current_date_time)
-    << std::string("Iso date time failed ") + current_date_time;
+  EXPECT_EQ(test_iso_date_time(DateTime::day_of_week_mask(current_date_time), time, tz),
+            current_date_time)
+      << std::string("Iso date time failed ") + current_date_time;
 }
 
 void TryTestIsValid(const std::string& date, bool return_value) {
 
   auto ret = DateTime::is_iso_valid(date);
-  EXPECT_EQ(ret, return_value)
-    << "Test is_iso_valid failed: " + date + " locale = " + std::locale("").name();
+  EXPECT_EQ(ret, return_value) << "Test is_iso_valid failed: " + date +
+                                      " locale = " + std::locale("").name();
 }
 
 void TryTestDST(const uint64_t origin_seconds,
@@ -171,26 +171,23 @@ void TryTestDST(const uint64_t origin_seconds,
   std::string iso_origin, iso_dest;
   DateTime::seconds_to_date(origin_seconds, dest_seconds, tz, tz, iso_origin, iso_dest);
 
-  EXPECT_EQ(iso_origin, o_value)
-    << "Test origin DST failed.  Expected: " + o_value + " but received " +
-    iso_origin;
+  EXPECT_EQ(iso_origin, o_value) << "Test origin DST failed.  Expected: " + o_value +
+                                        " but received " + iso_origin;
 
-  EXPECT_EQ(iso_dest, d_value)
-    << "Test destination DST failed.  Expected: " + d_value + " but received " +
-    iso_dest;
+  EXPECT_EQ(iso_dest, d_value) << "Test destination DST failed.  Expected: " + d_value +
+                                      " but received " + iso_dest;
 }
 
 void TryIsRestricted(const TimeDomain td, const std::string& date, const bool expected_value) {
 
   auto tz = DateTime::get_tz_db().from_index(DateTime::get_tz_db().to_index("America/New_York"));
 
-  EXPECT_EQ(DateTime::is_restricted(td.type(), td.begin_hrs(), td.begin_mins(), td.end_hrs(), td.end_mins(),
-                              td.dow(), td.begin_week(), td.begin_month(), td.begin_day_dow(),
-                              td.end_week(), td.end_month(), td.end_day_dow(),
-                                    DateTime::seconds_since_epoch(date, tz), tz),
+  EXPECT_EQ(DateTime::is_restricted(td.type(), td.begin_hrs(), td.begin_mins(), td.end_hrs(),
+                                    td.end_mins(), td.dow(), td.begin_week(), td.begin_month(),
+                                    td.begin_day_dow(), td.end_week(), td.end_month(),
+                                    td.end_day_dow(), DateTime::seconds_since_epoch(date, tz), tz),
             expected_value)
-    << "Is Restricted " + date +
-    " test failed.  Expected: " + std::to_string(expected_value);
+      << "Is Restricted " + date + " test failed.  Expected: " + std::to_string(expected_value);
 }
 
 void TryTestTimezoneDiff(const uint64_t date_time,
@@ -207,16 +204,14 @@ void TryTestTimezoneDiff(const uint64_t date_time,
   dt += DateTime::timezone_diff(dt, tz1, tz2);
 
   EXPECT_EQ(DateTime::seconds_to_date(dt, tz1), expected1)
-    << "Timezone Diff test #1: " 
-    + std::to_string(date_time) 
-    + " test failed.  Expected: " + expected1 + " but got " 
-    + DateTime::seconds_to_date(dt, tz1);
+      << "Timezone Diff test #1: " + std::to_string(date_time) +
+             " test failed.  Expected: " + expected1 + " but got " +
+             DateTime::seconds_to_date(dt, tz1);
 
   EXPECT_EQ(DateTime::seconds_to_date(dt, tz2), expected2)
-    << "Timezone Diff test #2: " 
-    + std::to_string(date_time) 
-    + " test failed.  Expected: " + expected2 + " but got " 
-    + DateTime::seconds_to_date(dt, tz2);
+      << "Timezone Diff test #2: " + std::to_string(date_time) +
+             " test failed.  Expected: " + expected2 + " but got " +
+             DateTime::seconds_to_date(dt, tz2);
 }
 
 TEST(DateTime, TestGetDaysFromPivotDate) {
@@ -533,15 +528,15 @@ TEST(DateTime, TestTimezoneDiff) {
 TEST(DateTime, TestDayOfWeek) {
   std::string date = "2018-07-22T10:00";
   uint32_t dow = DateTime::day_of_week(date);
-  EXPECT_EQ(dow , 0) << "DateTime::day_of_week failed: 0 expected";
+  EXPECT_EQ(dow, 0) << "DateTime::day_of_week failed: 0 expected";
 
   date = "2018-07-26T10:00";
   dow = DateTime::day_of_week(date);
-  EXPECT_EQ(dow , 4) << "DateTime::day_of_week failed: 4 expected";
+  EXPECT_EQ(dow, 4) << "DateTime::day_of_week failed: 4 expected";
 
   date = "2019-11-06T17:15";
   dow = DateTime::day_of_week(date);
-  EXPECT_EQ(dow , 3) << "DateTime::day_of_week failed: 3 expected";
+  EXPECT_EQ(dow, 3) << "DateTime::day_of_week failed: 3 expected";
 }
 
 TEST(DateTime, TestSecondOfWeek) {
@@ -550,19 +545,19 @@ TEST(DateTime, TestSecondOfWeek) {
   auto a = DateTime::second_of_week(1573078500, tz);
   auto e = 3 * valhalla::midgard::kSecondsPerDay + 17 * valhalla::midgard::kSecondsPerHour +
            15 * valhalla::midgard::kSecondsPerMinute;
-  EXPECT_EQ(a , e) << "Wrong second of week";
+  EXPECT_EQ(a, e) << "Wrong second of week";
 
   // 1982-12-08T06:07:42
   a = DateTime::second_of_week(408193662, tz);
   e = 3 * valhalla::midgard::kSecondsPerDay + 6 * valhalla::midgard::kSecondsPerHour +
       7 * valhalla::midgard::kSecondsPerMinute + 42;
-  EXPECT_EQ(a , e) << "Wrong second of week";
+  EXPECT_EQ(a, e) << "Wrong second of week";
 
   // 2077-02-14T11:11:11
   a = DateTime::second_of_week(3380544671, tz);
   e = 0 * valhalla::midgard::kSecondsPerDay + 11 * valhalla::midgard::kSecondsPerHour +
       11 * valhalla::midgard::kSecondsPerMinute + 11;
-  EXPECT_EQ(a , e) << "Wrong second of week";
+  EXPECT_EQ(a, e) << "Wrong second of week";
 }
 
 } // namespace

@@ -19,26 +19,27 @@ TEST(GridRangeQuery, TestAddLineSegment) {
   meili::GridRangeQuery<int, midgard::PointLL> grid(bbox, 1.f, 1.f);
 
   grid.AddLineSegment(0, LineSegment({2.5, 3.5}, {10, 3.5}));
-  const auto &items23 = grid.GetItemsInSquare(2, 3);
-  EXPECT_EQ(items23.size() , 1) << "should be added to Cell(2, 3)";
+  const auto& items23 = grid.GetItemsInSquare(2, 3);
+  EXPECT_EQ(items23.size(), 1) << "should be added to Cell(2, 3)";
 
-  const auto &items53 = grid.GetItemsInSquare(5, 3);
-  EXPECT_EQ(items53.size() , 1) << "should be added to Cell(5, 3)";
+  const auto& items53 = grid.GetItemsInSquare(5, 3);
+  EXPECT_EQ(items53.size(), 1) << "should be added to Cell(5, 3)";
 
-  const auto &items88 = grid.GetItemsInSquare(8, 8);
+  const auto& items88 = grid.GetItemsInSquare(8, 8);
   EXPECT_TRUE(items88.empty()) << "nothing should be added to Cell(8, 8)";
 
   grid.AddLineSegment(1, LineSegment({10, 3.5}, {2.5, 3.5}));
-  const auto &items33 = grid.GetItemsInSquare(2, 3);
-  EXPECT_EQ(items33.size() , 2) << "2 items should be added to Cell(2, 3)";
+  const auto& items33 = grid.GetItemsInSquare(2, 3);
+  EXPECT_EQ(items33.size(), 2) << "2 items should be added to Cell(2, 3)";
 
   grid.AddLineSegment(0, LineSegment({-10, -10}, {110, 110}));
-  const auto &items50 = grid.GetItemsInSquare(50, 50);
-  EXPECT_EQ(items50.size() , 1) << "should be added to Cell(50, 50)";
+  const auto& items50 = grid.GetItemsInSquare(50, 50);
+  EXPECT_EQ(items50.size(), 1) << "should be added to Cell(50, 50)";
 
-  const auto &old_item00_size = grid.GetItemsInSquare(0, 0).size();
+  const auto& old_item00_size = grid.GetItemsInSquare(0, 0).size();
   grid.AddLineSegment(0, LineSegment({0.5, 0.5}, {0.5, 0.5}));
-  EXPECT_EQ(grid.GetItemsInSquare(0, 0).size() , old_item00_size + 1) << "empty segment should be added";
+  EXPECT_EQ(grid.GetItemsInSquare(0, 0).size(), old_item00_size + 1)
+      << "empty segment should be added";
 
   // A special case that failed
   {
@@ -57,7 +58,7 @@ TEST(GridRangeQuery, TestQuery) {
   grid.AddLineSegment(0, LineSegment({2.5, 3.5}, {10, 3.5}));
 
   auto items = grid.Query(BoundingBox(2, 2, 5, 5));
-  EXPECT_EQ(items.size() , 1 && items.find(0) != items.end()) << "query should get item 0";
+  EXPECT_EQ(items.size(), 1 && items.find(0) != items.end()) << "query should get item 0";
 
   items = grid.Query(BoundingBox(10, 10, 20, 20));
   EXPECT_TRUE(items.empty()) << "query should get nothing";
@@ -68,7 +69,6 @@ TEST(GridRangeQuery, TestQuery) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

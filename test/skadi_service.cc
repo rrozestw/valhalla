@@ -153,7 +153,6 @@ const std::vector<std::string> responses{
         "292,292,291,289,278,279,279,280,281,281,280,281,281,282,282,282,280,276,251,248,247,246,"
         "244,243,240,239,239,238,239,241,241,239,236,221,221,225,224]}")};
 
-
 void create_tile() {
   // its annoying to have to get actual data but its also very boring to test with fake data
   // so we get some real data build the tests and then create the data on the fly
@@ -253,7 +252,6 @@ TEST(SkadiService, test_requests) {
 }
 } // namespace
 
-
 // TODO: add tests that do resampling as well
 
 class SkadiServiceEnv : public ::testing::Environment {
@@ -262,7 +260,6 @@ public:
     create_tile();
   }
 };
-
 
 // Elevation service
 int main(int argc, char* argv[]) {

@@ -25,19 +25,19 @@ TEST(DirectedEdge, TestWriteRead) {
   directededge.set_turntype(2, Turn::Type::kSharpRight);
   directededge.set_turntype(5, Turn::Type::kSharpLeft);
 
-  EXPECT_EQ(directededge.turntype(0) , Turn::Type::kStraight);
-  EXPECT_EQ(directededge.turntype(3) , Turn::Type::kRight);
-  EXPECT_EQ(directededge.turntype(5) , Turn::Type::kSharpLeft);
-  EXPECT_EQ(directededge.turntype(1) , Turn::Type::kLeft);
-  EXPECT_EQ(directededge.turntype(2) , Turn::Type::kSharpRight);
+  EXPECT_EQ(directededge.turntype(0), Turn::Type::kStraight);
+  EXPECT_EQ(directededge.turntype(3), Turn::Type::kRight);
+  EXPECT_EQ(directededge.turntype(5), Turn::Type::kSharpLeft);
+  EXPECT_EQ(directededge.turntype(1), Turn::Type::kLeft);
+  EXPECT_EQ(directededge.turntype(2), Turn::Type::kSharpRight);
 
   directededge.set_stopimpact(5, 7);
   directededge.set_stopimpact(1, 4);
   directededge.set_stopimpact(3, 0);
 
-  EXPECT_EQ(directededge.stopimpact(3) , 0);
-  EXPECT_EQ(directededge.stopimpact(5) , 7);
-  EXPECT_EQ(directededge.stopimpact(1) , 4);
+  EXPECT_EQ(directededge.stopimpact(3), 0);
+  EXPECT_EQ(directededge.stopimpact(5), 7);
+  EXPECT_EQ(directededge.stopimpact(1), 4);
 
   // name consistency should be false by default
   EXPECT_FALSE(directededge.name_consistency(2));
@@ -62,47 +62,46 @@ TEST(DirectedEdge, TestMaxSlope) {
   DirectedEdge edge;
 
   edge.set_max_up_slope(5.0f);
-  EXPECT_EQ(edge.max_up_slope() , 5);
+  EXPECT_EQ(edge.max_up_slope(), 5);
 
   edge.set_max_up_slope(15.0f);
-  EXPECT_EQ(edge.max_up_slope() , 15);
+  EXPECT_EQ(edge.max_up_slope(), 15);
 
   edge.set_max_up_slope(-5.0f);
-  EXPECT_EQ(edge.max_up_slope() , 0);
+  EXPECT_EQ(edge.max_up_slope(), 0);
 
   edge.set_max_up_slope(25.0f);
-  EXPECT_EQ(edge.max_up_slope() , 28);
+  EXPECT_EQ(edge.max_up_slope(), 28);
 
   edge.set_max_up_slope(71.5f);
-  EXPECT_EQ(edge.max_up_slope() , 72);
+  EXPECT_EQ(edge.max_up_slope(), 72);
 
   edge.set_max_up_slope(88.0f);
-  EXPECT_EQ(edge.max_up_slope() , 76);
+  EXPECT_EQ(edge.max_up_slope(), 76);
 
   edge.set_max_up_slope(15.7f);
-  EXPECT_EQ(edge.max_up_slope() , 16);
-
+  EXPECT_EQ(edge.max_up_slope(), 16);
 
   edge.set_max_down_slope(-5.5f);
-  EXPECT_EQ(edge.max_down_slope() , -6);
+  EXPECT_EQ(edge.max_down_slope(), -6);
 
   edge.set_max_down_slope(-15.0f);
-  EXPECT_EQ(edge.max_down_slope() , -15);
+  EXPECT_EQ(edge.max_down_slope(), -15);
 
   edge.set_max_down_slope(5.0f);
-  EXPECT_EQ(edge.max_down_slope() , 0);
+  EXPECT_EQ(edge.max_down_slope(), 0);
 
   edge.set_max_down_slope(-25.0f);
-  EXPECT_EQ(edge.max_down_slope() , -28);
+  EXPECT_EQ(edge.max_down_slope(), -28);
 
   edge.set_max_down_slope(-71.5f);
-  EXPECT_EQ(edge.max_down_slope() , -72);
+  EXPECT_EQ(edge.max_down_slope(), -72);
 
   edge.set_max_down_slope(-88.0f);
-  EXPECT_EQ(edge.max_down_slope() , -76);
+  EXPECT_EQ(edge.max_down_slope(), -76);
 
   edge.set_max_down_slope(-15.7f);
-  EXPECT_EQ(edge.max_down_slope() , -16);
+  EXPECT_EQ(edge.max_down_slope(), -16);
 }
 
 } // namespace
@@ -111,4 +110,3 @@ int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
-

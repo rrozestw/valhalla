@@ -9,7 +9,6 @@
 
 #include <gtest/gtest.h>
 
-
 // Viterbi and topK search tests
 
 using namespace valhalla::meili;
@@ -74,8 +73,7 @@ void AddColumns(IViterbiSearch& vs, const std::vector<Column>& columns) {
       StateId stateid(time, idx);
       const auto added = vs.AddStateId(stateid);
 
-      ASSERT_TRUE(added) << std::to_string(stateid.time()) 
-                         << "/" + std::to_string(stateid.id()) 
+      ASSERT_TRUE(added) << std::to_string(stateid.time()) << "/" + std::to_string(stateid.id())
                          << " must be added";
 
       ASSERT_TRUE(vs.HasStateId(stateid)) << "must contain it";
@@ -231,7 +229,8 @@ void test_viterbi_search(const std::vector<Column>& columns) {
         std::cout << "PATH OF VS" << std::endl;
         print_path_reversely(columns, vs.SearchPath(time), vs.PathEnd());
       }
-      EXPECT_EQ(na.AccumulatedCost(na_winner), vs.AccumulatedCost(vs_winner)) << "costs should be both optimal";
+      EXPECT_EQ(na.AccumulatedCost(na_winner), vs.AccumulatedCost(vs_winner))
+          << "costs should be both optimal";
     } else {
       EXPECT_FALSE(vs_winner.IsValid()) << "both winners should not be found";
     }
@@ -401,10 +400,10 @@ void validate_path(const std::vector<Column>& columns, const std::vector<StateId
 
   for (StateId::Time time = 0; time < path.size(); time++) {
     EXPECT_TRUE(path[time].IsValid())
-      << "stateid in path must be valid at time " + std::to_string(time);
+        << "stateid in path must be valid at time " + std::to_string(time);
 
-    EXPECT_EQ(time, path[time].time()) <<
-                      "path[time].time() != time " + std::to_string(path[time].time());
+    EXPECT_EQ(time, path[time].time())
+        << "path[time].time() != time " + std::to_string(path[time].time());
 
     EXPECT_LT(path[time].id(), columns[time].size());
 
@@ -434,8 +433,8 @@ float total_cost(const std::vector<Column>& columns, const std::vector<StateId>&
 void test_viterbisearch_brute_force(const std::vector<Column>& columns, IViterbiSearch& vs) {
   const auto& pcs = sort_all_paths(columns);
   if (columns.empty()) {
-    EXPECT_EQ(pcs, std::vector<PathWithCost>{PathWithCost({}, 0.0)}) <<
-                      "expect empty set from empty columns";
+    EXPECT_EQ(pcs, std::vector<PathWithCost>{PathWithCost({}, 0.0)})
+        << "expect empty set from empty columns";
     return;
   }
 

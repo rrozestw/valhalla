@@ -22,17 +22,16 @@ TEST(ComplexRestriction, WriteRead) {
   // Test building a ComplexRestriction and reading back values
   ComplexRestriction r;
   EXPECT_FALSE(r.from_graphid().Is_Valid())
-    << "ComplexRestriction from Id should be invalid with default constructor";
+      << "ComplexRestriction from Id should be invalid with default constructor";
 
   // Test set method (complex restriction builder) and get methods
   ComplexRestrictionBuilder res;
   res.set_from_id(GraphId(1234, 1, 111));
   EXPECT_EQ(res.from_graphid(), GraphId(1234, 1, 111))
-    << "ComplexRestriction from GraphId get failed";
+      << "ComplexRestriction from GraphId get failed";
 
   res.set_to_id(GraphId(2345, 1, 2222));
-  EXPECT_EQ(res.to_graphid(), GraphId(2345, 1, 2222))
-    << "ComplexRestriction to GraphId get failed";
+  EXPECT_EQ(res.to_graphid(), GraphId(2345, 1, 2222)) << "ComplexRestriction to GraphId get failed";
 
   res.set_via_list(std::vector<GraphId>(5, GraphId{}));
   EXPECT_EQ(res.via_count() , 5) << "ComplexRestriction via count failed";
@@ -41,8 +40,7 @@ TEST(ComplexRestriction, WriteRead) {
   EXPECT_EQ(res.via_count() , 5) << "ComplexRestriction via count limit check failed";
 
   res.set_type(RestrictionType::kNoLeftTurn);
-  EXPECT_EQ(res.type(), RestrictionType::kNoLeftTurn)
-    << "ComplexRestriction type failed";
+  EXPECT_EQ(res.type(), RestrictionType::kNoLeftTurn) << "ComplexRestriction type failed";
 
   res.set_modes(2224);
   EXPECT_EQ(res.modes(), 2224) << "ComplexRestriction modes failed";
@@ -88,7 +86,6 @@ TEST(ComplexRestriction, WriteRead) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

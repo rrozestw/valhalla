@@ -196,17 +196,17 @@ TEST(Utrecht, TestBus) {
   EXPECT_TRUE(way_33648196.bike_backward());
 }
 
-
 // Setup and tearown will be called only once for the entire suite
 class UtrecthTestSuiteEnv : public ::testing::Environment {
 public:
   void SetUp() override {
     boost::property_tree::ptree conf;
     conf.put<std::string>("mjolnir.tile_dir", "test/data/parser_tiles");
-    auto osmdata = PBFGraphParser::Parse(conf.get_child("mjolnir"),
-                                         {VALHALLA_SOURCE_DIR "test/data/utrecht_netherlands.osm.pbf"},
-                                         ways_file, way_nodes_file, access_file, from_restriction_file,
-                                         to_restriction_file, bss_file);
+    auto osmdata =
+        PBFGraphParser::Parse(conf.get_child("mjolnir"),
+                              {VALHALLA_SOURCE_DIR "test/data/utrecht_netherlands.osm.pbf"},
+                              ways_file, way_nodes_file, access_file, from_restriction_file,
+                              to_restriction_file, bss_file);
   }
 
   void TearDown() override {
@@ -219,7 +219,6 @@ public:
 };
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::AddGlobalTestEnvironment(new UtrecthTestSuiteEnv);

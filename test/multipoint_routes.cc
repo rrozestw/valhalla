@@ -151,9 +151,9 @@ void test_mid_break(const std::string& date_time) {
     }
   }
 
-  EXPECT_EQ(names, (std::vector<std::string>{"Korianderstraat", "Maanzaadstraat", "", "Maanzaadstraat",
-          "Korianderstraat", ""}))
-    << "Should be a destination at the midpoint and reverse the route for the second leg";
+  EXPECT_EQ(names, (std::vector<std::string>{"Korianderstraat", "Maanzaadstraat", "",
+                                             "Maanzaadstraat", "Korianderstraat", ""}))
+      << "Should be a destination at the midpoint and reverse the route for the second leg";
 
   check_dates(date_time.find(R"("type":)") != std::string::npos, response.options().locations(),
               *tester.reader);
@@ -194,8 +194,8 @@ void test_mid_through(const std::string& date_time) {
   }
 
   EXPECT_EQ(names, (std::vector<std::string>{"Korianderstraat", "Maanzaadstraat", "Pimpernelstraat",
-          "Selderiestraat", "Korianderstraat", ""}))
-    << "Should continue through the midpoint and around the block";
+                                             "Selderiestraat", "Korianderstraat", ""}))
+      << "Should continue through the midpoint and around the block";
 
   check_dates(date_time.find(R"("type":)") != std::string::npos, response.options().locations(),
               *tester.reader);
@@ -237,11 +237,11 @@ void test_mid_via(const std::string& date_time) {
 
   float mid_via_distance = directions.begin()->summary().length();
   EXPECT_NEAR(mid_via_distance, mid_break_distance, 0.001f)
-    << "The only difference in path between mid break and mid via is arrive/depart guidance";
-  
+      << "The only difference in path between mid break and mid via is arrive/depart guidance";
+
   EXPECT_EQ(names, (std::vector<std::string>{"Korianderstraat", "Maanzaadstraat", "Maanzaadstraat",
-          "Korianderstraat", ""}))
-    << "Should be a uturn at the mid point";
+                                             "Korianderstraat", ""}))
+      << "Should be a uturn at the mid point";
 
   check_dates(date_time.find(R"("type":)") != std::string::npos, response.options().locations(),
               *tester.reader);
@@ -280,13 +280,14 @@ void test_mid_break_through(const std::string& date_time) {
 
   float mid_break_through_distance =
       directions.begin()->summary().length() + directions.rbegin()->summary().length();
-  
-  EXPECT_NEAR(mid_break_through_distance, mid_through_distance, 0.001f)
-    << "The only difference in path between mid through and mid break through is arrive/depart guidance";
 
-  EXPECT_EQ(names, (std::vector<std::string>{"Korianderstraat", "Maanzaadstraat", "", "Maanzaadstraat",
-          "Pimpernelstraat", "Selderiestraat", "Korianderstraat", ""}))
-    << "Should be a destination at the midpoint and continue around the block";
+  EXPECT_NEAR(mid_break_through_distance, mid_through_distance, 0.001f)
+      << "The only difference in path between mid through and mid break through is arrive/depart guidance";
+
+  EXPECT_EQ(names,
+            (std::vector<std::string>{"Korianderstraat", "Maanzaadstraat", "", "Maanzaadstraat",
+                                      "Pimpernelstraat", "Selderiestraat", "Korianderstraat", ""}))
+      << "Should be a destination at the midpoint and continue around the block";
 
   check_dates(date_time.find(R"("type":)") != std::string::npos, response.options().locations(),
               *tester.reader);
@@ -341,7 +342,6 @@ TEST(MultiPointRoutesBreakThrough, test_mid_break_through_arrive_by) {
 }
 
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   valhalla::midgard::logging::Configure({{"type", ""}});
