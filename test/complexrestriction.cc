@@ -34,10 +34,10 @@ TEST(ComplexRestriction, WriteRead) {
   EXPECT_EQ(res.to_graphid(), GraphId(2345, 1, 2222)) << "ComplexRestriction to GraphId get failed";
 
   res.set_via_list(std::vector<GraphId>(5, GraphId{}));
-  EXPECT_EQ(res.via_count() , 5) << "ComplexRestriction via count failed";
+  EXPECT_EQ(res.via_count(), 5) << "ComplexRestriction via count failed";
 
   res.set_via_list(std::vector<GraphId>(kMaxViasPerRestriction + 7, GraphId{}));
-  EXPECT_EQ(res.via_count() , 5) << "ComplexRestriction via count limit check failed";
+  EXPECT_EQ(res.via_count(), 5) << "ComplexRestriction via count limit check failed";
 
   res.set_type(RestrictionType::kNoLeftTurn);
   EXPECT_EQ(res.type(), RestrictionType::kNoLeftTurn) << "ComplexRestriction type failed";

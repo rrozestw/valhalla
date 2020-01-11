@@ -1030,17 +1030,16 @@ TEST(Mapmatch, test_intersection_matching) {
     const auto& routes = matched.get_child("matchings");
     for (const auto& route : routes) {
       const auto& legs = route.second.get_child("legs");
-      ASSERT_EQ(legs.size() , test_answers[i].first)
-        << "Expected " + std::to_string(test_answers[i].first) +
-           " legs but got " + std::to_string(legs.size());
+      ASSERT_EQ(legs.size(), test_answers[i].first)
+          << "Expected " + std::to_string(test_answers[i].first) + " legs but got " +
+                 std::to_string(legs.size());
 
       int j = 0;
       for (const auto& leg : legs) {
         float distance = leg.second.get<float>("distance");
-        ASSERT_EQ(distance , test_answers[i].second[j++])
-          << "Expected legs with distance" +
-                                 std::to_string(test_answers[i].second[j - 1]) + " but got " +
-          std::to_string(distance);
+        ASSERT_EQ(distance, test_answers[i].second[j++])
+            << "Expected legs with distance" + std::to_string(test_answers[i].second[j - 1]) +
+                   " but got " + std::to_string(distance);
       }
     }
   }

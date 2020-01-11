@@ -195,7 +195,7 @@ void make_tile() {
   GraphTileBuilder::AddBins(test_dir, &reloaded, bins);
 
   ASSERT_PRED1(filesystem::exists, test_dir + "/2/000/519/120.gph")
-    << "Still no expected tile, did the actual fname on disk change?";
+      << "Still no expected tile, did the actual fname on disk change?";
 }
 
 const std::string config_file = "test/test_trivial_path";
@@ -261,11 +261,10 @@ void assert_is_trivial_path(vt::PathAlgorithm& astar,
   vb::GraphReader reader(conf);
   auto* tile = reader.GetGraphTile(tile_id);
 
-  ASSERT_NE(tile, nullptr)
-    << "Unable to load test tile! Did `make_tile` run succesfully?";
+  ASSERT_NE(tile, nullptr) << "Unable to load test tile! Did `make_tile` run succesfully?";
 
-  EXPECT_EQ(tile->header()->directededgecount() , 14)
-    << "test-tiles does not contain expected number of edges";
+  EXPECT_EQ(tile->header()->directededgecount(), 14)
+      << "test-tiles does not contain expected number of edges";
 
   const GraphTile* endtile = reader.GetGraphTile(node::b.first);
   ASSERT_NE(endtile, nullptr) << "bad tile, node::b wasn't found in it";
@@ -300,7 +299,7 @@ void assert_is_trivial_path(vt::PathAlgorithm& astar,
     for (const vt::PathInfo& subpath : path) {
       LOG_INFO("Got path " + std::to_string(subpath.edgeid.id()));
     }
-    EXPECT_EQ(path.size() , expected_num_paths);
+    EXPECT_EQ(path.size(), expected_num_paths);
     break;
   }
 
@@ -317,9 +316,8 @@ void assert_is_trivial_path(vt::PathAlgorithm& astar,
       expected_time = expected_cost.secs;
       break;
   };
-  EXPECT_NE(expected_time, 0)
-    << "Expected time is 0, your test probably has a logic error";
-  EXPECT_EQ(time , expected_time) << "time in seconds";
+  EXPECT_NE(expected_time, 0) << "Expected time is 0, your test probably has a logic error";
+  EXPECT_EQ(time, expected_time) << "time in seconds";
 }
 
 // Adds edge to location

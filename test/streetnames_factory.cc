@@ -5,9 +5,7 @@
 #include <memory>
 #include <vector>
 
-
 #include "test.h"
-
 
 using namespace valhalla::baldr;
 
@@ -20,7 +18,7 @@ void TryCreate(const std::string& country_code,
 
   auto& value = *street_names.get();
   std::string rtti(typeid(value).name());
-  EXPECT_EQ(rtti , expected) << "Incorrect object type";
+  EXPECT_EQ(rtti, expected) << "Incorrect object type";
 }
 
 TEST(StreetnamesFactory, Create) {
