@@ -15,8 +15,6 @@
 #include <valhalla/proto/options.pb.h>
 #include <valhalla/proto/trip.pb.h>
 
-#include "test.h" // for load_binary_file
-
 #include "test.h"
 
 #if !defined(VALHALLA_SOURCE_DIR)

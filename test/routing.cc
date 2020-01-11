@@ -2,8 +2,6 @@
 // -*- mode: c++ -*-
 #include "meili/routing.h"
 
-#include "test.h" // for random generator
-
 #include "test.h"
 
 using namespace valhalla;

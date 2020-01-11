@@ -34,10 +34,6 @@ inline std::string load_binary_file(const std::string filename) {
   return bytes;
 }
 
-template <typename T> inline bool IsBetweenInclusive(T value, T lower, T upper) {
-  return (value >= lower && value <= upper);
-}
-
 MATCHER_P2(IsBetween,
            a,
            b,
