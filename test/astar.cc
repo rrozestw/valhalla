@@ -193,9 +193,9 @@ void make_tile() {
   GraphTile reloaded(test_dir, tile_id);
   auto bins = GraphTileBuilder::BinEdges(&reloaded, tweeners);
   GraphTileBuilder::AddBins(test_dir, &reloaded, bins);
-  if (!filesystem::exists(test_dir + "/2/000/519/120.gph")) {
-    throw std::runtime_error("Still no expected tile, did the actual fname on disk change?");
-  }
+
+  ASSERT_PRED1(filesystem::exists, test_dir + "/2/000/519/120.gph")
+    << "Still no expected tile, did the actual fname on disk change?";
 }
 
 const std::string config_file = "test/test_trivial_path";
@@ -260,20 +260,20 @@ void assert_is_trivial_path(vt::PathAlgorithm& astar,
 
   vb::GraphReader reader(conf);
   auto* tile = reader.GetGraphTile(tile_id);
-  if (tile == nullptr) {
-    throw std::runtime_error("Unable to load test tile! Did `make_tile` run succesfully?");
-  }
-  if (tile->header()->directededgecount() != 14) {
-    throw std::runtime_error("test-tiles does not contain expected number of edges");
-  }
+
+  ASSERT_NE(tile, nullptr)
+    << "Unable to load test tile! Did `make_tile` run succesfully?";
+
+  EXPECT_EQ(tile->header()->directededgecount() , 14)
+    << "test-tiles does not contain expected number of edges";
+
   const GraphTile* endtile = reader.GetGraphTile(node::b.first);
-  if (endtile == nullptr) {
-    throw std::runtime_error("bad tile, node::b wasn't found in it");
-  }
+  ASSERT_NE(endtile, nullptr) << "bad tile, node::b wasn't found in it";
 
   Options options;
   create_costing_options(options);
   vs::cost_ptr_t costs[int(vs::TravelMode::kMaxTravelMode)];
+
   switch (mode) {
     case vs::TravelMode::kPedestrian: {
       auto pedestrian = vs::CreatePedestrianCost(Costing::pedestrian, options);
@@ -286,9 +286,9 @@ void assert_is_trivial_path(vt::PathAlgorithm& astar,
       break;
     }
     default:
-      throw std::runtime_error("Unhandled case");
+      FAIL() << "unhandled mode " << static_cast<int>(mode);
   }
-  assert(bool(costs[int(mode)]));
+  ASSERT_TRUE(bool(costs[int(mode)]));
 
   auto paths = astar.GetBestPath(origin, dest, reader, costs, mode);
 
@@ -300,11 +300,7 @@ void assert_is_trivial_path(vt::PathAlgorithm& astar,
     for (const vt::PathInfo& subpath : path) {
       LOG_INFO("Got path " + std::to_string(subpath.edgeid.id()));
     }
-    if (path.size() != expected_num_paths) {
-      std::ostringstream ostr;
-      ostr << "Expected number of paths to be " << expected_num_paths << ", but got " << path.size();
-      throw std::runtime_error(ostr.str());
-    }
+    EXPECT_EQ(path.size() , expected_num_paths);
     break;
   }
 
@@ -321,15 +317,9 @@ void assert_is_trivial_path(vt::PathAlgorithm& astar,
       expected_time = expected_cost.secs;
       break;
   };
-  if (expected_time == 0) {
-    throw std::runtime_error("Expected time is 0, your test probably has a logic error");
-  }
-
-  if (time != expected_time) {
-    std::ostringstream ostr;
-    ostr << "Expected time to be " << expected_time << "s, but got " << time << "s";
-    throw std::runtime_error(ostr.str());
-  }
+  EXPECT_NE(expected_time, 0)
+    << "Expected time is 0, your test probably has a logic error";
+  EXPECT_EQ(time , expected_time) << "time in seconds";
 }
 
 // Adds edge to location
@@ -371,18 +361,19 @@ void TestTrivialPath(vt::PathAlgorithm& astar) {
                          vs::TravelMode::kDrive);
 }
 
-void TestTrivialPathForward() {
+TEST(Astar, TestTrivialPathForward) {
   auto astar = vt::TimeDepForward();
   TestTrivialPath(astar);
 }
-void TestTrivialPathReverse() {
+
+TEST(Astar, TestTrivialPathReverse) {
   auto astar = vt::TimeDepReverse();
   TestTrivialPath(astar);
 }
 
 // test that a path from E to F succeeds, even if the edges from E and F
 // to G appear first in the PathLocation.
-void TestTrivialPathTriangle() {
+TEST(Astar, TestTrivialPathTriangle) {
   using node::e;
   using node::f;
 
@@ -468,14 +459,16 @@ void TestPartialDuration(vt::PathAlgorithm& astar) {
                          vs::TravelMode::kDrive);
 }
 
-void TestPartialDurationForward() {
+TEST(Astar, TestPartialDurationForward) {
   vt::TimeDepForward astar;
   TestPartialDuration(astar);
 }
-void TestPartialDurationReverse() {
+
+TEST(Astar, TestPartialDurationReverse) {
   vt::TimeDepReverse astar;
   TestPartialDuration(astar);
 }
+
 void trivial_path_no_uturns(const std::string& config_file) {
   boost::property_tree::ptree conf;
   rapidjson::read_json(config_file, conf);
@@ -540,10 +533,10 @@ void trivial_path_no_uturns(const std::string& config_file) {
   std::vector<PathLocation> path_location;
 
   for (const auto& loc : locations) {
-    try {
-      path_location.push_back(projections.at(loc));
-      PathLocation::toPBF(path_location.back(), options.mutable_locations()->Add(), graph_reader);
-    } catch (...) { throw std::runtime_error("fail_invalid_origin"); }
+    ASSERT_NO_THROW(
+            path_location.push_back(projections.at(loc));
+            PathLocation::toPBF(path_location.back(), options.mutable_locations()->Add(), graph_reader);
+      ) << "fail_invalid_origin";
   }
 
   vt::AStarPathAlgorithm astar;
@@ -561,11 +554,7 @@ void trivial_path_no_uturns(const std::string& config_file) {
   odin::DirectionsBuilder::Build(api);
   const auto& trip_directions = api.directions().routes(0).legs(0);
 
-  if (trip_directions.summary().time() != 0) {
-    std::ostringstream ostr;
-    ostr << "Expected 0, but got " << trip_directions.summary().time();
-    throw std::runtime_error(ostr.str());
-  }
+  EXPECT_EQ(trip_directions.summary().time() , 0);
 
   boost::filesystem::remove(ways_file);
   boost::filesystem::remove(way_nodes_file);
@@ -576,13 +565,9 @@ void trivial_path_no_uturns(const std::string& config_file) {
   boost::filesystem::remove(cr_to_file);
 }
 
-void TestTrivialPathNoUturns() {
-  trivial_path_no_uturns(config_file);
-}
-
-void DoConfig() {
-  // make a config file
+TEST(Astar, TestTrivialPathNoUturns) {
   write_config(config_file);
+  trivial_path_no_uturns(config_file);
 }
 
 std::string ways_file = "test_ways_whitelion.bin";
@@ -651,7 +636,7 @@ struct route_tester {
   vo::odin_worker_t odin_worker;
 };
 
-void test_oneway() {
+TEST(Astar, test_oneway) {
   auto conf = get_conf("whitelion_tiles");
   route_tester tester(conf);
   // Test onewayness with this route - oneway works, South-West to North-East
@@ -663,9 +648,7 @@ void test_oneway() {
   const auto& legs = response.trip().routes(0).legs();
   const auto& directions = response.directions().routes(0).legs();
 
-  if (legs.size() != 1) {
-    throw std::logic_error("Should have 1 leg");
-  }
+  EXPECT_EQ(legs.size() , 1);
 
   std::vector<std::string> names;
 
@@ -683,13 +666,12 @@ void test_oneway() {
   }
 
   auto correct_route = std::vector<std::string>{"Quay Street", "Nelson Street", ""};
-  if (names != correct_route) {
-    throw std::logic_error("Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
-                           ", expected: \n" + boost::algorithm::join(correct_route, ", "));
-  }
+  EXPECT_EQ(names , correct_route)
+    << "Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
+       ", expected: \n" + boost::algorithm::join(correct_route, ", ");
 }
 
-void test_oneway_wrong_way() {
+TEST(Astar, test_oneway_wrong_way) {
   auto conf = get_conf("whitelion_tiles");
   route_tester tester(conf);
   // Test onewayness with this route - oneway wrong way, North-east to South-West
@@ -699,14 +681,15 @@ void test_oneway_wrong_way() {
 
   try {
     auto response = tester.test(request);
+    FAIL() << "Expectd exception!";
   } catch (const std::exception& e) {
-    if (std::string(e.what()) != "No path could be found for input") {
-      throw std::logic_error("Was expecting 'No path could be found for input'");
-    }
+    EXPECT_EQ(std::string(e.what()) , "No path could be found for input");
+  } catch (...) {
+    FAIL() << "Wrong exception type";
   }
 }
 
-void test_deadend() {
+TEST(Astar, test_deadend) {
   auto conf = get_conf("whitelion_tiles");
   route_tester tester(conf);
   std::string request =
@@ -723,9 +706,7 @@ void test_deadend() {
   const auto& legs = response.trip().routes(0).legs();
   const auto& directions = response.directions().routes(0).legs();
 
-  if (legs.size() != 1) {
-    throw std::logic_error("Should have 1 leg");
-  }
+  EXPECT_EQ(legs.size() , 1);
 
   std::vector<std::string> names;
   std::string uturn_street;
@@ -753,16 +734,14 @@ void test_deadend() {
       std::vector<std::string>{"Bell Lane",   "Small Street",
                                "Quay Street", // The u-turn on Quay Street is optimized away
                                "Quay Street", "Small Street", "", ""};
-  if (names != correct_route) {
-    throw std::logic_error("Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
-                           ", expected: \n" + boost::algorithm::join(correct_route, ", "));
-  }
-  if (uturn_street != "Quay Street") {
-    throw std::logic_error("We did not find the expected u-turn");
-  }
+  EXPECT_EQ(names , correct_route)
+    << "Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
+       ", expected: \n" + boost::algorithm::join(correct_route, ", ");
+
+  EXPECT_EQ(uturn_street , "Quay Street") << "We did not find the expected u-turn";
 }
 
-void test_deadend_timedep_forward() {
+TEST(Astar, test_deadend_timedep_forward) {
   auto conf = get_conf("whitelion_tiles_reverse");
   route_tester tester(conf);
   std::string request =
@@ -783,9 +762,7 @@ void test_deadend_timedep_forward() {
   const auto& legs = response.trip().routes(0).legs();
   const auto& directions = response.directions().routes(0).legs();
 
-  if (legs.size() != 1) {
-    throw std::logic_error("Should have 1 leg");
-  }
+  EXPECT_EQ(legs.size() , 1);
 
   std::vector<std::string> names;
   std::string uturn_street;
@@ -813,17 +790,15 @@ void test_deadend_timedep_forward() {
       std::vector<std::string>{"Bell Lane",   "Small Street",
                                "Quay Street", // The u-turn on Quay Street is optimized away
                                "Quay Street", "Small Street", "", ""};
-  if (names != correct_route) {
-    throw std::logic_error("Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
-                           ", expected: \n" + boost::algorithm::join(correct_route, ", "));
-  }
+  EXPECT_EQ(names , correct_route)
+    << "Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
+       ", expected: \n" + boost::algorithm::join(correct_route, ", ");
+
   // TODO Why did it not happen on Quay Street?
   // if (uturn_street != "Small Street") {
-  if (uturn_street != "Quay Street") {
-    throw std::logic_error("We did not find the expected u-turn");
-  }
+  EXPECT_EQ(uturn_street , "Quay Street") << "We did not find the expected u-turn";
 }
-void test_deadend_timedep_reverse() {
+TEST(Astar, test_deadend_timedep_reverse) {
   auto conf = get_conf("whitelion_tiles");
   route_tester tester(conf);
   std::string request =
@@ -844,9 +819,7 @@ void test_deadend_timedep_reverse() {
   const auto& legs = response.trip().routes(0).legs();
   const auto& directions = response.directions().routes(0).legs();
 
-  if (legs.size() != 1) {
-    throw std::logic_error("Should have 1 leg");
-  }
+  EXPECT_EQ(legs.size() , 1);
 
   std::vector<std::string> names;
   std::string uturn_street;
@@ -874,15 +847,13 @@ void test_deadend_timedep_reverse() {
       std::vector<std::string>{"Bell Lane",   "Small Street",
                                "Quay Street", // The u-turn on Quay Street is optimized away
                                "Quay Street", "Small Street", "", ""};
-  if (names != correct_route) {
-    throw std::logic_error("Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
-                           ", expected: \n" + boost::algorithm::join(correct_route, ", "));
-  }
-  if (uturn_street != "Quay Street") {
-    throw std::logic_error("We did not find the expected u-turn");
-  }
+  EXPECT_EQ(names , correct_route)
+    << "Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
+       ", expected: \n" + boost::algorithm::join(correct_route, ", ");
+
+  EXPECT_EQ(uturn_street , "Quay Street") << "We did not find the expected u-turn";
 }
-void test_time_restricted_road() {
+TEST(Astar, test_time_restricted_road) {
   // Try routing over "Via Montebello" in Rome which is a time restricted road
   // We should receive a route for a time-independent query but have the response
   // note that it is time restricted
@@ -896,9 +867,7 @@ void test_time_restricted_road() {
   const auto& legs = response.trip().routes(0).legs();
   const auto& directions = response.directions().routes(0).legs();
 
-  if (legs.size() != 1) {
-    throw std::logic_error("Should have 1 leg");
-  }
+  EXPECT_EQ(legs.size() , 1);
 
   std::vector<std::string> names;
   std::vector<std::string> restricted_streets;
@@ -920,14 +889,12 @@ void test_time_restricted_road() {
   }
 
   auto correct_route = std::vector<std::string>{"Via Goito", "Via Montebello", ""};
-  if (names != correct_route) {
-    throw std::logic_error("Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
-                           ", expected: \n" + boost::algorithm::join(correct_route, ", "));
-  }
+  EXPECT_EQ(names , correct_route)
+    << "Incorrect route, got: \n" + boost::algorithm::join(names, ", ") +
+       ", expected: \n" + boost::algorithm::join(correct_route, ", ");
 
-  if (!response.trip().routes(0).legs(0).node(1).edge().has_time_restrictions()) {
-    throw std::logic_error("Expected leg to have time_restriction");
-  }
+  EXPECT_TRUE(response.trip().routes(0).legs(0).node(1).edge().has_time_restrictions())
+    << "Expected leg to have time_restriction";
 
   // Verify JSON payload
   const std::string payload = tyr::serializeDirections(response);
@@ -936,56 +903,40 @@ void test_time_restricted_road() {
   std::cout << payload << std::endl;
   {
     const char key[] = "/trip/legs/0/maneuvers/0/has_time_restrictions";
-    if (GetValueByPointerWithDefault(response_json, key, false) == true) {
-      throw std::logic_error(
-          std::string("Via Goito is marked as time-restricted which is incorrect! JSON does have ") +
-          key + " set to true");
-    }
+    EXPECT_TRUE(GetValueByPointerWithDefault(response_json, key, false) != true)
+      << "Via Goito is marked as time-restricted which is incorrect! JSON does have "
+      <<  key << " set to true";
   }
   {
     const char key[] = "/trip/legs/0/maneuvers/1/has_time_restrictions";
-    if (GetValueByPointerWithDefault(response_json, key, false) != true) {
-      throw std::logic_error(std::string("JSON does not have ") + key + " set to true");
-    }
+    EXPECT_TRUE(GetValueByPointerWithDefault(response_json, key, false) == true)
+      << std::string("JSON does not have ") + key + " set to true";
   }
   {
     const char key[] = "/trip/legs/0/summary/has_time_restrictions";
-    if (GetValueByPointerWithDefault(response_json, key, false) != true) {
-      throw std::logic_error(std::string("JSON does not have ") + key + " set to true");
-    }
+    EXPECT_TRUE(GetValueByPointerWithDefault(response_json, key, false) == true)
+      << std::string("JSON does not have ") + key + " set to true";
   }
   {
     const char key[] = "/trip/summary/has_time_restrictions";
-    if (GetValueByPointerWithDefault(response_json, key, false) != true) {
-      throw std::logic_error(std::string("JSON does not have ") + key + " set to true");
-    }
+    EXPECT_TRUE(GetValueByPointerWithDefault(response_json, key, false) == true)
+      << std::string("JSON does not have ") + key + " set to true";
   }
 }
 
+class AstarTestEnv : public ::testing::Environment {
+public:
+  void SetUp() override {
+    make_tile();
+  }
+};
+
 } // anonymous namespace
 
-int main() {
-  test::suite suite("astar");
 
-  // TODO: move to mjolnir?
-  suite.test(TEST_CASE(make_tile));
-
-  suite.test(TEST_CASE(TestTrivialPathForward));
-  suite.test(TEST_CASE(TestTrivialPathReverse));
-  suite.test(TEST_CASE(TestTrivialPathTriangle));
-  suite.test(TEST_CASE(TestPartialDurationTrivial));
-  suite.test(TEST_CASE(TestPartialDurationForward));
-  suite.test(TEST_CASE(TestPartialDurationReverse));
-
-  suite.test(TEST_CASE(DoConfig));
-  suite.test(TEST_CASE(TestTrivialPathNoUturns));
-
-  suite.test(TEST_CASE(test_deadend));
-  suite.test(TEST_CASE(test_deadend_timedep_forward));
-  suite.test(TEST_CASE(test_deadend_timedep_reverse));
-  suite.test(TEST_CASE(test_oneway));
-  suite.test(TEST_CASE(test_oneway_wrong_way));
-  suite.test(TEST_CASE(test_time_restricted_road));
-
-  return suite.tear_down();
+int main(int argc, char* argv[]) {
+  testing::AddGlobalTestEnvironment(new AstarTestEnv);
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
+
