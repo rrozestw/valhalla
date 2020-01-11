@@ -9,6 +9,7 @@
 #include <string>
 
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 namespace test {
 
@@ -31,6 +32,19 @@ inline std::string load_binary_file(const std::string filename) {
     throw std::runtime_error("Failed to read " + filename);
   }
   return bytes;
+}
+
+template <typename T>
+inline bool IsBetweenInclusive(T value, T lower, T upper)
+{
+  return (value >= lower && value <= upper);
+}
+
+MATCHER_P2(IsBetween, a, b,
+    std::string(negation ? "isn't" : "is")
+    + " between " + ::testing::PrintToString(a) + " and "
+    + ::testing::PrintToString(b)) {
+  return a <= arg && arg <= b;
 }
 
 } // namespace test

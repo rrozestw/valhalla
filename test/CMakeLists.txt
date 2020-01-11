@@ -33,7 +33,7 @@ foreach(test ${tests})
   add_executable(${test} EXCLUDE_FROM_ALL ${test}.cc )
   set_target_properties(${test} PROPERTIES
     COMPILE_DEFINITIONS VALHALLA_SOURCE_DIR="${VALHALLA_SOURCE_DIR}/")
-  target_link_libraries(${test} valhalla gtest)
+  target_link_libraries(${test} valhalla gtest gmock)
 endforeach()
 
 set(cost_tests autocost bicyclecost motorcyclecost motorscootercost pedestriancost transitcost truckcost)
@@ -41,7 +41,7 @@ foreach(test ${cost_tests})
   add_executable(${test} EXCLUDE_FROM_ALL ${VALHALLA_SOURCE_DIR}/src/sif/${test}.cc)
   set_target_properties(${test} PROPERTIES
     COMPILE_DEFINITIONS INLINE_TEST)
-  target_link_libraries(${test} valhalla)
+  target_link_libraries(${test} valhalla gtest gmock)
 endforeach()
 
 ## Test-specific data, properties and dependencies
