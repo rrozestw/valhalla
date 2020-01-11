@@ -185,14 +185,12 @@ void test_tile_download(size_t tile_count, size_t curler_count, size_t thread_co
           auto tile_data = curler.get()(tile_uri, http_code, params.is_gzipped_tile);
 
           if (http_code != 404) {
-            test::assert_bool(http_code == 200,
-                              "Invalid code received: " + std::to_string(http_code));
-
+            EXPECT_EQ(http_code, 200);
             auto tile = GraphTile(GraphId(), tile_data.data(), tile_data.size());
-            test::assert_bool(tile.id() == expected_tile_id, "wrong tile ID received");
+            EXPECT_EQ(tile.id(), expected_tile_id);
           } else {
-            test::assert_bool(expected_tile_id == non_existent_tile_id,
-                              "Tile not found! " + tile_name);
+            // The test is expecting to get 404 since the tile does not exist
+            EXPECT_EQ(expected_tile_id, non_existent_tile_id);
           }
         }
       }

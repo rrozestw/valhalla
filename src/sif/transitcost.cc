@@ -798,46 +798,49 @@ TEST(TransitCost, testTransitCostParams) {
   distributor.reset(make_distributor_from_range(kModeFactorRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_transitcost_from_json("mode_factor", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->mode_factor_ , test::IsBetween( kModeFactorRange.min ,kModeFactorRange.max));
+    EXPECT_THAT(ctorTester->mode_factor_,
+                test::IsBetween(kModeFactorRange.min, kModeFactorRange.max));
   }
 
   // use_bus_
   distributor.reset(make_distributor_from_range(kUseBusRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_transitcost_from_json("use_bus", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->use_bus_ , test::IsBetween( kUseBusRange.min ,kUseBusRange.max));
+    EXPECT_THAT(ctorTester->use_bus_, test::IsBetween(kUseBusRange.min, kUseBusRange.max));
   }
 
   // use_rail_
   distributor.reset(make_distributor_from_range(kUseRailRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_transitcost_from_json("use_rail", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->use_rail_ , test::IsBetween( kUseRailRange.min ,kUseRailRange.max));
+    EXPECT_THAT(ctorTester->use_rail_, test::IsBetween(kUseRailRange.min, kUseRailRange.max));
   }
 
   // use_transfers_
   distributor.reset(make_distributor_from_range(kUseTransfersRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_transitcost_from_json("use_transfers", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->use_transfers_ , test::IsBetween( kUseTransfersRange.min ,kUseTransfersRange.max));
+    EXPECT_THAT(ctorTester->use_transfers_,
+                test::IsBetween(kUseTransfersRange.min, kUseTransfersRange.max));
   }
 
   // transfer_cost_
   distributor.reset(make_distributor_from_range(kTransferCostRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_transitcost_from_json("transfer_cost", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->transfer_cost_ , test::IsBetween( kTransferCostRange.min ,kTransferCostRange.max));
+    EXPECT_THAT(ctorTester->transfer_cost_,
+                test::IsBetween(kTransferCostRange.min, kTransferCostRange.max));
   }
 
   // transfer_penalty_
   distributor.reset(make_distributor_from_range(kTransferPenaltyRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_transitcost_from_json("transfer_penalty", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->transfer_penalty_ , test::IsBetween( kTransferPenaltyRange.min ,kTransferPenaltyRange.max));
+    EXPECT_THAT(ctorTester->transfer_penalty_,
+                test::IsBetween(kTransferPenaltyRange.min, kTransferPenaltyRange.max));
   }
 }
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);

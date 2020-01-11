@@ -709,14 +709,16 @@ TEST(MotorcycleCost, testMotorcycleCostParams) {
   distributor.reset(make_distributor_from_range(kManeuverPenaltyRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_motorcyclecost_from_json("maneuver_penalty", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->maneuver_penalty_ , test::IsBetween( kManeuverPenaltyRange.min ,kManeuverPenaltyRange.max));
+    EXPECT_THAT(ctorTester->maneuver_penalty_,
+                test::IsBetween(kManeuverPenaltyRange.min, kManeuverPenaltyRange.max));
   }
 
   // alley_penalty_
   distributor.reset(make_distributor_from_range(kAlleyPenaltyRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_motorcyclecost_from_json("alley_penalty", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->alley_penalty_ , test::IsBetween( kAlleyPenaltyRange.min ,kAlleyPenaltyRange.max));
+    EXPECT_THAT(ctorTester->alley_penalty_,
+                test::IsBetween(kAlleyPenaltyRange.min, kAlleyPenaltyRange.max));
   }
 
   // destination_only_penalty_
@@ -724,35 +726,40 @@ TEST(MotorcycleCost, testMotorcycleCostParams) {
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(
         make_motorcyclecost_from_json("destination_only_penalty", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->destination_only_penalty_ , test::IsBetween( kDestinationOnlyPenaltyRange.min ,kDestinationOnlyPenaltyRange.max));
+    EXPECT_THAT(ctorTester->destination_only_penalty_,
+                test::IsBetween(kDestinationOnlyPenaltyRange.min, kDestinationOnlyPenaltyRange.max));
   }
 
   // gate_cost_ (Cost.secs)
   distributor.reset(make_distributor_from_range(kGateCostRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_motorcyclecost_from_json("gate_cost", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->gate_cost_.secs , test::IsBetween( kGateCostRange.min ,kGateCostRange.max));
+    EXPECT_THAT(ctorTester->gate_cost_.secs, test::IsBetween(kGateCostRange.min, kGateCostRange.max));
   }
 
   // gate_penalty_ (Cost.cost)
   distributor.reset(make_distributor_from_range(kGatePenaltyRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_motorcyclecost_from_json("gate_penalty", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->gate_cost_.cost , test::IsBetween( kGatePenaltyRange.min ,kGatePenaltyRange.max + kDefaultGateCost));
+    EXPECT_THAT(ctorTester->gate_cost_.cost,
+                test::IsBetween(kGatePenaltyRange.min, kGatePenaltyRange.max + kDefaultGateCost));
   }
 
   // toll_booth_cost_ (Cost.secs)
   distributor.reset(make_distributor_from_range(kTollBoothCostRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_motorcyclecost_from_json("toll_booth_cost", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->toll_booth_cost_.secs , test::IsBetween( kTollBoothCostRange.min ,kTollBoothCostRange.max));
+    EXPECT_THAT(ctorTester->toll_booth_cost_.secs,
+                test::IsBetween(kTollBoothCostRange.min, kTollBoothCostRange.max));
   }
 
   // tollbooth_penalty_ (Cost.cost)
   distributor.reset(make_distributor_from_range(kTollBoothPenaltyRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_motorcyclecost_from_json("toll_booth_penalty", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->toll_booth_cost_.cost , test::IsBetween( kTollBoothPenaltyRange.min ,kTollBoothPenaltyRange.max + kDefaultTollBoothCost));
+    EXPECT_THAT(ctorTester->toll_booth_cost_.cost,
+                test::IsBetween(kTollBoothPenaltyRange.min,
+                                kTollBoothPenaltyRange.max + kDefaultTollBoothCost));
   }
 
   // country_crossing_cost_ (Cost.secs)
@@ -760,7 +767,8 @@ TEST(MotorcycleCost, testMotorcycleCostParams) {
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(
         make_motorcyclecost_from_json("country_crossing_cost", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->country_crossing_cost_.secs , test::IsBetween( kCountryCrossingCostRange.min ,kCountryCrossingCostRange.max));
+    EXPECT_THAT(ctorTester->country_crossing_cost_.secs,
+                test::IsBetween(kCountryCrossingCostRange.min, kCountryCrossingCostRange.max));
   }
 
   // country_crossing_penalty_ (Cost.cost)
@@ -768,14 +776,17 @@ TEST(MotorcycleCost, testMotorcycleCostParams) {
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(
         make_motorcyclecost_from_json("country_crossing_penalty", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->country_crossing_cost_.cost , test::IsBetween( kCountryCrossingPenaltyRange.min ,kCountryCrossingPenaltyRange.max + kDefaultCountryCrossingCost));
+    EXPECT_THAT(ctorTester->country_crossing_cost_.cost,
+                test::IsBetween(kCountryCrossingPenaltyRange.min,
+                                kCountryCrossingPenaltyRange.max + kDefaultCountryCrossingCost));
   }
 
   // ferry_cost_ (Cost.secs)
   distributor.reset(make_distributor_from_range(kFerryCostRange));
   for (unsigned i = 0; i < testIterations; ++i) {
     ctorTester.reset(make_motorcyclecost_from_json("ferry_cost", (*distributor)(generator)));
-    EXPECT_THAT(ctorTester->ferry_transition_cost_.secs , test::IsBetween( kFerryCostRange.min ,kFerryCostRange.max));
+    EXPECT_THAT(ctorTester->ferry_transition_cost_.secs,
+                test::IsBetween(kFerryCostRange.min, kFerryCostRange.max));
   }
 
   /*
@@ -790,7 +801,8 @@ EXPECT_THAT(ctorTester->use_ferry , test::IsBetween( kUseFerryRange.min ,kUseFer
     distributor.reset(make_distributor_from_range(kUseHighwaysRange));
     for (unsigned i = 0; i < testIterations; ++i) {
       ctorTester.reset(make_motorcyclecost_from_json("use_highways", (*distributor)(generator)));
-EXPECT_THAT(ctorTester->use_highways , test::IsBetween( kUseHighwaysRange.min ,kUseHighwaysRange.max));
+EXPECT_THAT(ctorTester->use_highways , test::IsBetween( kUseHighwaysRange.min
+,kUseHighwaysRange.max));
     }
 
      // use_trails
@@ -809,7 +821,6 @@ EXPECT_THAT(ctorTester->use_tolls , test::IsBetween( kUseTollsRange.min ,kUseTol
    **/
 }
 } // namespace
-
 
 int main(int argc, char* argv[]) {
   testing::InitGoogleTest(&argc, argv);
