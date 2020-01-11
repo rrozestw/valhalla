@@ -96,23 +96,33 @@ TEST(Actor, Basic) {
   // TODO: test the rest of them
 }
 
-TEST(Actor, Interrupt) {
-  auto conf = make_conf();
-  tyr::actor_t actor(conf);
+class ActorInterrupt : public ::testing::Test {
+protected:
+  void SetUp() override {
+    conf = make_conf();
+  }
+
   struct test_exception_t {};
 
-  EXPECT_THROW(actor.route(R"({"locations":[{"lat":40.546115,"lon":-76.385076,"type":"break"},
-        {"lat":40.544232,"lon":-76.385752,"type":"break"}],"costing":"auto"})",
-                           []() -> void { throw test_exception_t{}; }),
-               test_exception_t);
+  boost::property_tree::ptree conf;
+};
 
-  EXPECT_THROW(actor.trace_attributes(R"({"shape":[{"lat":40.546115,"lon":-76.385076},
-        {"lat":40.544232,"lon":-76.385752}],"costing":"auto","shape_match":"map_snap"})",
-                                      []() -> void { throw test_exception_t{}; }),
-               test_exception_t);
-
-  // TODO: test the rest of them
+TEST_F(ActorInterrupt, Route) {
+  tyr::actor_t actor(conf);
+  std::string request = R"({"locations":[{"lat":40.546115,"lon":-76.385076,"type":"break"},
+        {"lat":40.544232,"lon":-76.385752,"type":"break"}],"costing":"auto"})";
+  EXPECT_THROW(actor.route(request, []() -> void { throw test_exception_t{}; }), test_exception_t);
 }
+
+TEST_F(ActorInterrupt, TraceAttributes) {
+  tyr::actor_t actor(conf);
+  std::string request = R"({"shape":[{"lat":40.546115,"lon":-76.385076},
+        {"lat":40.544232,"lon":-76.385752}],"costing":"auto","shape_match":"map_snap"})";
+  EXPECT_THROW(actor.trace_attributes(request, []() -> void { throw test_exception_t{}; }),
+               test_exception_t);
+}
+
+// TODO: test the rest of them
 
 } // namespace
 
